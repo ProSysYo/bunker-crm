@@ -2,8 +2,7 @@
 
 import Link from "next/link"
 import { useLoginStore } from "../model/store"
-import { Button } from "@/shared/ui/button"
-import { Input } from "@/shared/ui/input"
+import { Button, Input } from "@heroui/react"
 
 export const LoginForm = () => {
   const { values, errors, loading, serverError, setField, submit } = useLoginStore()
@@ -50,7 +49,7 @@ export const LoginForm = () => {
         )}
       </div>
 
-      <Button type="submit" variant="outline" disabled={loading}>
+      <Button type="submit" variant="flat" disabled={loading}>
         {loading ? "Отправка..." : "Войти"}
       </Button>
 

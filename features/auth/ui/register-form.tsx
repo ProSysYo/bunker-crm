@@ -2,8 +2,7 @@
 
 import Link from "next/link"
 import { useRegisterStore } from "../model/store"
-import { Button } from "@/shared/ui/button"
-import { Input } from "@/shared/ui/input"
+import { Button, Input } from "@heroui/react"
 
 export const RegisterForm = () => {
   const { values, errors, loading, serverError, setField, submit } = useRegisterStore()
@@ -76,7 +75,7 @@ export const RegisterForm = () => {
         )}
       </div>
 
-      <Button type="submit" variant="outline" disabled={loading}>
+      <Button type="submit" variant="flat" disabled={loading}>
         {loading ? "Отправка..." : "Зарегистрироваться"}
       </Button>
 
