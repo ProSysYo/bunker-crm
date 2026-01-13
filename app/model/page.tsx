@@ -1,7 +1,7 @@
-export default function ModelPage() {
-    return (
-        <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Модели дверей</h1>
-        </div>
-    );
+import { getDoorModels } from "@/features/model/actions/door-model"
+import ModelPageClient from "./client"
+
+export default async function ModelPage() {
+  const models = await getDoorModels()
+  return <ModelPageClient initialModels={models} />
 }

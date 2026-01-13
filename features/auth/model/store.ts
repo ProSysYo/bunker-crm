@@ -2,8 +2,8 @@
 
 import { create } from "zustand"
 import { loginSchema, registerSchema, type LoginFormValues, type RegisterFormValues } from "./schema"
-import { loginUser } from "../api/login"
-import { registerUser } from "../api/register"
+import { loginUser } from "../actions/login"
+import { registerUser } from "../actions/register"
 
 type LoginState = {
   values: LoginFormValues
@@ -61,7 +61,7 @@ export const useLoginStore = create<LoginState>((set, get) => ({
 
       // При успешном входе редирект на главную
       window.location.href = "/"
-    } catch (error) {
+    } catch {
       set({ serverError: "Произошла ошибка при входе" })
     } finally {
       set({ loading: false })
@@ -127,7 +127,7 @@ export const useRegisterStore = create<RegisterState>((set, get) => ({
 
       // При успешной регистрации редирект на страницу логина
       window.location.href = "/login"
-    } catch (error) {
+    } catch {
       set({ serverError: "Произошла ошибка при регистрации" })
     } finally {
       set({ loading: false })
