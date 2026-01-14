@@ -1,9 +1,12 @@
-import { TLockType } from "./TLockType"
+import { TLockType } from "./TLockType";
 
-export type TLock = {
+export type TLockCreate = {
+    name: string;
+    type: TLockType;
+};
+
+export type TLockFull = TLockCreate & {
     id: number
-    name: string
-    type:  TLockType | string
     createdAt: Date;
     updatedAt: Date;
-}
+};
