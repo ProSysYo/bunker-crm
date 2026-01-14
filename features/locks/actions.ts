@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { lockFormSchema } from "./model/schema";
 
 export async function getLocks() {
     return prisma.lock.findMany({
@@ -18,11 +19,24 @@ export async function getLock(id: number) {
 }
 
 export async function createLock(prevState: unknown, formData: FormData) {
+    const name = formData.get("name") as string;
+    const type = formData.get("type") as string;
+
+    const result = lockFormSchema.safeParse({ name, type });
+    if (!result.success) {
+        const errors = result.error.flatten().fieldErrors;
+        return {
+            success: false,
+            error: errors.name?.[0] || errors.type?.[0] || "Ошибка валидации",
+            errors,
+        };
+    }
+
     try {
         const lock = await prisma.lock.create({
             data: {
-                name: formData.get("name") as string,
-                type: (formData.get("type") as string),
+                name,
+                type,
             },
         });
         revalidatePath("/locks");
@@ -34,19 +48,28 @@ export async function createLock(prevState: unknown, formData: FormData) {
 }
 
 export async function updateLock(prevState: unknown, formData: FormData) {
-    try {
-        const id = (formData.get("id") as string) || "";
-        if (!id) {
-            return { success: false, error: "Нет id" };
-        }
-        const data = {
-            name: (formData.get("name") as string) ,
-            type: (formData.get("type") as string),
-        };
+    const id = (formData.get("id") as string) || "";
+    if (!id) {
+        return { success: false, error: "Нет id" };
+    }
 
+    const name = formData.get("name") as string;
+    const type = formData.get("type") as string;
+
+    const result = lockFormSchema.safeParse({ name, type });
+    if (!result.success) {
+        const errors = result.error.flatten().fieldErrors;
+        return {
+            success: false,
+            error: errors.name?.[0] || errors.type?.[0] || "Ошибка валидации",
+            errors,
+        };
+    }
+
+    try {
         const lock = await prisma.lock.update({
             where: { id: +id },
-            data,
+            data: { name, type },
         });
 
         revalidatePath("/locks");

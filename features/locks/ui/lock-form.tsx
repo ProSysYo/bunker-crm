@@ -1,67 +1,75 @@
 "use client";
 
-import React, { useActionState, useEffect } from "react";
+import { useEffect } from "react";
 import { Autocomplete, AutocompleteItem, Button, Input } from "@heroui/react";
-import { createLock, updateLock } from "../actions";
-import { TLockType } from "../types/TLockType";
 
-interface ModelFormProps {
+import { TLockType } from "../types/TLockType";
+import { useLockFormStore } from "../store/use-lock-form-store";
+
+interface LockFormProps {
     onSuccess?: () => void;
     editId?: string;
-    initialValues?: { [key: string]: unknown } | null;
+    initialValues?: { name?: string; type?: TLockType } | null;
 }
-
-const initialState = {
-    success: false,
-    error: "",
-};
 
 const types: TLockType[] = ["цилиндр", "сувальда", "цилиндр + сувальда", "сувальда + цилиндр"];
 
-export const LockForm = ({ onSuccess, editId, initialValues }: ModelFormProps) => {
-    const action = editId ? updateLock : createLock;
-    const [state, formAction, isPending] = useActionState(action, initialState);
+export const LockForm = ({ onSuccess, editId, initialValues }: LockFormProps) => {
+    const { values, errors, loading, serverError, setField, submitCreate, submitUpdate, reset } = useLockFormStore();
 
     useEffect(() => {
-        if (state.success) {
-            onSuccess?.();
+        if (initialValues) {
+            setField("name", initialValues.name || "");
+            setField("type", initialValues.type || "");
         }
-    }, [state.success, onSuccess]);
+    }, [initialValues, setField]);
 
+    useEffect(() => {
+        reset();
+        if (initialValues) {
+            setField("name", initialValues.name || "");
+            setField("type", initialValues.type || "");
+        }
+    }, [reset, setField, initialValues]);
+
+    const handleSubmit = () => {
+        if (editId) {
+            submitUpdate(editId, onSuccess);
+        } else {
+            submitCreate(onSuccess);
+        }
+    };
     return (
-        <form action={formAction} className="flex w-full max-w-sm flex-col gap-4">
-            {editId && <input type="hidden" name="id" value={editId} />}
-
-            <div className="flex flex-col gap-1">
-                <Input
-                    name="name"
-                    label="Название замка"
-                    placeholder="Введите название замка"
-                    isRequired
-                    defaultValue={initialValues?.name ? String(initialValues.name) : undefined}
-                />
-            </div>
+        <div className="flex w-full max-w-sm flex-col gap-4">
+            <Input
+                label="Название замка"
+                placeholder="Введите название замка"
+                isRequired
+                value={values.name}
+                onValueChange={(v) => setField("name", v)}
+                errorMessage={errors.name}
+                isInvalid={!!errors.name}
+            />
 
             <div className="flex flex-col gap-1">
                 <Autocomplete
-                    name="type"
                     label="Тип замка"
                     placeholder="Выберите тип замка"
                     isRequired
-                    defaultItems={types.map((item) => {
-                        return { label: item, key: item };
-                    })}
-                    defaultInputValue={initialValues?.type ? String(initialValues.type) : undefined}
+                    selectedKey={values.type || undefined}
+                    onSelectionChange={(key) => setField("type", key as TLockType)}
+                    defaultItems={types.map((item) => ({ label: item, key: item }))}
                 >
                     {(item) => <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>}
                 </Autocomplete>
+                {errors.type && <p className="text-sm text-danger">{errors.type}</p>}
             </div>
 
-            {state?.error && <p className="text-sm text-danger">{state.error}</p>}
+            {serverError && <p className="text-sm text-danger">{serverError}</p>}
 
-            <Button type="submit" variant="flat" disabled={isPending}>
-                {isPending ? "Сохранение..." : "Сохранить"}
+            <Button variant="flat" isLoading={loading} disabled={loading} onPress={handleSubmit}>
+                {loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}
             </Button>
-        </form>
+        </div>
     );
 };
