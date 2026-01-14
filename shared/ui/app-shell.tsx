@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, DoorOpen, Lock } from "lucide-react";
-
-import { cn } from "@/lib/utils";
+import { Home, Lock } from "lucide-react";
 
 type AppShellProps = {
     children: React.ReactNode;
@@ -15,12 +13,6 @@ const navItems = [
         href: "/",
         label: "Главная",
         icon: Home,
-    },
-
-    {
-        href: "/model",
-        label: "Модели дверей",
-        icon: DoorOpen,
     },
     {
         href: "/locks",
