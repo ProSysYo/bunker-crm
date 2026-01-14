@@ -9,7 +9,7 @@ type Props = {
   initialValues?: { [key: string]: unknown } | null
 }
 
-export default function EditModelClient({ editId, initialValues }: Props) {
+export default function EditLockClient({ editId, initialValues }: Props) {
   const router = useRouter()
   const handleSuccess = () => router.push("/model")
 

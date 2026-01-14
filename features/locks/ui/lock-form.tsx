@@ -9,7 +9,7 @@ import { useLockFormStore } from "../store/use-lock-form-store";
 interface LockFormProps {
     onSuccess?: () => void;
     editId?: string;
-    initialValues?: { name?: string; type?: TLockType } | null;
+    initialValues?: { name?: string; type?: TLockType | string } | null;
 }
 
 const types: TLockType[] = ["цилиндр", "сувальда", "цилиндр + сувальда", "сувальда + цилиндр"];

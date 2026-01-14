@@ -1,5 +1,5 @@
 
-import LockPageClient from "./client"
+import LockPageClient from "./locks-client"
 import { getLocks } from "@/features/locks/actions"
 
 export default async function LocksPage() {

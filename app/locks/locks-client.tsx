@@ -13,7 +13,7 @@ interface Props {
     locks: TLock[];
 }
 
-export default function LocksPageClient({ locks }: Props) {
+export default function LocksClient({ locks }: Props) {
     const router = useRouter();
 
     const [deletingId, setDeletingId] = useState<number | null>(null);
