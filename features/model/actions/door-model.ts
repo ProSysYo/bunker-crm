@@ -36,26 +36,6 @@ export async function createDoorModel(prevState: unknown, formData: FormData) {
   }
 }
 
-export async function updateDoorModel(
-  id: string,
-  data: {
-    name?: string
-    description?: string | null
-    outside?: string | null
-    inside?: string | null
-    isDouble?: boolean
-  }
-) {
-  if (!id) {
-    throw new Error("updateDoorModel: id is required")
-  }
-
-  return prisma.doorModel.update({
-    where: { id },
-    data,
-  })
-}
-
 export async function updateDoorModelForm(prevState: unknown, formData: FormData) {
   try {
     const id = (formData.get("id") as string) || ""

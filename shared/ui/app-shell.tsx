@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, DoorOpen } from "lucide-react";
+import { Home, DoorOpen, Lock } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -22,6 +22,11 @@ const navItems = [
         label: "Модели дверей",
         icon: DoorOpen,
     },
+    {
+        href: "/locks",
+        label: "Замки",
+        icon: Lock,
+    },
 ] as const;
 
 export const AppShell = ({ children }: AppShellProps) => {
@@ -35,7 +40,7 @@ export const AppShell = ({ children }: AppShellProps) => {
                     <span className="text-lg font-semibold tracking-tight">Bunker CRM</span>
                 </div>
 
-                <nav className="flex flex-1 flex-col gap-2 p-2">
+                <nav className="flex flex-1 flex-col gap-2 p-4">
                     {navItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = pathname === item.href;
