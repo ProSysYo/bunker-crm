@@ -1,8 +1,8 @@
 'use client'
 
 import { create } from "zustand"
-import { loginSchema, registerSchema, type LoginFormValues, type RegisterFormValues } from "./schema"
-import { loginUser } from "../actions/login"
+import { loginSchema, registerSchema, type LoginFormValues, type RegisterFormValues } from "../model/schema"
+import { signInWithCredentials } from "../actions/login"
 import { registerUser } from "../actions/register"
 
 type LoginState = {
@@ -52,12 +52,12 @@ export const useLoginStore = create<LoginState>((set, get) => ({
     try {
       set({ loading: true, serverError: undefined })
 
-      const response = await loginUser(result.data)
+      const response = await signInWithCredentials(result.data.email, result.data.password)
       
-      if (!response.success) {
-        set({ serverError: response.error })
-        return
-      }
+      // if (!response.success) {
+      //   set({ serverError: response.error })
+      //   return
+      // }
 
       // При успешном входе редирект на главную
       window.location.href = "/"

@@ -7,7 +7,6 @@ export const loginSchema = z.object({
 
 export const registerSchema = z.object({
   email: z.string().email("Некорректный email"),
-  name: z.string().min(2, "Минимум 2 символа"),
   password: z.string().min(6, "Минимум 6 символов"),
   confirmPassword: z.string().min(6, "Минимум 6 символов"),
 }).refine((data) => data.password === data.confirmPassword, {

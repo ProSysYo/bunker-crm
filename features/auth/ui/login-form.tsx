@@ -1,8 +1,8 @@
 'use client'
 
 import Link from "next/link"
-import { useLoginStore } from "../model/store"
 import { Button, Input } from "@heroui/react"
+import { useLoginStore } from "../store/store"
 
 export const LoginForm = () => {
   const { values, errors, loading, serverError, setField, submit } = useLoginStore()

@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Home, Lock } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Home, Lock, LogOut } from "lucide-react";
+import { Button } from "@heroui/react";
+import { signOutFunc } from "@/features/auth/actions/login";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 
 type AppShellProps = {
     children: React.ReactNode;
@@ -23,10 +26,29 @@ const navItems = [
 
 export const AppShell = ({ children }: AppShellProps) => {
     const pathname = usePathname();
+    const router = useRouter();
+    const { isAuth, session, setAuthState } = useAuthStore();
+
+    const handleSignOut = async () => {
+        try {
+            await signOutFunc();
+        } catch (error) {
+            console.log(error);
+        }
+        setAuthState("unauthenticated", null);
+        router.push("/login");
+    };
+
+    if (!isAuth) {
+        return (
+            <main className="flex-1 overflow-y-auto bg-muted/40 p-6">
+                <div className="mx-auto max-w-5xl">{children}</div>
+            </main>
+        );
+    }
 
     return (
         <div className="flex min-h-screen bg-background text-foreground">
-            {/* Sidebar */}
             <aside className="flex h-screen w-64 flex-col border-r bg-sidebar text-sidebar-foreground">
                 <div className="flex h-14 items-center border-b px-4">
                     <span className="text-lg font-semibold tracking-tight">Bunker CRM</span>
@@ -41,7 +63,11 @@ export const AppShell = ({ children }: AppShellProps) => {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={'flex items-center gap-2'}
+                                className={`flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors ${
+                                    isActive
+                                        ? "bg-primary/10 text-primary font-medium"
+                                        : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                }`}
                             >
                                 <Icon className="size-4" />
                                 <span>{item.label}</span>
@@ -51,31 +77,31 @@ export const AppShell = ({ children }: AppShellProps) => {
                 </nav>
             </aside>
 
-            {/* Main area */}
             <div className="flex min-h-screen flex-1 flex-col">
-                {/* Header */}
                 <header className="flex h-14 items-center justify-between border-b bg-background/80 px-6 backdrop-blur">
                     <div className="text-sm text-muted-foreground">Панель управления</div>
 
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
-                            <div className="flex size-8 items-center justify-center rounded-full bg-secondary text-sm font-medium">
-                                BI
-                            </div>
-                            <div className="flex flex-col leading-tight">
-                                <span className="text-sm font-medium">Пользователь</span>
-                                <span className="text-xs text-muted-foreground">admin@bunker.crm</span>
-                            </div>
+                            {isAuth && (
+                                <div className="flex flex-col leading-tight">
+                                    <span className="text-xs text-muted-foreground">{session?.user?.email}</span>
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex items-center gap-2">
-                            <Link href="/login">Войти</Link>
-                            <Link href="/register">Регистрация</Link>
+                            {!isAuth ? (
+                                <Link href="/login">Войти</Link>
+                            ) : (
+                                <Button variant="flat" onClick={handleSignOut} className="min-w-0">
+                                    <LogOut size={16}/>
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </header>
 
-                {/* Content */}
                 <main className="flex-1 overflow-y-auto bg-muted/40 p-6">
                     <div className="mx-auto max-w-5xl">{children}</div>
                 </main>
