@@ -4,10 +4,42 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { lockFormSchema } from "./model/schema";
 
-export async function getLocks() {
-    return prisma.lock.findMany({
-        orderBy: { createdAt: "desc" },
-    });
+export async function getLocks(params?: {
+    search?: string;
+    page?: number;
+    limit?: number;
+}) {
+    const { search = "", page = 1, limit = 10 } = params || {};
+    const skip = (page - 1) * limit;
+
+    const where = search
+        ? {
+              OR: [
+                  { name: { contains: search, mode: 'insensitive' as const } },
+                  { type: { contains: search, mode: 'insensitive' as const } },
+              ],
+          }
+        : {};
+
+    const [locks, total] = await Promise.all([
+        prisma.lock.findMany({
+            where,
+            orderBy: { createdAt: "desc" },
+            skip,
+            take: limit,
+        }),
+        prisma.lock.count({ where }),
+    ]);
+
+    return {
+        locks,
+        pagination: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit),
+        },
+    };
 }
 
 export async function getLock(id: number) {

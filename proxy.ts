@@ -9,8 +9,6 @@ export async function proxy(request: NextRequest) {
 
     const session = await auth();
 
-    console.log(session);
-
     if (session?.user && (pathname === "/login" || pathname === "/register")) {
         return NextResponse.redirect(new URL("/", request.url));
     }
