@@ -41,7 +41,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     return { id: user.id, email: user.email };
                 } catch (error) {
                     if (error instanceof ZodError) {
-                        // Return `null` to indicate that the credentials are invalid
                         return null;
                     }
                     return null;

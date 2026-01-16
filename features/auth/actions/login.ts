@@ -46,7 +46,7 @@ export async function signInWithCredentials(email: string, password: string) {
 
 export async function signOutFunc() {
   try {
-    const result = await signOut({ redirect: false, });
+    const result = await signOut({ redirect: false });
 
     return result;
   } catch (error) {

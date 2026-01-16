@@ -5,7 +5,6 @@ import { AppShell } from "@/shared/ui/app-shell";
 import { Providers } from "./providers";
 import { auth } from "@/features/auth/auth";
 import { SessionProvider } from "next-auth/react";
-import AppLoader from "@/shared/hoc/app-loader";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -33,9 +32,7 @@ export default async function RootLayout({
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <SessionProvider session={session}>
                     <Providers>
-                        <AppLoader>
-                            <AppShell>{children}</AppShell>
-                        </AppLoader>
+                        <AppShell>{children}</AppShell>
                     </Providers>
                 </SessionProvider>
             </body>

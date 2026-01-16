@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Home, Lock, LogOut } from "lucide-react";
 import { Button } from "@heroui/react";
-import { signOutFunc } from "@/features/auth/actions/login";
-import { useAuthStore } from "@/features/auth/store/auth.store";
+import { signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 type AppShellProps = {
     children: React.ReactNode;
@@ -27,17 +28,26 @@ const navItems = [
 export const AppShell = ({ children }: AppShellProps) => {
     const pathname = usePathname();
     const router = useRouter();
-    const { isAuth, session, setAuthState } = useAuthStore();
+    const { data: session, status } = useSession();
 
     const handleSignOut = async () => {
         try {
-            await signOutFunc();
+            //await signOutFunc();
+            await signOut({ redirect: false });
+            router.push("/login");
         } catch (error) {
             console.log(error);
         }
-        setAuthState("unauthenticated", null);
-        router.push("/login");
+        //window.location.href = "/login";
     };
+
+    const isAuth = status === "authenticated";
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login");
+        }
+    }, [status, router]);
 
     if (!isAuth) {
         return (
