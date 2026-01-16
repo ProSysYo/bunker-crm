@@ -40,18 +40,66 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="rounded-xl border bg-card p-4 shadow-sm">
-        <p className="text-xs font-medium text-muted-foreground">
-          Динамика выполненных заказов (макет)
-        </p>
-        <div className="mt-4 flex h-32 items-end gap-2 rounded-lg bg-muted p-3">
-          {[40, 60, 80, 50, 70, 90, 65].map((height, index) => (
-            <div
-              key={index}
-              className="flex-1 rounded-md bg-primary/80"
-              style={{ height: `${height}%` }}
-            />
-          ))}
+      <section className="grid gap-4 md:grid-cols-3">
+        <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <p className="text-xs font-medium text-muted-foreground">
+            Сварка
+          </p>
+          <p className="mt-2 text-2xl font-semibold">1200</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            -12% к прошлой неделе
+          </p>
+        </div>
+
+        <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <p className="text-xs font-medium text-muted-foreground">
+            Панельный
+          </p>
+          <p className="mt-2 text-2xl font-semibold">500</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            +10% к прошлой неделе
+          </p>
+        </div>
+
+        <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <p className="text-xs font-medium text-muted-foreground">
+            Отделка
+          </p>
+          <p className="mt-2 text-2xl font-semibold">900</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            -12% к прошлой неделе
+          </p>
+        </div>
+      </section>
+      <section className="grid gap-4 md:grid-cols-3">
+        <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <p className="text-xs font-medium text-muted-foreground">
+            Ожидает отгрузку
+          </p>
+          <p className="mt-2 text-2xl font-semibold">2000</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            +50% к прошлой неделе
+          </p>
+        </div>
+
+        <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <p className="text-xs font-medium text-muted-foreground">
+            Конструктора
+          </p>
+          <p className="mt-2 text-2xl font-semibold">900</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            +90% к прошлой неделе
+          </p>
+        </div>
+
+        <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <p className="text-xs font-medium text-muted-foreground">
+            Менеджеры
+          </p>
+          <p className="mt-2 text-2xl font-semibold">900</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            -50% к прошлой неделе
+          </p>
         </div>
       </section>
     </div>

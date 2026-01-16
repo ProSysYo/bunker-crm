@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@heroui/react";
 import Link from "next/link";
-import { Edit, Trash } from "lucide-react";
-import { TLock } from "@/features/locks/types/TLock";
+import { Edit, Plus, Trash } from "lucide-react";
+import { TLockFull } from "@/features/locks/types/TLock";
 import { deleteLock } from "@/features/locks/actions";
 import ConfirmDialog from "@/shared/ui/confirm-dialog";
 import { useRouter } from "next/navigation";
 
 interface Props {
-    locks: TLock[];
+    locks: TLockFull[];
 }
 
 export default function LocksClient({ locks }: Props) {
@@ -49,19 +49,25 @@ export default function LocksClient({ locks }: Props) {
                     className=""
                     aria-label="Добавить замок"
                 >
-                    <Button color="default">Добавить замок</Button>
+                    <Button color="default" endContent={<Plus size={20}/>}>Добавить замок</Button>
                 </Link>
             </div>
 
             <Table>
                 <TableHeader>
-                    <TableColumn className="w-24">Действия</TableColumn>
+                    
                     <TableColumn>Название</TableColumn>
                     <TableColumn>Тип замка</TableColumn>
+                    <TableColumn>Добавлено</TableColumn>
+                    <TableColumn className="w-12"> </TableColumn>
                 </TableHeader>
                 <TableBody>
                     {locks.map((lock) => (
                         <TableRow key={lock.id}>
+                            
+                            <TableCell>{lock.name}</TableCell>
+                            <TableCell>{lock.type}</TableCell>
+                            <TableCell>{lock.createdAt.toLocaleString()}</TableCell>
                             <TableCell className="flex gap-0">
                                 <Link href={`/locks/${lock.id}`}>
                                     <Button size="sm" variant="light" aria-label="Редактировать" className="min-w-0 w-auto px-2">
@@ -81,8 +87,6 @@ export default function LocksClient({ locks }: Props) {
                                     <Trash size={18} />
                                 </Button>
                             </TableCell>
-                            <TableCell>{lock.name}</TableCell>
-                            <TableCell>{lock.type}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

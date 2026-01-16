@@ -41,20 +41,20 @@ export const AppShell = ({ children }: AppShellProps) => {
 
     if (!isAuth) {
         return (
-            <main className="flex-1 overflow-y-auto bg-muted/40 p-6">
+            <main className="flex-1 overflow-y-auto bg-muted/40 p-6 h-screen">
                 <div className="mx-auto max-w-5xl">{children}</div>
             </main>
         );
     }
 
     return (
-        <div className="flex min-h-screen bg-background text-foreground">
-            <aside className="flex h-screen w-64 flex-col border-r bg-sidebar text-sidebar-foreground">
-                <div className="flex h-14 items-center border-b px-4">
+        <div className="flex h-screen bg-background text-foreground">
+            <aside className="w-64 flex flex-col border-r bg-sidebar text-sidebar-foreground">
+                <div className="flex h-14 items-center border-b px-4 shrink-0">
                     <span className="text-lg font-semibold tracking-tight">Bunker CRM</span>
                 </div>
 
-                <nav className="flex flex-1 flex-col gap-2 p-4">
+                <nav className="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
                     {navItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = pathname === item.href;
@@ -77,9 +77,9 @@ export const AppShell = ({ children }: AppShellProps) => {
                 </nav>
             </aside>
 
-            <div className="flex min-h-screen flex-1 flex-col">
-                <header className="flex h-14 items-center justify-between border-b bg-background/80 px-6 backdrop-blur">
-                    <div className="text-sm text-muted-foreground">Панель управления</div>
+            <div className="flex flex-1 flex-col">
+                <header className="flex h-14 items-center justify-between border-b bg-background/80 px-6 backdrop-blur shrink-0">
+                    <div className="text-sm text-muted-foreground"></div>
 
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
@@ -95,7 +95,7 @@ export const AppShell = ({ children }: AppShellProps) => {
                                 <Link href="/login">Войти</Link>
                             ) : (
                                 <Button variant="flat" onClick={handleSignOut} className="min-w-0">
-                                    <LogOut size={16}/>
+                                    <LogOut size={16} />
                                 </Button>
                             )}
                         </div>
