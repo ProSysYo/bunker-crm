@@ -7,6 +7,7 @@ import { TLockFull } from "@/features/locks/types/TLock";
 import { LocksSearch } from "@/features/locks/ui/locks-search";
 import { LocksPagination } from "@/features/locks/ui/locks-pagination";
 import { LocksTable } from "@/features/locks/ui/locks-table";
+import { routes } from "@/config/navigation";
 
 interface Props {
     locks: TLockFull[];
@@ -18,7 +19,7 @@ export default function LocksClient({ locks, totalPages }: Props) {
         <div className="container mx-auto py-8">
             <div className="mb-6 flex items-center justify-between">
                 <h1 className="text-2xl font-semibold">Замки</h1>
-                <Link href="/locks/new">
+                <Link href={routes.locksNew}>
                     <Button color="primary" endContent={<Plus size={20} />}>
                         Добавить замок
                     </Button>

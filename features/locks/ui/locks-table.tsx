@@ -6,6 +6,7 @@ import { TLockFull } from "../types/TLock";
 import ConfirmDialog from "@/shared/ui/confirm-dialog";
 import { useRouter } from "next/navigation";
 import { deleteLock } from "../actions";
+import { routes } from "@/config/navigation";
 
 type Props = {
     locks: TLockFull[];
@@ -55,7 +56,7 @@ export const LocksTable = ({ locks }: Props) => {
                             <TableCell>{lock.createdAt.toLocaleString("ru-RU")}</TableCell>
                             <TableCell>
                                 <div className="flex gap-1">
-                                    <Link href={`/locks/${lock.id}`}>
+                                    <Link href={`${routes.locksEdit}${lock.id}`}>
                                         <Button
                                             isIconOnly
                                             size="sm"

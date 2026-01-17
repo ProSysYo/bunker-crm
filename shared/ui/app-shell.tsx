@@ -2,28 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Lock, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Button } from "@heroui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { navItems, routes } from "../../config/navigation";
 
 type AppShellProps = {
     children: React.ReactNode;
 };
-
-const navItems = [
-    {
-        href: "/",
-        label: "Главная",
-        icon: Home,
-    },
-    {
-        href: "/locks",
-        label: "Замки",
-        icon: Lock,
-    },
-] as const;
 
 export const AppShell = ({ children }: AppShellProps) => {
     const pathname = usePathname();
@@ -34,7 +22,7 @@ export const AppShell = ({ children }: AppShellProps) => {
         try {
             //await signOutFunc();
             await signOut({ redirect: false });
-            router.push("/login");
+            router.push(routes.login);
         } catch (error) {
             console.log(error);
         }
@@ -45,7 +33,7 @@ export const AppShell = ({ children }: AppShellProps) => {
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            router.push("/login");
+            router.push(routes.login);
         }
     }, [status, router]);
 
@@ -67,7 +55,7 @@ export const AppShell = ({ children }: AppShellProps) => {
                 <nav className="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
                     {navItems.map((item) => {
                         const Icon = item.icon;
-                        const isActive = pathname === item.href;
+                        const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
                         return (
                             <Link

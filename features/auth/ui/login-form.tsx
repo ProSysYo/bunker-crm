@@ -2,7 +2,8 @@
 
 import Link from "next/link"
 import { Button, Input } from "@heroui/react"
-import { useLoginStore } from "../store/store"
+import { useLoginStore } from "../store/use-login-store"
+import { routes } from "@/config/navigation"
 
 export const LoginForm = () => {
   const { values, errors, loading, serverError, setField, submit } = useLoginStore()
@@ -55,7 +56,7 @@ export const LoginForm = () => {
 
       <p className="text-center text-sm text-muted-foreground">
         Нет аккаунта?{" "}
-        <Link href="/register" className="text-primary hover:underline">
+        <Link href={routes.register} className="text-primary hover:underline">
           Зарегистрироваться
         </Link>
       </p>
