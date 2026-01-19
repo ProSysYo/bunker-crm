@@ -1,4 +1,5 @@
 
+import { lableLimits } from "@/config/table-limits";
 import LockPageClient from "./locks-client"
 import { getLocks } from "@/features/locks/actions"
 
@@ -15,7 +16,7 @@ export default async function LocksPage(props: {
     const { locks, pagination } = await getLocks({
         search: query,
         page: currentPage,
-        limit: 10,
+        limit: lableLimits.locks,
     });
 
     return (

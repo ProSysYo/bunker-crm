@@ -1,11 +1,15 @@
 "use client";
 import { useDebouncedCallback } from "@/shared/hooks/use-debounced-callback";
 import { Input } from "@heroui/react";
-import { Search } from "lucide-react";
+import { Search as SearchLicid } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 
-export const LocksSearch = () => {
+type Props = {
+    placeholder: string
+}
+
+export const Search = ({placeholder}: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -40,10 +44,10 @@ export const LocksSearch = () => {
     };
     return (
         <Input
-            placeholder="Поиск по названию или типу..."
+            placeholder={placeholder}
             value={searchTerm}
             onValueChange={handleSearchChange}
-            startContent={<Search className="w-4 h-4 text-default-400" />}
+            startContent={<SearchLicid className="w-4 h-4 text-default-400" />}
             size="lg"
             className="max-w-md"
         />

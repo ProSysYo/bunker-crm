@@ -1,12 +1,15 @@
-import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
-import { Edit, Trash } from "lucide-react";
-import Link from "next/link";
+"use client";
+
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
+
 import { useState } from "react";
 import { TLockFull } from "../types/TLock";
 import ConfirmDialog from "@/shared/ui/confirm-dialog";
 import { useRouter } from "next/navigation";
 import { deleteLock } from "../actions";
 import { routes } from "@/config/navigation";
+import { EditLink } from "@/shared/ui/edit-link";
+import { DeleteBtn } from "@/shared/ui/delete-btn";
 
 type Props = {
     locks: TLockFull[];
@@ -49,39 +52,27 @@ export const LocksTable = ({ locks }: Props) => {
                     <TableColumn className="w-12"> </TableColumn>
                 </TableHeader>
                 <TableBody emptyContent="Замки не найдены">
-                    {locks.map((lock) => (
-                        <TableRow key={lock.id}>
-                            <TableCell>{lock.name}</TableCell>
-                            <TableCell>{lock.type}</TableCell>
-                            <TableCell>{lock.createdAt.toLocaleString("ru-RU")}</TableCell>
-                            <TableCell>
-                                <div className="flex gap-1">
-                                    <Link href={`${routes.locksEdit}${lock.id}`}>
-                                        <Button
-                                            isIconOnly
-                                            size="sm"
-                                            variant="light"
-                                            color="primary"
-                                            aria-label="Редактировать"
-                                        >
-                                            <Edit size={18} />
-                                        </Button>
-                                    </Link>
-                                    <Button
-                                        size="sm"
-                                        color="danger"
-                                        variant="light"
-                                        isLoading={deletingId === lock.id}
-                                        onPress={() => handleOpenConfirm(lock.id)}
-                                        aria-label="Удалить"
-                                        className="min-w-0 w-auto px-2"
-                                    >
-                                        <Trash size={18} />
-                                    </Button>
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                    {locks.map((lock) => {
+                        const isLoading = deletingId === lock.id;
+
+                        const onDelete = () => {
+                            handleOpenConfirm(lock.id);
+                        };
+
+                        return (
+                            <TableRow key={lock.id}>
+                                <TableCell>{lock.name}</TableCell>
+                                <TableCell>{lock.type}</TableCell>
+                                <TableCell>{lock.createdAt.toLocaleString("ru-RU")}</TableCell>
+                                <TableCell>
+                                    <div className="flex gap-1">
+                                        <EditLink href={`${routes.locksEdit}${lock.id}`} />
+                                        <DeleteBtn isLoading={isLoading} onDelete={onDelete} />
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        );
+                    })}
                 </TableBody>
             </Table>
 

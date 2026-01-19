@@ -1,12 +1,12 @@
 "use client";
-import { Pagination } from "@heroui/react";
+import { Pagination as PaginationHero } from "@heroui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
     totalPages: number;
 };
 
-export const LocksPagination = ({ totalPages }: Props) => {
+export const Pagination = ({ totalPages }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -23,7 +23,7 @@ export const LocksPagination = ({ totalPages }: Props) => {
 
     if (totalPages > 1) {
         return (
-            <Pagination
+            <PaginationHero
                 total={totalPages}
                 page={currentPage}
                 onChange={handlePageChange}

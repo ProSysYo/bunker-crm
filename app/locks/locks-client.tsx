@@ -8,6 +8,8 @@ import { LocksSearch } from "@/features/locks/ui/locks-search";
 import { LocksPagination } from "@/features/locks/ui/locks-pagination";
 import { LocksTable } from "@/features/locks/ui/locks-table";
 import { routes } from "@/config/navigation";
+import { Pagination } from "@/shared/ui/pagination";
+import { Search } from "@/shared/ui/search";
 
 interface Props {
     locks: TLockFull[];
@@ -27,9 +29,9 @@ export default function LocksClient({ locks, totalPages }: Props) {
             </div>
 
             <div className="mb-4 flex items-center justify-between">
-                <LocksSearch />
+                <Search placeholder="Поиск по названию или типу" />
 
-                <LocksPagination totalPages={totalPages} />
+                <Pagination totalPages={totalPages} />
             </div>
 
             <LocksTable locks={locks} />
