@@ -60,5 +60,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
             return token;
         },
+        async session({ session, token }) {
+            if (token) {
+                session.user.id = token.id as string;
+                session.user.email = token.email as string;
+            }
+            return session;
+        },
     },
 });
+
+export async function requireAuth() {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+        throw new Error("Unauthorized");
+    }
+    return { userId: session.user.id };
+}
