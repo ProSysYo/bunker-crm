@@ -13,7 +13,7 @@ type LockFormState = {
     serverError?: string;
     setField: <K extends keyof LockFormValues>(field: K, value: LockFormValues[K]) => void;
     submitCreate: (onSuccess?: () => void) => Promise<void>;
-    submitUpdate: (id: string, onSuccess?: () => void) => Promise<void>;
+    submitUpdate: (id: number, onSuccess?: () => void) => Promise<void>;
     reset: () => void;
 };
 

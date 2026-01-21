@@ -9,7 +9,7 @@ import { lockTypes } from "@/config/lock-types";
 
 interface LockFormProps {
     onSuccess?: () => void;
-    editId?: string;
+    editId?: number;
     initialValues?: { name?: string; type?: TLockType | string } | null;
 }
 
@@ -50,19 +50,19 @@ export const LockForm = ({ onSuccess, editId, initialValues }: LockFormProps) =>
                 isInvalid={!!errors.name}
             />
 
-            <div className="flex flex-col gap-1">
-                <Autocomplete
-                    label="Тип замка"
-                    placeholder="Выберите тип замка"
-                    isRequired
-                    selectedKey={values.type || undefined}
-                    onSelectionChange={(key) => setField("type", key as TLockType)}
-                    defaultItems={lockTypes.map((item) => ({ label: item, key: item }))}
-                >
-                    {(item) => <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>}
-                </Autocomplete>
-                {errors.type && <p className="text-sm text-danger">{errors.type}</p>}
-            </div>
+            <Autocomplete
+                label="Тип замка"
+                placeholder="Выберите тип замка"
+                isRequired
+                selectedKey={values.type || undefined}
+                onSelectionChange={(key) => setField("type", key as TLockType)}
+                defaultItems={lockTypes.map((item) => ({ label: item, key: item }))}
+                errorMessage={errors.type}
+                onClear={() => setField("type", "")}
+                isInvalid={!!errors.type}
+            >
+                {(item) => <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>}
+            </Autocomplete>
 
             {serverError && <p className="text-sm text-danger">{serverError}</p>}
 

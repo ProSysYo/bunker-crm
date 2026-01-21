@@ -8,8 +8,8 @@ import ConfirmDialog from "@/shared/ui/confirm-dialog";
 import { useRouter } from "next/navigation";
 import { deleteLock } from "../actions";
 import { routes } from "@/config/navigation";
-import { EditLink } from "@/shared/ui/edit-link";
-import { DeleteBtn } from "@/shared/ui/delete-btn";
+import { EditLink } from "@/shared/ui/table/edit-link";
+import { DeleteBtn } from "@/shared/ui/table/delete-btn";
 
 type Props = {
     locks: TLockFull[];

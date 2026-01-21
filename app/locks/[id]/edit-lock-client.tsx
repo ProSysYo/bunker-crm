@@ -1,11 +1,11 @@
 "use client";
 
+import { TLockFull } from "@/features/locks/types/TLock";
 import { LockForm } from "@/features/locks/ui/lock-form";
 import { useRouter } from "next/navigation";
-import { TLock } from "@/features/locks/types/TLock";
 
 interface Props {
-    lock: TLock;
+    lock: TLockFull;
 }
 
 export const EditLockClient = ({ lock }: Props) => {
@@ -24,7 +24,7 @@ export const EditLockClient = ({ lock }: Props) => {
                     </p>
                 </div>
                 <LockForm
-                    editId={String(lock.id)}
+                    editId={lock.id}
                     initialValues={{ name: lock.name, type: lock.type }}
                     onSuccess={handleSuccess}
                 />
