@@ -1,3 +1,4 @@
 export const lableLimits = {
-    locks: 10
+    locks: 10,
+    pads: 10,
 }

@@ -1,11 +1,5 @@
-/*
-  Warnings:
-
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE "User";
+-- CreateEnum
+CREATE TYPE "PadType" AS ENUM ('cylinder', 'suvaldny');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -51,6 +45,28 @@ CREATE TABLE "verification_tokens" (
     "identifier" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "lock" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "lock_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "pad" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "type" "PadType" NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "pad_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

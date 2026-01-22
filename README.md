@@ -16,6 +16,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ```bash
 npx prisma migrate dev --name enter_name
-npx prisma migrate reset --force      
 npx prisma generate
+npx prisma db seed
+
+npx prisma migrate reset --force      
+
 ```

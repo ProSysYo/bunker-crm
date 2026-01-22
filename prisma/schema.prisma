@@ -64,6 +64,23 @@ model Lock {
   id          Int      @id @default(autoincrement())
   name        String
   type        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("lock")
+}
+
+enum PadType {
+  cylinder
+  suvaldny
+}
+
+model Pad {
+  id          Int      @id @default(autoincrement())
+  name        String
+  type        PadType
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("pad")
 }
