@@ -1,10 +1,10 @@
 "use client";
 
-import { deleteLock } from "../actions";
+import { deleteLock } from "../../actions";
 import { routes } from "@/config/navigation";
-import { TPadFull } from "../types/TPad";
+import { TPadFull } from "../../types/TPad";
 import { CatalogTable, ColumnDef } from "@/shared/ui/table/catalog-table/catalog-table";
-import { padTypeLabels } from "../types/TPadType";
+import { padTypeLabels } from "../../types/TPadType";
 
 type Props = {
     pads: TPadFull[];

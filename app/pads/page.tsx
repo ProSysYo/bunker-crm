@@ -1,10 +1,10 @@
 
 import { lableLimits } from "@/config/table-limits";
-import PadsClient from "./pads-client";
+import Pads from "../../features/pads/ui/pages/pads";
 import { getPads } from "@/features/pads/actions";
 import { TPadFull } from "@/features/pads/types/TPad";
 
-export default async function LocksPage(props: {
+export default async function PadsPage(props: {
     searchParams?: Promise<{
         query?: string;
         page?: string;
@@ -21,7 +21,7 @@ export default async function LocksPage(props: {
     });
 
     return (
-        <PadsClient
+        <Pads
             pads={pads as TPadFull[]}
             totalPages={pagination.totalPages}
         />

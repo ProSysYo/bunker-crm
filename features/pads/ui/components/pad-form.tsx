@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { Autocomplete, AutocompleteItem, Button, Input } from "@heroui/react";
 
-import { usePadFormStore } from "../store/use-pad-form-store";
-import { TPadType } from "../types/TPadType";
-import { padTypes } from "../data/pad-types";
+import { usePadFormStore } from "../../store/use-pad-form-store";
+import { TPadType } from "../../types/TPadType";
+import { padTypes } from "../../data/pad-types";
 
 interface LockFormProps {
     onSuccess?: () => void;

@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { getPad } from "@/features/pads/actions";
-import { EditPadClient } from "./edit-pad-client";
+import { PadEdit } from "../../../features/pads/ui/pages/pad-edit";
 
-export default async function EditPadPageRoute({ params }: { params: Promise<{ id: string }> }) {
+export default async function EditPadPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const item = await getPad(Number(id));
 
@@ -10,5 +10,5 @@ export default async function EditPadPageRoute({ params }: { params: Promise<{ i
         notFound();
     }
 
-    return <EditPadClient item={item} />;
+    return <PadEdit item={item} />;
 }

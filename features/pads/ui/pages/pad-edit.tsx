@@ -2,14 +2,14 @@
 
 import { routes } from "@/config/navigation";
 import { TPadFull } from "@/features/pads/types/TPad";
-import { PadForm } from "@/features/pads/ui/pad-form";
+import { PadForm } from "@/features/pads/ui/components/pad-form";
 import { useRouter } from "next/navigation";
 
 interface Props {
     item: TPadFull;
 }
 
-export const EditPadClient = ({ item }: Props) => {
+export const PadEdit = ({ item }: Props) => {
     const router = useRouter();
     const handleSuccess = () => {
         router.push(routes.pads);
