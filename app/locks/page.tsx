@@ -1,7 +1,7 @@
-
 import { lableLimits } from "@/config/table-limits";
-import LockPageClient from "./locks-client"
-import { getLocks } from "@/features/locks/actions"
+import Locks from "../../features/locks/ui/pages/locks";
+import { getLocks } from "@/features/locks/actions/get-locks";
+
 
 export default async function LocksPage(props: {
     searchParams?: Promise<{
@@ -10,19 +10,14 @@ export default async function LocksPage(props: {
     }>;
 }) {
     const searchParams = await props.searchParams;
-    const query = searchParams?.query || '';
+    const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
-    
+
     const { locks, pagination } = await getLocks({
         search: query,
         page: currentPage,
         limit: lableLimits.locks,
     });
 
-    return (
-        <LockPageClient
-            locks={locks}
-            totalPages={pagination.totalPages}
-        />
-    );
+    return <Locks locks={locks} totalPages={pagination.totalPages} />;
 }

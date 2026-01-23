@@ -1,5 +1,5 @@
 import PadNew from "@/features/pads/ui/pages/pad-new";
 
-export default function NewPadPage() {
+export default function PadNewPage() {
     return <PadNew />;
 }

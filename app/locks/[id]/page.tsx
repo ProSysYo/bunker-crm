@@ -1,8 +1,9 @@
-import { getLock } from "@/features/locks/actions";
-import { notFound } from "next/navigation";
-import { EditLockClient } from "./edit-lock-client";
 
-export default async function EditLockPageRoute({ params }: { params: Promise<{ id: string }> }) {
+import { notFound } from "next/navigation";
+import { LockEdit } from "../../../features/locks/ui/pages/lock-edit";
+import { getLock } from "@/features/locks/actions/get-lock";
+
+export default async function LockEditPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const lock = await getLock(Number(id));
 
@@ -10,5 +11,5 @@ export default async function EditLockPageRoute({ params }: { params: Promise<{ 
         notFound();
     }
 
-    return <EditLockClient lock={lock} />;
+    return <LockEdit lock={lock} />;
 }

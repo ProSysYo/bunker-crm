@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { Autocomplete, AutocompleteItem, Button, Input } from "@heroui/react";
 
-import { TLockType } from "../types/TLockType";
-import { useLockFormStore } from "../store/use-lock-form-store";
+import { TLockType } from "../../types/TLockType";
+import { useLockFormStore } from "../../store/use-lock-form-store";
 import { lockTypes } from "@/config/lock-types";
 
 interface LockFormProps {

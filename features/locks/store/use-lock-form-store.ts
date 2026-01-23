@@ -3,8 +3,10 @@
 
 import { create } from "zustand";
 import { lockFormSchema, type LockFormValues } from "../model/schema";
-import { createLock, updateLock } from "../actions";
+
 import { TLockType } from "../types/TLockType";
+import { createLock } from "../actions/create-lock";
+import { updateLock } from "../actions/update-lock";
 
 type LockFormState = {
     values: LockFormValues;

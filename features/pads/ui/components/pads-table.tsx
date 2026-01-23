@@ -15,7 +15,7 @@ const padColumns: ColumnDef<TPadFull>[] = [
     { key: "type", label: "Тип", render: (item) => padTypeLabels[item.type] ?? item.type  },
     {
         key: "createdAt",
-        label: "Дата создания",
+        label: "Дата обновления",
         render: (item) => item.updatedAt.toLocaleString("ru-RU"),
     },
     { key: "", label: " ", widthClass: 'w-1' },
