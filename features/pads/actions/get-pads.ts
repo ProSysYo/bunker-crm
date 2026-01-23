@@ -1,8 +1,9 @@
 "use server";
+
 import { requireAuth } from "@/features/auth/auth";
 import prisma from "@/lib/prisma";
 
-export async function getLocks(params?: { search?: string; page?: number; limit?: number }) {
+export async function getPads(params?: { search?: string; page?: number; limit?: number }) {
     const { userId } = await requireAuth();
 
     if (!userId) {
@@ -18,18 +19,18 @@ export async function getLocks(params?: { search?: string; page?: number; limit?
           }
         : {};
 
-    const [locks, total] = await Promise.all([
-        prisma.lock.findMany({
+    const [pads, total] = await Promise.all([
+        prisma.pad.findMany({
             where,
             orderBy: { createdAt: "desc" },
             skip,
             take: limit,
         }),
-        prisma.lock.count({ where }),
+        prisma.pad.count({ where }),
     ]);
 
     return {
-        locks,
+        pads,
         pagination: {
             page,
             limit,

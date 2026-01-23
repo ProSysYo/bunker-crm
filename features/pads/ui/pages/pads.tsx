@@ -27,7 +27,7 @@ export default function Pads({ pads, totalPages }: Props) {
             </div>
 
             <div className="mb-4 flex items-center justify-between">
-                <Search placeholder="Поиск по названию или типу" />
+                <Search placeholder="Поиск по названию" />
 
                 <Pagination totalPages={totalPages} />
             </div>

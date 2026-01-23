@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { getPad } from "@/features/pads/actions";
 import { PadEdit } from "../../../features/pads/ui/pages/pad-edit";
+import { getPad } from "@/features/pads/actions/get-pad";
 
 export default async function PadEditPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;

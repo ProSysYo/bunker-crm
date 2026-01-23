@@ -2,7 +2,8 @@
 
 import { create } from "zustand";
 import { padFormSchema, PadFormValues } from "../model/schema";
-import { createPad, updatePad } from "../actions";
+import { createPad } from "../actions/create-pad";
+import { updatePad } from "../actions/update-pad";
 
 type PadFormState = {
     values: PadFormValues;

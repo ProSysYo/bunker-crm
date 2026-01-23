@@ -1,8 +1,8 @@
 
 import { lableLimits } from "@/config/table-limits";
 import Pads from "../../features/pads/ui/pages/pads";
-import { getPads } from "@/features/pads/actions";
 import { TPadFull } from "@/features/pads/types/TPad";
+import { getPads } from "@/features/pads/actions/get-pads";
 
 export default async function PadsPage(props: {
     searchParams?: Promise<{
