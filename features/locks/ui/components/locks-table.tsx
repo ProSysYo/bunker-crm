@@ -5,10 +5,11 @@ import { routes } from "@/config/navigation";
 
 import { deleteLock } from "../../actions/delete-lock";
 import { CatalogTable, ColumnDef } from "@/shared/ui/table/catalog-table/catalog-table";
+import { lockTypeLabels } from "../../types/TLockType";
 
 const lockColumns: ColumnDef<TLockFull>[] = [
     { key: "name", label: "Название", render: (item) => item.name },
-    { key: "type", label: "Тип", render: (item) => item.type },
+    { key: "type", label: "Тип", render: (item) => lockTypeLabels[item.type] ?? item.type },
     {
         key: "createdAt",
         label: "Дата обновления",

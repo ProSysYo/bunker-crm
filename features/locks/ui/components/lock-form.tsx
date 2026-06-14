@@ -5,7 +5,7 @@ import { Autocomplete, AutocompleteItem, Button, Input } from "@heroui/react";
 
 import { TLockType } from "../../types/TLockType";
 import { useLockFormStore } from "../../store/use-lock-form-store";
-import { lockTypes } from "@/config/lock-types";
+import { lockTypes } from "@/features/locks/data/lock-types";
 
 interface LockFormProps {
     onSuccess?: () => void;
@@ -56,7 +56,7 @@ export const LockForm = ({ onSuccess, editId, initialValues }: LockFormProps) =>
                 isRequired
                 selectedKey={values.type || undefined}
                 onSelectionChange={(key) => setField("type", key as TLockType)}
-                defaultItems={lockTypes.map((item) => ({ label: item, key: item }))}
+                defaultItems={lockTypes.map((item) => ({ label: item.label, key: item.key }))}
                 errorMessage={errors.type}
                 onClear={() => setField("type", "")}
                 isInvalid={!!errors.type}

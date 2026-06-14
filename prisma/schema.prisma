@@ -60,10 +60,18 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
+enum LockType {
+  cylinder
+  suvaldny
+  cylinder_suvaldny
+  suvaldny_cylinder
+  code
+}
+
 model Lock {
   id          Int      @id @default(autoincrement())
   name        String
-  type        String
+  type        LockType
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 

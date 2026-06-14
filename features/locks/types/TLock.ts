@@ -2,7 +2,7 @@ import { TLockType } from "./TLockType";
 
 export type TLockCreate = {
     name: string;
-    type: TLockType | string;
+    type: TLockType;
 };
 
 export type TLockFull = TLockCreate & {
