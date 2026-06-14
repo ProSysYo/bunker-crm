@@ -4,7 +4,7 @@ import { routes } from "@/config/navigation";
 import { TPadFull } from "../../types/TPad";
 import { CatalogTable, ColumnDef } from "@/shared/ui/table/catalog-table/catalog-table";
 import { padTypeLabels } from "../../types/TPadType";
-import { deleteLock } from "@/features/locks/actions/delete-lock";
+import { deletePad } from "../../actions/delete-pad";
 
 type Props = {
     pads: TPadFull[];
@@ -26,9 +26,9 @@ export const PadsTable = ({ pads }: Props) => {
         <CatalogTable
             data={pads}
             columns={padColumns}
-            emptyContent="Замки не найдены"
-            ariaLabel="Таблица замков"
-            onDelete={deleteLock}
+            emptyContent="Накладки не найдены"
+            ariaLabel="Таблица накладок"
+            onDelete={deletePad}
             getEditHref={(item) => `${routes.padsEdit}${item.id}`}
         />
     );
