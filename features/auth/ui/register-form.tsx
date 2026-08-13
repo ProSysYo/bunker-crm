@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { Button, Input } from "@heroui/react";
-import { useRegisterStore } from "../store/use-register-store.ts";
+
 import { routes } from "@/config/navigation";
+import { useRegisterStore } from "../store/use-register-store";
 
 export const RegisterForm = () => {
     const { values, errors, loading, serverError, setField, submit } = useRegisterStore();

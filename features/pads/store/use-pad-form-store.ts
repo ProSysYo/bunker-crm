@@ -68,8 +68,9 @@ export const usePadFormStore = create<PadFormState>((set, get) => ({
 
             set({ errors: {}, serverError: undefined });
             onSuccess?.();
-        } catch (err) {
-            set({ serverError: "Произошла ошибка при создании" });
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Произошла ошибка при создании";
+            set({ serverError: message });
         } finally {
             set({ loading: false });
         }

@@ -14,7 +14,7 @@ const padColumns: ColumnDef<TPadFull>[] = [
     { key: "name", label: "Название", render: (item) => item.name },
     { key: "type", label: "Тип", render: (item) => padTypeLabels[item.type] ?? item.type  },
     {
-        key: "createdAt",
+        key: "updatedAt",
         label: "Дата обновления",
         render: (item) => item.updatedAt.toLocaleString("ru-RU"),
     },
