@@ -10,9 +10,8 @@ export const DeleteBtn = ({isLoading, onDelete}: Props) => {
     return (
         <Button
             size="sm"
-            color="danger"
-            variant="light"
-            isLoading={isLoading}
+            variant="danger-soft"
+            isPending={isLoading}
             onPress={onDelete}
             aria-label="Удалить"
             className="min-w-0 w-auto px-2"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect } from "react";
-import { Autocomplete, AutocompleteItem, Button, Input } from "@heroui/react";
+import { Button, ComboBox, FieldError, Input, Label, ListBox, TextField } from "@heroui/react";
 
 import { usePadFormStore } from "../../store/use-pad-form-store";
 import { TPadType } from "../../types/TPadType";
@@ -38,36 +38,45 @@ export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => 
             submitCreate(onSuccess);
         }
     };
-    
+
     return (
         <div className="flex w-full max-w-sm flex-col gap-4">
-            <Input
-                label="Название накладки"
-                placeholder="Введите название накладки"
-                isRequired
-                value={values.name}
-                onValueChange={(v) => setField("name", v)}
-                errorMessage={errors.name}
-                isInvalid={!!errors.name}
-            />
+            <TextField isRequired value={values.name} isInvalid={!!errors.name}>
+                <Label>Название накладки</Label>
+                <Input
+                    placeholder="Введите название накладки"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("name", e.target.value)}
+                />
+                {errors.name && <FieldError>{errors.name}</FieldError>}
+            </TextField>
 
-            <Autocomplete
-                label="Тип накладки"
-                placeholder="Выберите тип накладки"
+            <ComboBox
+                defaultFilter={(text, inputValue) => text.toLowerCase().includes(inputValue.toLowerCase())}
                 isRequired
                 selectedKey={values.type || null}
                 onSelectionChange={(key) => setField("type", key as TPadType)}
-                defaultItems={padTypes.map((item) => ({ label: item.label, key: item.key }))}
-                errorMessage={errors.type}
-                onClear={() => setField("type", "")}
+                items={padTypes}
                 isInvalid={!!errors.type}
             >
-                {(item) => <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>}
-            </Autocomplete>
+                <Label>Тип накладки</Label>
+                <ComboBox.InputGroup>
+                    <Input placeholder="Выберите тип накладки" />
+                    <ComboBox.Trigger />
+                </ComboBox.InputGroup>
+                <ComboBox.Popover>
+                    <ListBox>
+                        {(item: { key: TPadType; label: string }) => (
+                            <ListBox.Item key={item.key} textValue={item.label}>
+                                {item.label}
+                            </ListBox.Item>
+                        )}
+                    </ListBox>
+                </ComboBox.Popover>
+            </ComboBox>
 
             {serverError && <p className="text-sm text-danger">{serverError}</p>}
 
-            <Button variant="flat" isLoading={loading} disabled={loading} onPress={handleSubmit}>
+            <Button variant="tertiary" isPending={loading} isDisabled={loading} onPress={handleSubmit}>
                 {loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}
             </Button>
         </div>

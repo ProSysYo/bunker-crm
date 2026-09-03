@@ -20,15 +20,15 @@ export default function KnobsList({ knobs, totalPages }: Props) {
             <div className="mb-6 flex items-center justify-between">
                 <h1 className="text-2xl font-semibold">Ручки</h1>
                 <Link href={routes.knobsNew}>
-                    <Button color="primary" endContent={<Plus size={20} />}>
+                    <Button variant="tertiary">
                         Добавить ручку
+                        <Plus size={20} />
                     </Button>
                 </Link>
             </div>
 
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex justify-between">
                 <Search placeholder="Поиск по названию" />
-
                 <Pagination totalPages={totalPages} />
             </div>
 

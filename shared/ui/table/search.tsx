@@ -1,15 +1,15 @@
 "use client";
 import { useDebouncedCallback } from "@/shared/hooks/use-debounced-callback";
-import { Input } from "@heroui/react";
-import { Search as SearchLicid } from "lucide-react";
+import { InputGroup } from "@heroui/react";
+import { Search as SearchLucide } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 
 type Props = {
-    placeholder: string
-}
+    placeholder: string;
+};
 
-export const Search = ({placeholder}: Props) => {
+export const Search = ({ placeholder }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -38,18 +38,21 @@ export const Search = ({placeholder}: Props) => {
 
     const debouncedUpdateURL = useDebouncedCallback(updateSearchURL as (...args: unknown[]) => void, 300);
 
-    const handleSearchChange = (value: string) => {
-        setSearchTerm(value);
-        debouncedUpdateURL(value);
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+        debouncedUpdateURL(e.target.value);
     };
+
     return (
-        <Input
-            placeholder={placeholder}
-            value={searchTerm}
-            onValueChange={handleSearchChange}
-            startContent={<SearchLicid className="w-4 h-4 text-default-400" />}
-            size="lg"
-            className="max-w-md"
-        />
+        <InputGroup className="max-w-[280px]" aria-label={placeholder}>
+            <InputGroup.Prefix>
+                <SearchLucide className="w-4 h-4 text-default-400 pointer-events-none" />
+            </InputGroup.Prefix>
+            <InputGroup.Input
+                placeholder={placeholder}
+                value={searchTerm}
+                onChange={handleSearchChange}
+            />
+        </InputGroup>
     );
 };

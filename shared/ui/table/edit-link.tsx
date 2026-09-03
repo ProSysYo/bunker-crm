@@ -10,7 +10,7 @@ type Props = {
 export const EditLink = ({href}: Props) => {
     return (
         <Link href={href}>
-            <Button isIconOnly size="sm" variant="light" color="primary" aria-label="Редактировать">
+            <Button isIconOnly size="sm" variant="tertiary" aria-label="Редактировать">
                 <Edit size={18} />
             </Button>
         </Link>

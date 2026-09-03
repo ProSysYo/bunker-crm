@@ -39,7 +39,7 @@ export const AppShell = ({ children }: AppShellProps) => {
 
     if (!isAuth) {
         return (
-            <main className="flex-1 overflow-y-auto bg-muted/40 p-6 h-screen">
+            <main className="flex-1 overflow-y-auto p-6 h-screen">
                 <div className="mx-auto max-w-5xl">{children}</div>
             </main>
         );
@@ -92,7 +92,7 @@ export const AppShell = ({ children }: AppShellProps) => {
                             {!isAuth ? (
                                 <Link href="/login">Войти</Link>
                             ) : (
-                                <Button variant="flat" onClick={handleSignOut} className="min-w-0">
+                                <Button variant="tertiary" onClick={handleSignOut} className="min-w-0">
                                     <LogOut size={16} />
                                 </Button>
                             )}
@@ -100,7 +100,7 @@ export const AppShell = ({ children }: AppShellProps) => {
                     </div>
                 </header>
 
-                <main className="flex-1 overflow-y-auto bg-muted/40 p-6">
+                <main className="flex-1 overflow-y-auto p-6">
                     <div className="mx-auto max-w-5xl">{children}</div>
                 </main>
             </div>

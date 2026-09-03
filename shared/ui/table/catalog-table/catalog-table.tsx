@@ -1,6 +1,6 @@
 "use client";
 
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
+import { Table } from "@heroui/react";
 import React, { useState } from "react";
 import ConfirmDialog from "@/shared/ui/confirm-dialog";
 import { useRouter } from "next/navigation";
@@ -73,25 +73,29 @@ export const CatalogTable = <T extends { id: number }>({
 
     return (
         <>
-            <Table aria-label={ariaLabel}>
-                <TableHeader columns={columns}>
-                    {(column) => (
-                        <TableColumn key={String(column.key)} className={column.widthClass}>
-                            {column.label}
-                        </TableColumn>
-                    )}
-                </TableHeader>
-                <TableBody emptyContent={emptyContent} items={data}>
-                    {(item) => (
-                        <TableRow key={item.id}>
-                            {columns.map((col) => (
-                                <TableCell key={String(col.key)}>
-                                    {col.render ? col.render(item) : renderRowActions(item)}
-                                </TableCell>
+            <Table>
+                <Table.ScrollContainer aria-label={ariaLabel}>
+                    <Table.Content aria-label={ariaLabel}>
+                        <Table.Header>
+                            {columns.map((column, index) => (
+                                <Table.Column key={String(column.key)} id={String(column.key)} className={column.widthClass} isRowHeader={index === 0}>
+                                    {column.label}
+                                </Table.Column>
                             ))}
-                        </TableRow>
-                    )}
-                </TableBody>
+                        </Table.Header>
+                        <Table.Body items={data}>
+                            {(item) => (
+                                <Table.Row key={item.id} id={String(item.id)}>
+                                    {columns.map((col) => (
+                                        <Table.Cell key={String(col.key)}>
+                                            {col.render ? col.render(item) : renderRowActions(item)}
+                                        </Table.Cell>
+                                    ))}
+                                </Table.Row>
+                            )}
+                        </Table.Body>
+                    </Table.Content>
+                </Table.ScrollContainer>
             </Table>
 
             <ConfirmDialog

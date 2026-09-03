@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Input } from "@heroui/react";
+import { Button, FieldError, Input, Label, TextField } from "@heroui/react";
 
 import { knobFormSchema, KnobFormValues } from "../../model/knob-schema";
 import { createKnob } from "../../actions/create-knob";
@@ -107,19 +107,15 @@ export function KnobForm({ onSuccess, editId, initialValues }: KnobFormProps) {
 
     return (
         <div className="flex w-full max-w-sm flex-col gap-4">
-            <Input
-                label="Название ручки"
-                placeholder="Введите название ручки"
-                isRequired
-                value={values.name}
-                onValueChange={(v) => setField("name", v)}
-                errorMessage={errors.name}
-                isInvalid={!!errors.name}
-            />
+            <TextField isRequired value={values.name} isInvalid={!!errors.name} >
+                <Label>Название ручки</Label>
+                <Input placeholder="Введите название ручки" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("name", e.target.value)} />
+                {errors.name && <FieldError>{errors.name}</FieldError>}
+            </TextField>
 
             {serverError && <p className="text-sm text-danger">{serverError}</p>}
 
-            <Button variant="flat" isLoading={loading} disabled={loading} onPress={handleSubmit}>
+            <Button fullWidth variant="tertiary" isPending={loading} isDisabled={loading} onPress={handleSubmit}>
                 {loading ? "Сохранение..." : isEdit ? "Обновить" : "Создать"}
             </Button>
         </div>

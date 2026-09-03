@@ -1,4 +1,4 @@
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
+import { Modal, Button } from "@heroui/react";
 import { ReactNode } from "react";
 
 interface Props {
@@ -22,30 +22,35 @@ export default function ConfirmDialog({
     cancelText = "Нет",
     isConfirmDanger = true,
 }: Props) {
+    if (!isOpen) return null;
+
     return (
-        <Modal isOpen={isOpen} onOpenChange={onClose} hideCloseButton>
-            <ModalContent>
-                {(onCloseInner) => (
-                    <>
-                        <ModalHeader className="text-lg font-semibold">{title}</ModalHeader>
-                        <ModalBody>{children}</ModalBody>
-                        <ModalFooter>
-                            <Button variant="light" onPress={onCloseInner}>
+        <Modal isOpen={true} onOpenChange={onClose}>
+            <Button className="hidden" onPress={() => {}} />
+            <Modal.Backdrop>
+                <Modal.Container>
+                    <Modal.Dialog>
+                        <Modal.Header>
+                            <Modal.Heading>{title}</Modal.Heading>
+                        </Modal.Header>
+                        <Modal.Body>{children}</Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="tertiary" onPress={onClose}>
                                 {cancelText}
                             </Button>
                             <Button
-                                color={isConfirmDanger ? "danger" : "primary"}
+                                variant={isConfirmDanger ? "danger-soft" : "primary"}
                                 onPress={() => {
                                     onConfirm();
-                                    onCloseInner();
+                                    onClose();
                                 }}
                             >
                                 {confirmText}
                             </Button>
-                        </ModalFooter>
-                    </>
-                )}
-            </ModalContent>
+                        </Modal.Footer>
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
         </Modal>
     );
 }

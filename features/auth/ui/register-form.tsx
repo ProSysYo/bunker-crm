@@ -27,7 +27,7 @@ export const RegisterForm = () => {
                     type="email"
                     placeholder="Email"
                     value={values.email}
-                    onChange={(event) => setField("email", event.target.value)}
+                    onChange={(e) => setField("email", e.target.value)}
                     aria-invalid={Boolean(errors.email)}
                 />
                 {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
@@ -38,7 +38,7 @@ export const RegisterForm = () => {
                     type="password"
                     placeholder="Пароль"
                     value={values.password}
-                    onChange={(event) => setField("password", event.target.value)}
+                    onChange={(e) => setField("password", e.target.value)}
                     aria-invalid={Boolean(errors.password)}
                 />
                 {errors.password && <p className="text-xs text-red-500">{errors.password}</p>}
@@ -49,13 +49,13 @@ export const RegisterForm = () => {
                     type="password"
                     placeholder="Подтвердите пароль"
                     value={values.confirmPassword}
-                    onChange={(event) => setField("confirmPassword", event.target.value)}
+                    onChange={(e) => setField("confirmPassword", e.target.value)}
                     aria-invalid={Boolean(errors.confirmPassword)}
                 />
                 {errors.confirmPassword && <p className="text-xs text-red-500">{errors.confirmPassword}</p>}
             </div>
 
-            <Button type="submit" variant="flat" disabled={loading}>
+            <Button type="submit" variant="tertiary" isPending={loading} isDisabled={loading}>
                 {loading ? "Отправка..." : "Зарегистрироваться"}
             </Button>
 

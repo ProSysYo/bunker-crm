@@ -29,7 +29,7 @@ export const LoginForm = () => {
           type="email"
           placeholder="Email"
           value={values.email}
-          onChange={(event) => setField("email", event.target.value)}
+          onChange={(e) => setField("email", e.target.value)}
           aria-invalid={Boolean(errors.email)}
         />
         {errors.email && (
@@ -42,7 +42,7 @@ export const LoginForm = () => {
           type="password"
           placeholder="Пароль"
           value={values.password}
-          onChange={(event) => setField("password", event.target.value)}
+          onChange={(e) => setField("password", e.target.value)}
           aria-invalid={Boolean(errors.password)}
         />
         {errors.password && (
@@ -50,7 +50,7 @@ export const LoginForm = () => {
         )}
       </div>
 
-      <Button type="submit" variant="flat" disabled={loading}>
+      <Button type="submit" variant="tertiary" isPending={loading} isDisabled={loading}>
         {loading ? "Отправка..." : "Войти"}
       </Button>
 

@@ -20,15 +20,15 @@ export default function Pads({ pads, totalPages }: Props) {
             <div className="mb-6 flex items-center justify-between">
                 <h1 className="text-2xl font-semibold">Накладки</h1>
                 <Link href={routes.padsNew}>
-                    <Button color="primary" endContent={<Plus size={20} />}>
+                    <Button variant="primary">
                         Добавить накладку
+                        <Plus size={20} />
                     </Button>
                 </Link>
             </div>
 
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex justify-between">
                 <Search placeholder="Поиск по названию" />
-
                 <Pagination totalPages={totalPages} />
             </div>
 
