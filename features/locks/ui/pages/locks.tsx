@@ -3,14 +3,14 @@
 import { Button } from "@heroui/react";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { TLockFull } from "@/features/locks/types/TLock";
+import { TLock } from "@/features/locks/types/TLock";
 import { LocksTable } from "@/features/locks/ui/components/locks-table";
 import { routes } from "@/config/navigation";
 import { Pagination } from "@/shared/ui/table/pagination";
 import { Search } from "@/shared/ui/table/search";
 
 interface Props {
-    locks: TLockFull[];
+    locks: TLock[];
     totalPages: number;
 }
 

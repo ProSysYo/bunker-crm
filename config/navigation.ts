@@ -1,4 +1,4 @@
-import { Home, Lock, SquaresExclude } from "lucide-react";
+import { DoorClosed, Home, Lock, SquaresExclude } from "lucide-react";
 
 export const routes = {
     home: "/",
@@ -12,6 +12,10 @@ export const routes = {
     pads: "/pads",
     padsNew: "/pads/new",
     padsEdit: "/pads/",
+
+    knobs: "/knobs",
+    knobsNew: "/knobs/new",
+    knobsEdit: "/knobs/",
 };
 
 export const navItems = [
@@ -29,5 +33,10 @@ export const navItems = [
         href: routes.pads,
         label: "Накладки",
         icon: SquaresExclude,
+    },
+    {
+        href: routes.knobs,
+        label: "Ручки",
+        icon: DoorClosed,
     },
 ] as const;

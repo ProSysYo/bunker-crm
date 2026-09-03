@@ -3,6 +3,7 @@ import { requireAuth } from "@/features/auth/auth";
 import { lockFormSchema } from "../model/schema";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { TLockType } from "../types/TLockType";
 
 export async function updateLock(prevState: unknown, formData: FormData) {
     const { userId } = await requireAuth();
@@ -17,7 +18,7 @@ export async function updateLock(prevState: unknown, formData: FormData) {
     }
 
     const name = formData.get("name") as string;
-    const type = formData.get("type") as string;
+    const type = formData.get("type") as TLockType;
 
     const result = lockFormSchema.safeParse({ name, type });
     if (!result.success) {

@@ -1,10 +1,8 @@
-
 import { tableLimits } from "@/config/table-limits";
-import Pads from "../../features/pads/ui/pages/pads";
-import { TPad } from "@/features/pads/types/TPad";
-import { getPads } from "@/features/pads/actions/get-pads";
+import { getKnobs } from "@/features/knobs/actions/get-knobs";
+import KnobsList from "@/features/knobs/ui/pages/knobs-list";
 
-export default async function PadsPage(props: {
+export default async function KnobsPage(props: {
     searchParams?: Promise<{
         query?: string;
         page?: string;
@@ -14,15 +12,15 @@ export default async function PadsPage(props: {
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
     
-    const { pads, pagination } = await getPads({
+    const { knobs, pagination } = await getKnobs({
         search: query,
         page: currentPage,
-        limit: tableLimits.pads,
+        limit: tableLimits.knobs,
     });
 
     return (
-        <Pads
-            pads={pads as TPad[]}
+        <KnobsList
+            knobs={knobs}
             totalPages={pagination.totalPages}
         />
     );

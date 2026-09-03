@@ -6,22 +6,22 @@ import { Plus } from "lucide-react";
 import { routes } from "@/config/navigation";
 import { Pagination } from "@/shared/ui/table/pagination";
 import { Search } from "@/shared/ui/table/search";
-import { TPad } from "@/features/pads/types/TPad";
-import { PadsTable } from "@/features/pads/ui/components/pads-table";
+import { TKnob } from "../../types/TKnob";
+import { KnobsTable } from "../components/knobs-table";
 
 interface Props {
-    pads: TPad[];
+    knobs: TKnob[];
     totalPages: number;
 }
 
-export default function Pads({ pads, totalPages }: Props) {
+export default function KnobsList({ knobs, totalPages }: Props) {
     return (
         <div className="container mx-auto py-8">
             <div className="mb-6 flex items-center justify-between">
-                <h1 className="text-2xl font-semibold">Накладки</h1>
-                <Link href={routes.padsNew}>
+                <h1 className="text-2xl font-semibold">Ручки</h1>
+                <Link href={routes.knobsNew}>
                     <Button color="primary" endContent={<Plus size={20} />}>
-                        Добавить накладку
+                        Добавить ручку
                     </Button>
                 </Link>
             </div>
@@ -32,7 +32,7 @@ export default function Pads({ pads, totalPages }: Props) {
                 <Pagination totalPages={totalPages} />
             </div>
 
-            <PadsTable pads={pads} />
+            <KnobsTable knobs={knobs} />
         </div>
     );
 }

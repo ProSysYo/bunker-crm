@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { Autocomplete, AutocompleteItem, Button, Input } from "@heroui/react";
 
 import { usePadFormStore } from "../../store/use-pad-form-store";
@@ -16,7 +16,7 @@ interface LockFormProps {
 export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => {
     const { values, errors, loading, serverError, setField, submitCreate, submitUpdate, reset } = usePadFormStore();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (initialValues) {
             setField("name", initialValues.name || "");
             setField("type", initialValues.type || "");
@@ -38,6 +38,7 @@ export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => 
             submitCreate(onSuccess);
         }
     };
+    
     return (
         <div className="flex w-full max-w-sm flex-col gap-4">
             <Input
@@ -54,7 +55,7 @@ export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => 
                 label="Тип накладки"
                 placeholder="Выберите тип накладки"
                 isRequired
-                selectedKey={values.type || undefined}
+                selectedKey={values.type || null}
                 onSelectionChange={(key) => setField("type", key as TPadType)}
                 defaultItems={padTypes.map((item) => ({ label: item.label, key: item.key }))}
                 errorMessage={errors.type}

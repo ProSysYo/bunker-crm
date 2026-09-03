@@ -1,3 +1,4 @@
+import { TKnobCreate } from "@/features/knobs/types/TKnob";
 import { TLockCreate } from "@/features/locks/types/TLock";
 import { TPadCreate } from "@/features/pads/types/TPad";
 import { PrismaClient } from "@prisma/client";
@@ -54,6 +55,20 @@ async function main() {
     }
 
     console.log(`Создано ${pads.length} накладок`);
+
+    const knobs: TKnobCreate[] = [
+        {name: 'Р 26 Л'},
+        {name: 'Р 26 Х'},
+        {name: 'Р 26 Б'},
+    ]
+
+    for (const item of knobs) {
+        await prisma.knob.create({
+            data: item
+        })
+    }
+
+    console.log(`Создано ${knobs.length} замков`)
 }
 
 main()

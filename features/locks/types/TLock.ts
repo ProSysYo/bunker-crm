@@ -5,7 +5,7 @@ export type TLockCreate = {
     type: TLockType;
 };
 
-export type TLockFull = TLockCreate & {
+export type TLock = TLockCreate & {
     id: number
     createdAt: Date;
     updatedAt: Date;

@@ -1,4 +1,4 @@
-import { lableLimits } from "@/config/table-limits";
+import { tableLimits } from "@/config/table-limits";
 import Locks from "../../features/locks/ui/pages/locks";
 import { getLocks } from "@/features/locks/actions/get-locks";
 
@@ -16,7 +16,7 @@ export default async function LocksPage(props: {
     const { locks, pagination } = await getLocks({
         search: query,
         page: currentPage,
-        limit: lableLimits.locks,
+        limit: tableLimits.locks,
     });
 
     return <Locks locks={locks} totalPages={pagination.totalPages} />;

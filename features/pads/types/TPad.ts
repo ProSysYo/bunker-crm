@@ -5,7 +5,7 @@ export type TPadCreate = {
     type: TPadType;
 };
 
-export type TPadFull = TPadCreate & {
+export type TPad = TPadCreate & {
     id: number
     createdAt: Date;
     updatedAt: Date;
