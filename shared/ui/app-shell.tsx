@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
-import { Button } from "@heroui/react";
+
 import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { navItems, routes } from "../../config/navigation";
+import { Button } from "./shadcn/button";
 
 type AppShellProps = {
     children: React.ReactNode;
@@ -92,7 +93,7 @@ export const AppShell = ({ children }: AppShellProps) => {
                             {!isAuth ? (
                                 <Link href="/login">Войти</Link>
                             ) : (
-                                <Button variant="tertiary" onClick={handleSignOut} className="min-w-0">
+                                <Button variant="outline" onClick={handleSignOut} className="min-w-0">
                                     <LogOut size={16} />
                                 </Button>
                             )}

@@ -1,9 +1,10 @@
 "use client";
 import { useDebouncedCallback } from "@/shared/hooks/use-debounced-callback";
-import { InputGroup } from "@heroui/react";
+
 import { Search as SearchLucide } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "../shadcn/input-group";
 
 type Props = {
     placeholder: string;
@@ -33,7 +34,7 @@ export const Search = ({ placeholder }: Props) => {
             const newURL = `${pathname}?${params.toString()}`;
             router.replace(newURL);
         },
-        [pathname, router, searchParams]
+        [pathname, router, searchParams],
     );
 
     const debouncedUpdateURL = useDebouncedCallback(updateSearchURL as (...args: unknown[]) => void, 300);
@@ -44,15 +45,12 @@ export const Search = ({ placeholder }: Props) => {
     };
 
     return (
-        <InputGroup className="max-w-[280px]" aria-label={placeholder}>
-            <InputGroup.Prefix>
-                <SearchLucide className="w-4 h-4 text-default-400 pointer-events-none" />
-            </InputGroup.Prefix>
-            <InputGroup.Input
-                placeholder={placeholder}
-                value={searchTerm}
-                onChange={handleSearchChange}
-            />
+        <InputGroup className="max-w-70">
+            <InputGroupAddon>
+                <SearchLucide className="w-4 h-4" />
+            </InputGroupAddon>
+
+            <InputGroupInput placeholder={placeholder} value={searchTerm} onChange={handleSearchChange} />
         </InputGroup>
     );
 };

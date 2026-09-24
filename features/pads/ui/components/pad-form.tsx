@@ -1,11 +1,21 @@
 "use client";
 
 import { useEffect, useLayoutEffect } from "react";
-import { Button, ComboBox, FieldError, Input, Label, ListBox, TextField } from "@heroui/react";
 
 import { usePadFormStore } from "../../store/use-pad-form-store";
 import { TPadType } from "../../types/TPadType";
 import { padTypes } from "../../data/pad-types";
+import { Field, FieldDescription, FieldLabel } from "@/shared/ui/shadcn/field";
+import { Input } from "@/shared/ui/shadcn/input";
+import {
+    Combobox,
+    ComboboxContent,
+    ComboboxEmpty,
+    ComboboxInput,
+    ComboboxItem,
+    ComboboxList,
+} from "@/shared/ui/shadcn/combobox";
+import { Button } from "@/shared/ui/shadcn/button";
 
 interface LockFormProps {
     onSuccess?: () => void;
@@ -15,6 +25,9 @@ interface LockFormProps {
 
 export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => {
     const { values, errors, loading, serverError, setField, submitCreate, submitUpdate, reset } = usePadFormStore();
+
+    const selectedPadType = padTypes.find((type) => type.value === values.type);
+    const displayValue = selectedPadType?.label || "";
 
     useLayoutEffect(() => {
         if (initialValues) {
@@ -41,44 +54,48 @@ export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => 
 
     return (
         <div className="flex w-full max-w-sm flex-col gap-4">
-            <TextField isRequired value={values.name} isInvalid={!!errors.name}>
-                <Label>Название накладки</Label>
+            <Field data-invalid={!!errors.name}>
+                <FieldLabel htmlFor="name">Название накладки</FieldLabel>
                 <Input
+                    id="name"
+                    type="text"
+                    required
                     placeholder="Введите название накладки"
+                    value={values.name}
+                    aria-invalid={!!errors.name}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("name", e.target.value)}
                 />
-                {errors.name && <FieldError>{errors.name}</FieldError>}
-            </TextField>
 
-            <ComboBox
-                defaultFilter={(text, inputValue) => text.toLowerCase().includes(inputValue.toLowerCase())}
-                isRequired
-                selectedKey={values.type || null}
-                onSelectionChange={(key) => setField("type", key as TPadType)}
-                items={padTypes}
-                isInvalid={!!errors.type}
-            >
-                <Label>Тип накладки</Label>
-                <ComboBox.InputGroup>
-                    <Input placeholder="Выберите тип накладки" />
-                    <ComboBox.Trigger />
-                </ComboBox.InputGroup>
-                <ComboBox.Popover>
-                    <ListBox>
-                        {(item: { key: TPadType; label: string }) => (
-                            <ListBox.Item key={item.key} textValue={item.label}>
-                                {item.label}
-                            </ListBox.Item>
-                        )}
-                    </ListBox>
-                </ComboBox.Popover>
-            </ComboBox>
+                {errors.name && <FieldDescription>{errors.name}</FieldDescription>}
+            </Field>
+
+            <Field data-invalid={!!errors.type}>
+                <FieldLabel htmlFor="type">Тип накладки</FieldLabel>
+                <Combobox
+                    id="type"
+                    items={padTypes}
+                    value={displayValue}
+                    required
+                    onValueChange={(key) => setField("type", (key ?? "") as TPadType)}
+                >
+                    <ComboboxInput placeholder="Выберите тип накладки" aria-invalid={!!errors.type} />
+                    <ComboboxContent>
+                        <ComboboxEmpty>Ничего не найдено</ComboboxEmpty>
+                        <ComboboxList>
+                            {(i) => (
+                                <ComboboxItem key={i.value} value={i.value}>
+                                    {i.label}
+                                </ComboboxItem>
+                            )}
+                        </ComboboxList>
+                    </ComboboxContent>
+                </Combobox>
+                {errors.type && <FieldDescription>{errors.type}</FieldDescription>}
+            </Field>
 
             {serverError && <p className="text-sm text-danger">{serverError}</p>}
 
-            <Button variant="tertiary" isPending={loading} isDisabled={loading} onPress={handleSubmit}>
-                {loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}
-            </Button>
+            <Button onClick={handleSubmit}>{loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}</Button>
         </div>
     );
 };

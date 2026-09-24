@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Button, Input } from "@heroui/react";
 
 import { routes } from "@/config/navigation";
 import { useRegisterStore } from "../store/use-register-store";
+import { Field, FieldDescription, FieldLabel } from "@/shared/ui/shadcn/field";
+import { Input } from "@/shared/ui/shadcn/input";
+import { Button } from "@/shared/ui/shadcn/button";
 
 export const RegisterForm = () => {
     const { values, errors, loading, serverError, setField, submit } = useRegisterStore();
@@ -22,40 +24,52 @@ export const RegisterForm = () => {
                 </div>
             )}
 
-            <div className="flex flex-col gap-1">
+            <Field data-invalid={!!errors.email}>
+                <FieldLabel htmlFor="name">Email</FieldLabel>
                 <Input
+                    id="name"
                     type="email"
-                    placeholder="Email"
+                    required
+                    placeholder="Введите email"
                     value={values.email}
-                    onChange={(e) => setField("email", e.target.value)}
-                    aria-invalid={Boolean(errors.email)}
+                    aria-invalid={!!errors.email}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("email", e.target.value)}
                 />
-                {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
-            </div>
 
-            <div className="flex flex-col gap-1">
+                {errors.email && <FieldDescription>{errors.email}</FieldDescription>}
+            </Field>
+
+            <Field data-invalid={!!errors.password}>
+                <FieldLabel htmlFor="password">Пароль</FieldLabel>
                 <Input
+                    id="password"
                     type="password"
-                    placeholder="Пароль"
+                    required
+                    placeholder="Введите пароль"
                     value={values.password}
-                    onChange={(e) => setField("password", e.target.value)}
-                    aria-invalid={Boolean(errors.password)}
+                    aria-invalid={!!errors.password}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("password", e.target.value)}
                 />
-                {errors.password && <p className="text-xs text-red-500">{errors.password}</p>}
-            </div>
 
-            <div className="flex flex-col gap-1">
+                {errors.password && <FieldDescription>{errors.password}</FieldDescription>}
+            </Field>
+
+            <Field data-invalid={!!errors.confirmPassword}>
+                <FieldLabel htmlFor="password">Подтвердите пароль</FieldLabel>
                 <Input
+                    id="password"
                     type="password"
+                    required
                     placeholder="Подтвердите пароль"
                     value={values.confirmPassword}
-                    onChange={(e) => setField("confirmPassword", e.target.value)}
-                    aria-invalid={Boolean(errors.confirmPassword)}
+                    aria-invalid={!!errors.confirmPassword}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("confirmPassword", e.target.value)}
                 />
-                {errors.confirmPassword && <p className="text-xs text-red-500">{errors.confirmPassword}</p>}
-            </div>
 
-            <Button type="submit" variant="tertiary" isPending={loading} isDisabled={loading}>
+                {errors.confirmPassword && <FieldDescription>{errors.confirmPassword}</FieldDescription>}
+            </Field>
+
+            <Button type="submit" variant="default">
                 {loading ? "Отправка..." : "Зарегистрироваться"}
             </Button>
 

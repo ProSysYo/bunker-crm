@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@heroui/react";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { TLock } from "@/features/locks/types/TLock";
@@ -8,6 +7,7 @@ import { LocksTable } from "@/features/locks/ui/components/locks-table";
 import { routes } from "@/config/navigation";
 import { Pagination } from "@/shared/ui/table/pagination";
 import { Search } from "@/shared/ui/table/search";
+import { Button } from "@/shared/ui/shadcn/button";
 
 interface Props {
     locks: TLock[];
@@ -20,7 +20,7 @@ export default function Locks({ locks, totalPages }: Props) {
             <div className="mb-6 flex items-center justify-between">
                 <h1 className="text-2xl font-semibold">Замки</h1>
                 <Link href={routes.locksNew}>
-                    <Button variant="primary">
+                    <Button variant="default" size='lg'>
                         Добавить замок
                         <Plus size={20} />
                     </Button>

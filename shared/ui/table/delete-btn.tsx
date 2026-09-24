@@ -1,22 +1,25 @@
-import { Button } from "@heroui/react";
-import { Trash } from "lucide-react";
+"use client";
+
+import { Loader2, Trash } from "lucide-react";
+import { Button } from "../shadcn/button";
 
 type Props = {
-    isLoading: boolean
-    onDelete: () => void
-}
+    isLoading: boolean;
+    onDelete: () => void;
+};
 
-export const DeleteBtn = ({isLoading, onDelete}: Props) => {
+export const DeleteBtn = ({ isLoading, onDelete }: Props) => {
     return (
         <Button
+            type="button"
             size="sm"
-            variant="danger-soft"
-            isPending={isLoading}
-            onPress={onDelete}
+            variant="ghost"
+            disabled={isLoading}
+            onClick={onDelete}
             aria-label="Удалить"
-            className="min-w-0 w-auto px-2"
+            className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
         >
-            <Trash size={18} />
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash className="h-4 w-4" />}
         </Button>
     );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@heroui/react";
+
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { routes } from "@/config/navigation";
@@ -8,6 +8,7 @@ import { Pagination } from "@/shared/ui/table/pagination";
 import { Search } from "@/shared/ui/table/search";
 import { TPad } from "@/features/pads/types/TPad";
 import { PadsTable } from "@/features/pads/ui/components/pads-table";
+import { Button } from "@/shared/ui/shadcn/button";
 
 interface Props {
     pads: TPad[];
@@ -20,7 +21,7 @@ export default function Pads({ pads, totalPages }: Props) {
             <div className="mb-6 flex items-center justify-between">
                 <h1 className="text-2xl font-semibold">Накладки</h1>
                 <Link href={routes.padsNew}>
-                    <Button variant="primary">
+                    <Button variant="default" size='lg'>
                         Добавить накладку
                         <Plus size={20} />
                     </Button>

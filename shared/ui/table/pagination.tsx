@@ -1,7 +1,14 @@
 "use client";
-import { Pagination as HeroPagination } from "@heroui/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+    Pagination as PaginationShade,
+} from "../shadcn/pagination";
 
 type Props = {
     totalPages: number;
@@ -29,26 +36,32 @@ export const Pagination = ({ totalPages }: Props) => {
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
     return (
-        <HeroPagination size="sm" aria-label="Пагинация" style={{ width: 'auto', flexShrink: 0, display: 'flex' }}>
-            <HeroPagination.Content>
-                <HeroPagination.Item>
-                    <HeroPagination.Previous onPress={() => handlePageChange(currentPage - 1)} isDisabled={currentPage <= 1}>
-                        <ChevronLeft size={16} />
-                    </HeroPagination.Previous>
-                </HeroPagination.Item>
+        <PaginationShade className="justify-end">
+            <PaginationContent>
+                <PaginationItem>
+                    <PaginationPrevious
+                        text="Назад"
+                        className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                        onClick={() => handlePageChange(currentPage - 1)}
+                    />
+                </PaginationItem>
+
                 {pages.map((page) => (
-                    <HeroPagination.Item key={page}>
-                        <HeroPagination.Link isActive={page === currentPage} onPress={() => handlePageChange(page)}>
+                    <PaginationItem key={page}>
+                        <PaginationLink isActive={page === currentPage} onClick={() => handlePageChange(page)}>
                             {page}
-                        </HeroPagination.Link>
-                    </HeroPagination.Item>
+                        </PaginationLink>
+                    </PaginationItem>
                 ))}
-                <HeroPagination.Item>
-                    <HeroPagination.Next onPress={() => handlePageChange(currentPage + 1)} isDisabled={currentPage >= totalPages}>
-                        <ChevronRight size={16} />
-                    </HeroPagination.Next>
-                </HeroPagination.Item>
-            </HeroPagination.Content>
-        </HeroPagination>
+
+                <PaginationItem>
+                    <PaginationNext
+                        text="Вперед"
+                        className={currentPage === pages.length ? "pointer-events-none opacity-50" : ""}
+                        onClick={() => handlePageChange(currentPage + 1)}
+                    />
+                </PaginationItem>
+            </PaginationContent>
+        </PaginationShade>
     );
 };

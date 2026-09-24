@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Button, FieldError, Input, Label, TextField } from "@heroui/react";
 
 import { knobFormSchema, KnobFormValues } from "../../model/knob-schema";
 import { createKnob } from "../../actions/create-knob";
 import { updateKnob } from "../../actions/update-knob";
+import { Field, FieldDescription, FieldLabel } from "@/shared/ui/shadcn/field";
+import { Input } from "@/shared/ui/shadcn/input";
+import { Button } from "@/shared/ui/shadcn/button";
 
 interface KnobFormProps {
     onSuccess?: () => void;
@@ -15,7 +16,6 @@ interface KnobFormProps {
 }
 
 export function KnobForm({ onSuccess, editId, initialValues }: KnobFormProps) {
-    const router = useRouter();
     const isEdit = !!editId;
 
     const [values, setValues] = useState<KnobFormValues>({
@@ -96,7 +96,6 @@ export function KnobForm({ onSuccess, editId, initialValues }: KnobFormProps) {
             }
 
             onSuccess?.();
-           
         } catch (error) {
             const message = error instanceof Error ? error.message : "Произошла ошибка";
             setServerError(message);
@@ -107,17 +106,24 @@ export function KnobForm({ onSuccess, editId, initialValues }: KnobFormProps) {
 
     return (
         <div className="flex w-full max-w-sm flex-col gap-4">
-            <TextField isRequired value={values.name} isInvalid={!!errors.name} >
-                <Label>Название ручки</Label>
-                <Input placeholder="Введите название ручки" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("name", e.target.value)} />
-                {errors.name && <FieldError>{errors.name}</FieldError>}
-            </TextField>
+            <Field data-invalid={!!errors.name}>
+                <FieldLabel htmlFor="name">Название ручки</FieldLabel>
+                <Input
+                    id="name"
+                    type="text"
+                    required
+                    placeholder="Введите название ручки"
+                    value={values.name}
+                    aria-invalid={!!errors.name}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("name", e.target.value)}
+                />
+
+                {errors.name && <FieldDescription>{errors.name}</FieldDescription>}
+            </Field>
 
             {serverError && <p className="text-sm text-danger">{serverError}</p>}
 
-            <Button fullWidth variant="tertiary" isPending={loading} isDisabled={loading} onPress={handleSubmit}>
-                {loading ? "Сохранение..." : isEdit ? "Обновить" : "Создать"}
-            </Button>
+            <Button onClick={handleSubmit}>{loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}</Button>
         </div>
     );
 }
