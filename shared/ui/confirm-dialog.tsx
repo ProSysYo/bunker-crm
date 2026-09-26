@@ -1,5 +1,14 @@
-import { Modal, Button } from "@heroui/react";
 import { ReactNode } from "react";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "./shadcn/alert-dialog";
 
 interface Props {
     isOpen: boolean;
@@ -25,32 +34,25 @@ export default function ConfirmDialog({
     if (!isOpen) return null;
 
     return (
-        <Modal isOpen={true} onOpenChange={onClose}>
-            <Button className="hidden" onPress={() => {}} />
-            <Modal.Backdrop>
-                <Modal.Container>
-                    <Modal.Dialog>
-                        <Modal.Header>
-                            <Modal.Heading>{title}</Modal.Heading>
-                        </Modal.Header>
-                        <Modal.Body>{children}</Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="tertiary" onPress={onClose}>
-                                {cancelText}
-                            </Button>
-                            <Button
-                                variant={isConfirmDanger ? "danger-soft" : "primary"}
-                                onPress={() => {
-                                    onConfirm();
-                                    onClose();
-                                }}
-                            >
-                                {confirmText}
-                            </Button>
-                        </Modal.Footer>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+        <AlertDialog open={isOpen} onOpenChange={onClose}>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>{title}</AlertDialogTitle>
+                    <AlertDialogDescription>{children}</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel> {cancelText}</AlertDialogCancel>
+                    <AlertDialogAction
+                        variant={isConfirmDanger ? "destructive" : "default"}
+                        onClick={() => {
+                            onConfirm();
+                            onClose();
+                        }}
+                    >
+                        {confirmText}
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     );
 }
