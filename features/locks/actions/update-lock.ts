@@ -1,45 +1,42 @@
-'use server'
+"use server";
 import { requireAuth } from "@/features/auth/auth";
-import { lockFormSchema } from "../model/schema";
+import { lockFormSchema } from "../model/lock-schema";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { TLockType } from "../types/TLockType";
+import { TLock, TLockCreate } from "../types/TLock";
+import { ActionResult } from "@/shared/utils/action-types";
+import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
+import { handleServerError } from "@/shared/utils/server-error";
 
-export async function updateLock(prevState: unknown, formData: FormData) {
+export async function updateLock(data: TLockCreate & { id: number }): Promise<ActionResult<TLock>> {
     const { userId } = await requireAuth();
-
     if (!userId) {
-        throw new Error("Нет id");
+        return { error: "Не авторизован" };
     }
 
-    const id = (formData.get("id") as string) || "";
-    if (!id) {
-        return { success: false, error: "Нет id" };
+    if (!data.id) {
+        return { error: "Не указан id записи" };
     }
 
-    const name = formData.get("name") as string;
-    const type = formData.get("type") as TLockType;
-
-    const result = lockFormSchema.safeParse({ name, type });
+    const result = lockFormSchema.safeParse({ name: data.name, type: data.type });
     if (!result.success) {
-        const errors = result.error.flatten().fieldErrors;
+        const fieldErrors = parseZodErrors(result.error);
         return {
-            success: false,
-            error: errors.name?.[0] || errors.type?.[0] || "Ошибка валидации",
-            errors,
+            error: getFirstZodError(result.error),
+            errors: fieldErrors,
         };
     }
 
     try {
         const lock = await prisma.lock.update({
-            where: { id: +id },
-            data: { name, type },
+            where: { id: data.id },
+            data: { name: data.name, type: data.type },
         });
 
         revalidatePath("/locks");
-        return { success: true, data: lock };
+        return { data: lock };
     } catch (error) {
         console.error(error);
-        return { success: false, error: "Ошибка обновления" };
+        return { error: handleServerError(error) };
     }
 }

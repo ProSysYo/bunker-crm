@@ -1,20 +1,27 @@
-'use server'
+"use server";
 
 import { routes } from "@/config/navigation";
 import { requireAuth } from "@/features/auth/auth";
 import prisma from "@/lib/prisma";
+import { handleServerError } from "@/shared/utils/server-error";
 import { revalidatePath } from "next/cache";
+import { ActionResult } from "@/shared/utils/action-types";
 
-export async function deleteKnob(id: number) {
+export async function deleteKnob(id: number): Promise<ActionResult<{ id: number }>> {
     const { userId } = await requireAuth();
     if (!userId) {
-        throw new Error("Нет id");
+        return { error: "Не авторизован" };
     }
 
     if (!id) {
-        throw new Error("Нет id замка");
+        return { error: "Не указан id записи" };
     }
 
-    await prisma.knob.delete({ where: { id } });
-    revalidatePath(routes.knobs);
+    try {
+        await prisma.knob.delete({ where: { id } });
+        revalidatePath(routes.knobs);
+        return { data: { id } };
+    } catch (error) {
+        return { error: handleServerError(error) };
+    }
 }

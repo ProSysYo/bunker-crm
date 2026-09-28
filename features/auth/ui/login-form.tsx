@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { useLoginStore } from "../store/use-login-store";
 import { routes } from "@/config/navigation";
-import { Field, FieldDescription, FieldLabel } from "@/shared/ui/shadcn/field";
-import { Input } from "@/shared/ui/shadcn/input";
 import { Button } from "@/shared/ui/shadcn/button";
+import { InputField } from "@/shared/ui/input-field";
 
 export const LoginForm = () => {
     const { values, errors, loading, serverError, setField, submit } = useLoginStore();
@@ -23,35 +22,24 @@ export const LoginForm = () => {
                 </div>
             )}
 
-            <Field data-invalid={!!errors.email}>
-                <FieldLabel htmlFor="name">Email</FieldLabel>
-                <Input
-                    id="name"
-                    type="email"
-                    required
-                    placeholder="Введите email"
-                    value={values.email}
-                    aria-invalid={!!errors.email}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("email", e.target.value)}
-                />
+            <InputField
+                id="email"
+                label="Email"
+                value={values.email}
+                placeholder="Введите email"
+                error={errors.email}
+                onChange={(e) => setField("email", e.target.value)}
+            />
 
-                {errors.email && <FieldDescription>{errors.email}</FieldDescription>}
-            </Field>
-
-            <Field data-invalid={!!errors.password}>
-                <FieldLabel htmlFor="password">Пароль</FieldLabel>
-                <Input
-                    id="password"
-                    type="password"
-                    required
-                    placeholder="Введите пароль"
-                    value={values.password}
-                    aria-invalid={!!errors.password}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("password", e.target.value)}
-                />
-
-                {errors.password && <FieldDescription>{errors.password}</FieldDescription>}
-            </Field>
+            <InputField
+                id="password"
+                label="Password"
+                value={values.password}
+                placeholder="Введите пароль"
+                error={errors.password}
+                type="password"
+                onChange={(e) => setField("password", e.target.value)}
+            />
 
             <Button type="submit" variant="default">
                 {loading ? "Отправка..." : "Войти"}

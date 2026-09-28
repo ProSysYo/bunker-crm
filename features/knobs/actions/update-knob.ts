@@ -1,50 +1,42 @@
-'use server'
+"use server";
 
 import { requireAuth } from "@/features/auth/auth";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { knobFormSchema } from "@/features/knobs/model/knob-schema";
+import { handleServerError } from "@/shared/utils/server-error";
+import { ActionResult } from "@/shared/utils/action-types";
+import { TKnobCreate, TKnob } from "@/features/knobs/types/TKnob";
+import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
 
-export async function updateKnob(prevState: unknown, formData: FormData) {
+export async function updateKnob(data: TKnobCreate & { id: number }): Promise<ActionResult<TKnob>> {
     const { userId } = await requireAuth();
-
     if (!userId) {
-        throw new Error("Нет id");
+        return { error: "Не авторизован" };
     }
 
-    const id = Number(formData.get("id"));
-    if (!id) {
-        return { success: false, error: "Нет id" };
+    if (!data.id) {
+        return { error: "Не указан id записи" };
     }
 
-    const name = formData.get("name") as string;
-
-    const result = knobFormSchema.safeParse({ name });
+    const result = knobFormSchema.safeParse({ name: data.name });
     if (!result.success) {
-        const fieldErrors: Record<string, string> = {};
-        for (const issue of result.error.issues) {
-            const path = issue.path[0] as string | undefined;
-            if (path) {
-                fieldErrors[path] = issue.message;
-            }
-        }
+        const fieldErrors = parseZodErrors(result.error);
         return {
-            success: false,
-            error: fieldErrors.name || "Ошибка валидации",
+            error: getFirstZodError(result.error),
             errors: fieldErrors,
         };
     }
 
     try {
         const knob = await prisma.knob.update({
-            where: { id },
-            data: { name },
+            where: { id: data.id },
+            data: { name: result.data.name },
         });
 
         revalidatePath("/knobs");
-        return { success: true, data: knob };
+        return { data: knob };
     } catch (error) {
-        console.error(error);
-        return { success: false, error: "Ошибка обновления" };
+        return { error: handleServerError(error) };
     }
 }

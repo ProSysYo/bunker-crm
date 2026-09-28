@@ -1,100 +1,101 @@
 "use client";
 
-import { useEffect } from "react";
-
+import { useState } from "react";
 import { TLockType } from "../../types/TLockType";
-import { useLockFormStore } from "../../store/use-lock-form-store";
 import { lockTypes } from "@/features/locks/data/lock-types";
-import {
-    Combobox,
-    ComboboxContent,
-    ComboboxEmpty,
-    ComboboxInput,
-    ComboboxItem,
-    ComboboxList,
-} from "@/shared/ui/shadcn/combobox";
 import { Button } from "@/shared/ui/shadcn/button";
-import { Field, FieldDescription, FieldLabel } from "@/shared/ui/shadcn/field";
-import { Input } from "@/shared/ui/shadcn/input";
+import { InputField } from "@/shared/ui/input-field";
+import { ComboboxField } from "@/shared/ui/combobox-field";
+import { lockFormSchema, LockFormValues } from "../../model/lock-schema";
+import { parseZodErrors } from "@/shared/utils/zod-utils";
+import { updateLock } from "../../actions/update-lock";
+import { createLock } from "../../actions/create-lock";
+import { toast } from "sonner";
 
 interface LockFormProps {
     onSuccess?: () => void;
     editId?: number;
-    initialValues?: { name?: string; type?: TLockType | string } | null;
+    initialValues?: { name?: string; type?: TLockType } | null;
 }
 
 export const LockForm = ({ onSuccess, editId, initialValues }: LockFormProps) => {
-    const { values, errors, loading, serverError, setField, submitCreate, submitUpdate, reset } = useLockFormStore();
+    const isEdit = !!editId;
 
-    const selectedLockType = lockTypes.find((type) => type.value === values.type);
-    const displayValue = selectedLockType?.label || "";
+    const [values, setValues] = useState<LockFormValues>({
+        name: initialValues?.name ?? "",
+        type: initialValues?.type ?? ("" as TLockType),
+    });
 
-    useEffect(() => {
-        if (initialValues) {
-            setField("name", initialValues.name || "");
-            setField("type", initialValues.type || "");
-        }
-    }, [initialValues, setField]);
+    const [errors, setErrors] = useState<Partial<Record<keyof LockFormValues, string>>>({});
 
-    useEffect(() => {
-        reset();
-        if (initialValues) {
-            setField("name", initialValues.name || "");
-            setField("type", initialValues.type || "");
-        }
-    }, [reset, setField, initialValues]);
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = () => {
-        if (editId) {
-            submitUpdate(editId, onSuccess);
-        } else {
-            submitCreate(onSuccess);
-        }
+    const setField = <K extends keyof LockFormValues>(field: K, value: LockFormValues[K]) => {
+        setValues((prev) => ({ ...prev, [field]: value }));
+
+        setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
+
+    const validate = (): LockFormValues | null => {
+        const result = lockFormSchema.safeParse(values);
+
+        if (!result.success) {
+            setErrors(parseZodErrors(result.error));
+            return null;
+        }
+
+        setErrors({});
+        return result.data;
+    };
+
+    const handleSubmit = async () => {
+        const data = validate();
+        if (!data) return;
+
+        setLoading(true);
+
+        const response = isEdit ? await updateLock({ ...data, id: editId }) : await createLock(data);
+
+        if (response.errors) {
+            setErrors(response.errors as Partial<Record<keyof LockFormValues, string>>);
+        }
+
+        if (response.error) {
+            toast.error(response.error);
+        } else if (response.data) {
+            toast.success(isEdit ? "Данные обновлены" : `Добавлен замок: ${response.data.name}`);
+            onSuccess?.();
+        }
+
+        setLoading(false);
+    };
+
     return (
         <div className="flex w-full max-w-sm flex-col gap-4">
-            <Field data-invalid={!!errors.name}>
-                <FieldLabel htmlFor="name">Название замка</FieldLabel>
-                <Input
-                    id="name"
-                    type="text"
-                    required
-                    placeholder="Введите название замка"
-                    value={values.name}
-                    aria-invalid={!!errors.name}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("name", e.target.value)}
-                />
+            <InputField
+                id="name"
+                label="Название"
+                value={values.name}
+                placeholder="Введите название"
+                error={errors.name}
+                type="text"
+                onChange={(e) => setField("name", e.target.value)}
+            />
 
-                {errors.name && <FieldDescription>{errors.name}</FieldDescription>}
-            </Field>
+            <ComboboxField
+                id="type"
+                label="Тип"
+                placeholder="Выберите тип"
+                items={lockTypes}
+                value={values.type}
+                onValueChange={(v) => setField("type", v as TLockType)}
+                error={errors.type}
+                required
+            />
 
-            <Field data-invalid={!!errors.type}>
-                <FieldLabel htmlFor="type">Тип замка</FieldLabel>
-                <Combobox
-                    id="type"
-                    items={lockTypes}
-                    value={displayValue}
-                    required
-                    onValueChange={(key) => setField("type", (key ?? "") as TLockType)}
-                >
-                    <ComboboxInput placeholder="Выберите тип замка" aria-invalid={!!errors.type} />
-                    <ComboboxContent>
-                        <ComboboxEmpty>Ничего не найдено</ComboboxEmpty>
-                        <ComboboxList>
-                            {(i) => (
-                                <ComboboxItem key={i.value} value={i.value}>
-                                    {i.label}
-                                </ComboboxItem>
-                            )}
-                        </ComboboxList>
-                    </ComboboxContent>
-                </Combobox>
-                {errors.type && <FieldDescription>{errors.type}</FieldDescription>}
-            </Field>
-
-            {serverError && <p className="text-sm text-danger">{serverError}</p>}
-
-            <Button onClick={handleSubmit}>{loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}</Button>
+            <Button disabled={loading} onClick={handleSubmit}>
+                {loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}
+            </Button>
         </div>
     );
 };

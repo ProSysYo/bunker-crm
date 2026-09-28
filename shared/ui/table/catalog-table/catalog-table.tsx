@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/shadcn/table";
 import { RowActions } from "./row-actions";
 import ConfirmDialog from "../../confirm-dialog";
+import { toast } from "sonner";
+import { ActionResult } from "@/shared/utils/action-types";
 
 export type ColumnDef<T> = {
     key: keyof T | string;
@@ -20,7 +22,7 @@ type Props<T> = {
     emptyContent: string;
     ariaLabel: string;
 
-    onDelete?: (id: number) => Promise<void>;
+    onDelete?: (id: number) => Promise<ActionResult<unknown>>;
     getEditHref?: (item: T) => string;
 };
 
@@ -40,16 +42,18 @@ export const CatalogTable = <T extends { id: number }>({
         if (confirmDeleteId === null || !onDelete) return;
 
         setDeletingId(confirmDeleteId);
-        try {
-            await onDelete(confirmDeleteId);
+
+        const response = await onDelete(confirmDeleteId);
+
+        if (response.error) {
+            toast.error(response.error);
+        } else if (response.data) {
             router.refresh();
-        } catch (error) {
-            console.error(error);
-            alert("Не удалось удалить");
-        } finally {
-            setDeletingId(null);
-            setConfirmDeleteId(null);
+            toast.success("Запись успешно удалена");
         }
+
+        setDeletingId(null);
+        setConfirmDeleteId(null);
     };
 
     const handleOpenConfirm = (id: number) => {

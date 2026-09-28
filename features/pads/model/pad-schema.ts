@@ -1,8 +1,9 @@
 import { z } from "zod";
+import { PAD_TYPE_VALUES } from "../types/TPadType";
 
 export const padFormSchema = z.object({
   name: z.string().min(3, "Минимум 3 символа"),
-  type: z.string().min(1, "Выберите тип накладки"),
+  type: z.enum(PAD_TYPE_VALUES, { message: "Выберите тип накладки" }),
 });
 
 export type PadFormValues = z.infer<typeof padFormSchema>;

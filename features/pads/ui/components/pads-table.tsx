@@ -18,7 +18,7 @@ const padColumns: ColumnDef<TPad>[] = [
         label: "Дата обновления",
         render: (item) => item.updatedAt.toLocaleString("ru-RU"),
     },
-    { key: "", label: " ", widthClass: 'w-1' },
+    { key: "", label: " ", className: 'w-1' },
 ];
 
 export const PadsTable = ({ pads }: Props) => {

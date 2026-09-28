@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 import { knobFormSchema, KnobFormValues } from "../../model/knob-schema";
 import { createKnob } from "../../actions/create-knob";
 import { updateKnob } from "../../actions/update-knob";
-import { Field, FieldDescription, FieldLabel } from "@/shared/ui/shadcn/field";
-import { Input } from "@/shared/ui/shadcn/input";
 import { Button } from "@/shared/ui/shadcn/button";
+import { InputField } from "@/shared/ui/input-field";
+import { toast } from "sonner";
+import { parseZodErrors } from "@/shared/utils/zod-utils";
 
 interface KnobFormProps {
     onSuccess?: () => void;
@@ -23,36 +23,20 @@ export function KnobForm({ onSuccess, editId, initialValues }: KnobFormProps) {
     });
 
     const [errors, setErrors] = useState<Partial<Record<keyof KnobFormValues, string>>>({});
-    const [serverError, setServerError] = useState<string>();
-    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        setValues({
-            name: initialValues?.name ?? "",
-        });
-        setErrors({});
-        setServerError(undefined);
-    }, [editId, initialValues]);
+    const [loading, setLoading] = useState(false);
 
     const setField = <K extends keyof KnobFormValues>(field: K, value: KnobFormValues[K]) => {
         setValues((prev) => ({ ...prev, [field]: value }));
 
         setErrors((prev) => ({ ...prev, [field]: undefined }));
-        setServerError(undefined);
     };
 
     const validate = (): KnobFormValues | null => {
         const result = knobFormSchema.safeParse(values);
 
         if (!result.success) {
-            const fieldErrors: Partial<Record<keyof KnobFormValues, string>> = {};
-            for (const issue of result.error.issues) {
-                const path = issue.path[0] as keyof KnobFormValues | undefined;
-                if (path) {
-                    fieldErrors[path] = issue.message;
-                }
-            }
-            setErrors(fieldErrors);
+            setErrors(parseZodErrors(result.error));
             return null;
         }
 
@@ -65,63 +49,34 @@ export function KnobForm({ onSuccess, editId, initialValues }: KnobFormProps) {
         if (!data) return;
 
         setLoading(true);
-        setServerError(undefined);
 
-        try {
-            const formData = new FormData();
+        const response = isEdit ? await updateKnob({ ...data, id: editId }) : await createKnob(data);
 
-            Object.entries(data).forEach(([key, value]) => {
-                formData.append(key, String(value));
-            });
-
-            if (isEdit && editId) {
-                formData.append("id", String(editId));
-                const response = await updateKnob(null, formData);
-
-                if (!response?.success) {
-                    setServerError(response?.error || "Не удалось обновить ручку");
-                    return;
-                }
-
-                //toast.success("Ручка обновлена");
-            } else {
-                const response = await createKnob(null, formData);
-
-                if (!response?.success) {
-                    setServerError(response?.error || "Не удалось создать ручку");
-                    return;
-                }
-
-                //toast.success("Ручка создана");
-            }
-
-            onSuccess?.();
-        } catch (error) {
-            const message = error instanceof Error ? error.message : "Произошла ошибка";
-            setServerError(message);
-        } finally {
-            setLoading(false);
+        if (response.errors) {
+            setErrors(response.errors as Partial<Record<keyof KnobFormValues, string>>);
         }
+
+        if (response.error) {
+            toast.error(response.error);
+        } else if (response.data) {
+            toast.success(isEdit ? "Данные обновлены" : `Добавлена ручка: ${response.data.name}`);
+            onSuccess?.();
+        }
+
+        setLoading(false);
     };
 
     return (
         <div className="flex w-full max-w-sm flex-col gap-4">
-            <Field data-invalid={!!errors.name}>
-                <FieldLabel htmlFor="name">Название ручки</FieldLabel>
-                <Input
-                    id="name"
-                    type="text"
-                    required
-                    placeholder="Введите название ручки"
-                    value={values.name}
-                    aria-invalid={!!errors.name}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setField("name", e.target.value)}
-                />
-
-                {errors.name && <FieldDescription>{errors.name}</FieldDescription>}
-            </Field>
-
-            {serverError && <p className="text-sm text-danger">{serverError}</p>}
+            <InputField
+                id="name"
+                label="Название"
+                value={values.name}
+                placeholder="Введите название"
+                error={errors.name}
+                type="text"
+                onChange={(e) => setField("name", e.target.value)}
+            />
 
             <Button onClick={handleSubmit}>{loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}</Button>
         </div>

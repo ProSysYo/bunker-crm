@@ -1,41 +1,40 @@
-'use server'
+"use server";
 import { requireAuth } from "@/features/auth/auth";
-import { lockFormSchema } from "../model/schema";
+import { lockFormSchema, LockFormValues } from "../model/lock-schema";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { LockType } from "@prisma/client";
+import { ActionResult } from "@/shared/utils/action-types";
+import { TLock } from "../types/TLock";
+import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
+import { handleServerError } from "@/shared/utils/server-error";
 
-export async function createLock(prevState: unknown, formData: FormData) {
+export async function createLock(data: LockFormValues): Promise<ActionResult<TLock>> {
     const { userId } = await requireAuth();
 
     if (!userId) {
         throw new Error("Нет id");
     }
 
-    const name = formData.get("name") as string;
-    const type = formData.get("type") as LockType;
-
-    const result = lockFormSchema.safeParse({ name, type });
+    const result = lockFormSchema.safeParse({ name: data.name, type: data.type });
     if (!result.success) {
-        const errors = result.error.flatten().fieldErrors;
+        const fieldErrors = parseZodErrors(result.error);
         return {
-            success: false,
-            error: errors.name?.[0] || errors.type?.[0] || "Ошибка валидации",
-            errors,
+            error: getFirstZodError(result.error),
+            errors: fieldErrors,
         };
     }
 
     try {
         const lock = await prisma.lock.create({
             data: {
-                name,
-                type,
+                name: data.name,
+                type: data.type,
             },
         });
         revalidatePath("/locks");
-        return { success: true, data: lock };
+        return { data: lock };
     } catch (error) {
         console.error(error);
-        return { success: false, error: "Ошибка создания" };
+        return { error: handleServerError(error) };
     }
 }

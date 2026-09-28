@@ -15,7 +15,7 @@ const lockColumns: ColumnDef<TLock>[] = [
         label: "Дата обновления",
         render: (item) => item.updatedAt.toLocaleString("ru-RU"),
     },
-    { key: "", label: " ", widthClass: "w-1" },
+    { key: "", label: " ", className: "w-1" },
 ];
 
 type Props = {

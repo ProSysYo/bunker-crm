@@ -1,6 +1,5 @@
 "use client";
 
-import { routes } from "@/config/navigation";
 import { TKnob } from "@/features/knobs/types/TKnob";
 import { useRouter } from "next/navigation";
 import { KnobForm } from "../components/knob-form";
@@ -13,6 +12,7 @@ export const KnobsEdit = ({ item }: Props) => {
     const router = useRouter();
     const handleSuccess = () => {
         router.back();
+       
     };
 
     return (
@@ -22,11 +22,7 @@ export const KnobsEdit = ({ item }: Props) => {
                     <h1 className="text-2xl font-semibold tracking-tight">Редактировать ручку</h1>
                     <p className="text-sm text-muted-foreground">Измените данные ручки</p>
                 </div>
-                <KnobForm
-                    editId={item.id}
-                    initialValues={{ name: item.name }}
-                    onSuccess={handleSuccess}
-                />
+                <KnobForm editId={item.id} initialValues={{ name: item.name }} onSuccess={handleSuccess} />
             </div>
         </div>
     );

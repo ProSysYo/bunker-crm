@@ -1,45 +1,43 @@
-"use server"
+"use server";
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { padFormSchema } from "../model/schema";
+import { padFormSchema } from "../model/pad-schema";
 import { requireAuth } from "@/features/auth/auth";
+import { TPad, TPadCreate } from "../types/TPad";
+import { ActionResult } from "@/shared/utils/action-types";
+import { handleServerError } from "@/shared/utils/server-error";
+import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
 
-export async function updatePad(prevState: unknown, formData: FormData) {
+export async function updatePad(data: TPadCreate & { id: number }): Promise<ActionResult<TPad>> {
     const { userId } = await requireAuth();
-
     if (!userId) {
-        throw new Error("Нет id");
+        return { error: "Не авторизован" };
     }
 
-    const id = (formData.get("id") as string) || "";
-    if (!id) {
-        return { success: false, error: "Нет id" };
+    if (!data.id) {
+        return { error: "Не указан id записи" };
     }
 
-    const name = formData.get("name") as string;
-    const type = formData.get("type") as string;
-
-    const result = padFormSchema.safeParse({ name, type });
+    const result = padFormSchema.safeParse({ name: data.name, type: data.type });
     if (!result.success) {
-        const errors = result.error.flatten().fieldErrors;
+        const fieldErrors = parseZodErrors(result.error);
         return {
-            success: false,
-            error: errors.name?.[0] || errors.type?.[0] || "Ошибка валидации",
-            errors,
+            error: getFirstZodError(result.error),
+            errors: fieldErrors,
         };
     }
 
     try {
         const pad = await prisma.pad.update({
-            where: { id: +id },
-            data: { name, type },
+            where: { id: data.id },
+            data: { name: data.name, type: data.type },
         });
 
         revalidatePath("/pads");
-        return { success: true, data: pad };
+        return { data: pad };
     } catch (error) {
         console.error(error);
-        return { success: false, error: "Ошибка обновления" };
+        return { error: handleServerError(error) };
     }
 }
