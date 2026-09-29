@@ -14,7 +14,7 @@ interface Props {
     totalPages: number;
 }
 
-export default function Locks({ locks, totalPages }: Props) {
+export default function LocksList({ locks, totalPages }: Props) {
     return (
         <div className="container mx-auto py-8">
             <div className="mb-6 flex items-center justify-between">

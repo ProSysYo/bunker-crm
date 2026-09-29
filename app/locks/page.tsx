@@ -1,6 +1,6 @@
 import { tableLimits } from "@/config/table-limits";
-import Locks from "../../features/locks/ui/pages/locks";
 import { getLocks } from "@/features/locks/actions/get-locks";
+import LocksList from "../../features/locks/ui/pages/locks-list";
 
 
 export default async function LocksPage(props: {
@@ -19,5 +19,5 @@ export default async function LocksPage(props: {
         limit: tableLimits.locks,
     });
 
-    return <Locks locks={locks} totalPages={pagination.totalPages} />;
+    return <LocksList locks={locks} totalPages={pagination.totalPages} />;
 }
