@@ -1,4 +1,4 @@
-import { DoorClosed, Home, Lock, SquaresExclude } from "lucide-react";
+import { DoorOpen, SquareTerminal } from "lucide-react";
 
 export const routes = {
     home: "/",
@@ -16,27 +16,49 @@ export const routes = {
     knobs: "/knobs",
     knobsNew: "/knobs/new",
     knobsEdit: "/knobs/",
+
+    orderCurrent: "/order-current",
+    orderPreview: "/order-preview",
+    orderOld: "/order-old"
 };
 
 export const navItems = [
     {
-        href: routes.home,
-        label: "Главная",
-        icon: Home,
+        title: "Заказы",
+        url: "#",
+        icon: DoorOpen,
+        items: [
+            {
+                href: routes.orderCurrent,
+                label: "Текущие",
+            },
+            {
+                href: routes.orderPreview,
+                label: "Предварительные",
+            },
+            {
+                href: routes.orderOld,
+                label: "Отгруженные",
+            },
+        ],
     },
     {
-        href: routes.locks,
-        label: "Замки",
-        icon: Lock,
-    },
-    {
-        href: routes.pads,
-        label: "Накладки",
-        icon: SquaresExclude,
-    },
-    {
-        href: routes.knobs,
-        label: "Ручки",
-        icon: DoorClosed,
+        title: "Таблицы",
+        url: "#",
+        icon: SquareTerminal,
+        items: [
+            {
+                href: routes.locks,
+                label: "Замки",
+            },
+            {
+                href: routes.pads,
+                label: "Накладки",
+            },
+            {
+                href: routes.knobs,
+                label: "Ручки",
+            },
+        ],
     },
 ] as const;

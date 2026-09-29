@@ -1,34 +1,20 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { LogOut } from "lucide-react";
-
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { navItems, routes } from "../../config/navigation";
-import { Button } from "./shadcn/button";
+import { routes } from "../../config/navigation";
+
+import { AppSidebar } from "./app-sidebar";
+import { SidebarTrigger } from "./shadcn/sidebar";
 
 type AppShellProps = {
     children: React.ReactNode;
 };
 
 export const AppShell = ({ children }: AppShellProps) => {
-    const pathname = usePathname();
     const router = useRouter();
-    const { data: session, status } = useSession();
-
-    const handleSignOut = async () => {
-        try {
-            //await signOutFunc();
-            await signOut({ redirect: false });
-            router.push(routes.login);
-        } catch (error) {
-            console.log(error);
-        }
-        //window.location.href = "/login";
-    };
+    const { status } = useSession();
 
     const isAuth = status === "authenticated";
 
@@ -47,60 +33,11 @@ export const AppShell = ({ children }: AppShellProps) => {
     }
 
     return (
-        <div className="flex h-screen bg-background text-foreground">
-            <aside className="w-64 flex flex-col border-r bg-sidebar text-sidebar-foreground">
-                <div className="flex h-14 items-center border-b px-4 shrink-0">
-                    <span className="text-lg font-semibold tracking-tight">Bunker CRM</span>
-                </div>
-
-                <nav className="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
-                    {navItems.map((item) => {
-                        const Icon = item.icon;
-                        const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-
-                        return (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className={`flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors ${
-                                    isActive
-                                        ? "bg-primary/10 text-primary font-medium"
-                                        : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                                }`}
-                            >
-                                <Icon className="size-4" />
-                                <span>{item.label}</span>
-                            </Link>
-                        );
-                    })}
-                </nav>
-            </aside>
+        <div className="flex h-screen bg-background text-foreground flex-1 ">
+            <AppSidebar />
+            <SidebarTrigger className="mt-2 ml-2" />
 
             <div className="flex flex-1 flex-col">
-                <header className="flex h-14 items-center justify-between border-b bg-background/80 px-6 backdrop-blur shrink-0">
-                    <div className="text-sm text-muted-foreground"></div>
-
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                            {isAuth && (
-                                <div className="flex flex-col leading-tight">
-                                    <span className="text-xs text-muted-foreground">{session?.user?.email}</span>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            {!isAuth ? (
-                                <Link href="/login">Войти</Link>
-                            ) : (
-                                <Button variant="outline" onClick={handleSignOut} className="min-w-0">
-                                    <LogOut size={16} />
-                                </Button>
-                            )}
-                        </div>
-                    </div>
-                </header>
-
                 <main className="flex-1 overflow-y-auto p-6">
                     <div className="mx-auto max-w-5xl">{children}</div>
                 </main>

@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Bunker CRM",
+    title: "Железные двери",
     description: "Управление производственными процессами",
 };
 
