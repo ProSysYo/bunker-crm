@@ -1,41 +1,37 @@
 'use server'
-
 import { ActionResult } from "@/shared/utils/action-types";
-import { Bolt, BoltCreate } from "../bolt-types";
+import { Peephole, PeepholeCreate } from "../peephole-types";
 import { requireAuth } from "@/features/auth/auth";
-import { boltFormSchema } from "../bolt-schema";
+import { peepholeFormSchema } from "../peephole-schema";
 import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
 import prisma from "@/lib/prisma";
 import { handleServerError } from "@/shared/utils/server-error";
 import { revalidatePath } from "next/cache";
 import { routes } from "@/config/navigation";
 
-export async function updateBolt(data: BoltCreate & { id: number }): Promise<ActionResult<Bolt>> {
+export async function updatePeephole(data: PeepholeCreate & { id: number }): Promise<ActionResult<Peephole>> {
     await requireAuth();
-
+    
     if (!data.id) {
         return { error: "Не указан id записи" };
     }
 
-    const result = boltFormSchema.safeParse({ name: data.name });
-
+    const result = peepholeFormSchema.safeParse({ name: data.name });
     if (!result.success) {
         const fieldErrors = parseZodErrors(result.error);
-
         return {
             error: getFirstZodError(result.error),
             errors: fieldErrors,
         };
     }
+
     try {
-        const bolt = await prisma.bolt.update({
+        const peephole = await prisma.peephole.update({
             where: { id: data.id },
             data: { name: data.name },
         });
-
-        revalidatePath(routes.bolts);
-
-        return { data: bolt };
+        revalidatePath(routes.peepholes);
+        return { data: peephole };
     } catch (error) {
         return { error: handleServerError(error) };
     }

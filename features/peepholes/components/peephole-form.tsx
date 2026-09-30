@@ -1,47 +1,41 @@
 "use client";
-
 import { useState } from "react";
 import { Button } from "@/shared/components/shadcn/button";
 import { InputField } from "@/shared/components/input-field";
 import { toast } from "sonner";
 import { parseZodErrors } from "@/shared/utils/zod-utils";
+import { peepholeFormSchema } from "../peephole-schema";
+import { updatePeephole } from "../actions/update-peephole";
+import { createPeephole } from "../actions/create-peephole";
+import { PeepholeCreate } from "../peephole-types";
 
-import { boltFormSchema } from "../bolt-schema";
-import { updateBolt } from "../actions/update-bolt";
-import { createBolt } from "../actions/create-bolt";
-import { BoltCreate } from "../bolt-types";
-
-interface KnobFormProps {
+interface PeepholeFormProps {
     onSuccess?: () => void;
     editId?: number;
     initialValues?: { name?: string } | null;
 }
 
-export function BoltForm({ onSuccess, editId, initialValues }: KnobFormProps) {
+export function PeepholeForm({ onSuccess, editId, initialValues }: PeepholeFormProps) {
     const isEdit = !!editId;
 
-    const [values, setValues] = useState<BoltCreate>({
+    const [values, setValues] = useState<PeepholeCreate>({
         name: initialValues?.name ?? "",
     });
 
-    const [errors, setErrors] = useState<Partial<Record<keyof BoltCreate, string>>>({});
-
+    const [errors, setErrors] = useState<Partial<Record<keyof PeepholeCreate, string>>>({});
     const [loading, setLoading] = useState(false);
 
-    const setField = <K extends keyof BoltCreate>(field: K, value: BoltCreate[K]) => {
+    const setField = <K extends keyof PeepholeCreate>(field: K, value: PeepholeCreate[K]) => {
         setValues((prev) => ({ ...prev, [field]: value }));
-
         setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
-    const validate = (): BoltCreate | null => {
-        const result = boltFormSchema.safeParse(values);
-
+    const validate = (): PeepholeCreate | null => {
+        const result = peepholeFormSchema.safeParse(values);
         if (!result.success) {
             setErrors(parseZodErrors(result.error));
             return null;
         }
-
         setErrors({});
         return result.data;
     };
@@ -52,16 +46,18 @@ export function BoltForm({ onSuccess, editId, initialValues }: KnobFormProps) {
 
         setLoading(true);
 
-        const response = isEdit ? await updateBolt({ ...data, id: editId }) : await createBolt(data);
+        const response = isEdit
+            ? await updatePeephole({ ...data, id: editId })
+            : await createPeephole(data);
 
         if (response.errors) {
-            setErrors(response.errors as Partial<Record<keyof BoltCreate, string>>);
+            setErrors(response.errors as Partial<Record<keyof PeepholeCreate, string>>);
         }
 
         if (response.error) {
             toast.error(response.error);
         } else if (response.data) {
-            toast.success(isEdit ? "Данные обновлены" : `Добавлен засов: ${response.data.name}`);
+            toast.success(isEdit ? "Данные обновлены" : `Добавлен глазок: ${response.data.name}`);
             onSuccess?.();
         }
 
@@ -79,7 +75,6 @@ export function BoltForm({ onSuccess, editId, initialValues }: KnobFormProps) {
                 type="text"
                 onChange={(e) => setField("name", e.target.value)}
             />
-
             <Button onClick={handleSubmit}>{loading ? "Сохранение..." : editId ? "Обновить" : "Создать"}</Button>
         </div>
     );

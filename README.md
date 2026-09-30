@@ -19,6 +19,6 @@ npx prisma migrate dev --name enter_name
 npx prisma generate
 npx prisma db seed
 
-npx prisma migrate reset --force      
+npx prisma migrate reset --force !!!УДАЛИТ ВСЕ ДАННЫЕ В БД!!! ОСТОРОЖНО!!! 
 
 ```

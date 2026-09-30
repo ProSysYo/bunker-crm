@@ -1,7 +1,9 @@
-import { BoltCreate } from "@/features/bolts/types/Bolt";
+
+import { BoltCreate } from "@/features/bolts/bolt-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
 import { LockCreate } from "@/features/locks/types/Lock";
 import { PadCreate } from "@/features/pads/types/Pad";
+import { PeepholeCreate } from "@/features/peepholes/peephole-types";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -83,6 +85,23 @@ async function main() {
     }
 
     console.log(`Создано ${bolts.length} засовов`);
+
+    const peepholes: PeepholeCreate[] = [
+        { name: "хром центр" },
+        { name: "хром сбоку" },
+        { name: "латунь центр" },
+        { name: "латунь сбоку" },
+        { name: "бронза центр" },
+        { name: "ХК центр" },
+    ];
+
+    for (const item of peepholes) {
+        await prisma.peephole.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${peepholes.length} глазков`);
 }
 
 main()

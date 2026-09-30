@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Железные двери",
+    title: "УПП ЖД",
     description: "Управление производственными процессами",
 };
 

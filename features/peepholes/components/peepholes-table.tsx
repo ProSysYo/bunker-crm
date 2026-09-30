@@ -1,14 +1,11 @@
 "use client";
-
 import { CatalogTable, ColumnDef } from "@/shared/components/table/catalog-table/catalog-table";
-
 import { routes } from "@/config/navigation";
-import { deleteBolt } from "../actions/delete-bolt";
-import { Bolt } from "../bolt-types";
+import { deletePeephole } from "../actions/delete-peephole";
+import { Peephole } from "../peephole-types";
 
-const columns: ColumnDef<Bolt>[] = [
+const columns: ColumnDef<Peephole>[] = [
     { key: "name", label: "Название", render: (item) => item.name },
-
     {
         key: "updatedAt",
         label: "Дата обновления",
@@ -18,18 +15,18 @@ const columns: ColumnDef<Bolt>[] = [
 ];
 
 type Props = {
-    items: Bolt[];
+    items: Peephole[];
 };
 
-export const BoltsTable = ({ items }: Props) => {
+export const PeepholesTable = ({ items }: Props) => {
     return (
         <CatalogTable
             data={items}
             columns={columns}
-            emptyContent="Ручки не найдены"
-            ariaLabel="Таблица ручек"
-            onDelete={deleteBolt}
-            getEditHref={(item) => `${routes.boltsEdit}${item.id}`}
+            emptyContent="Глазки не найдены"
+            ariaLabel="Таблица глазков"
+            onDelete={deletePeephole}
+            getEditHref={(item) => `${routes.peepholesEdit}${item.id}`}
         />
     );
 };
