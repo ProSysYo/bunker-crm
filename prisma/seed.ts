@@ -1,8 +1,8 @@
-
 import { BoltCreate } from "@/features/bolts/bolt-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
 import { LockCreate } from "@/features/locks/types/Lock";
 import { PadCreate } from "@/features/pads/types/Pad";
+import { PaintCreate } from "@/features/paints/paint-types";
 import { PeepholeCreate } from "@/features/peepholes/peephole-types";
 import { PrismaClient } from "@prisma/client";
 
@@ -102,6 +102,23 @@ async function main() {
     }
 
     console.log(`Создано ${peepholes.length} глазков`);
+
+    const paints: PaintCreate[] = [
+        { name: "антик бронза" },
+        { name: "антик медь" },
+        { name: "антик серебро" },
+        { name: "антик синий" },
+        { name: "шагрень черная" },
+        { name: "шагрень серая" },
+    ];
+
+    for (const item of paints) {
+        await prisma.paint.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${paints.length} цветов покраски`);
 }
 
 main()

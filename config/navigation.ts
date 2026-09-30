@@ -25,6 +25,10 @@ export const routes = {
     peepholesNew: "/peepholes/new",
     peepholesEdit: "/peepholes/",
 
+    paints: "/paints",
+    paintsNew: "/paints/new",
+    paintsEdit: "/paints/",
+
     orderCurrent: "/order-current",
     orderPreview: "/order-preview",
     orderOld: "/order-old"
@@ -74,6 +78,10 @@ export const navItems = [
             {
                 href: routes.peepholes,
                 label: "Глазки",
+            },
+            {
+                href: routes.paints,
+                label: "Цвета покраски",
             },
         ],
     },

@@ -15,7 +15,7 @@ export default async function PeepholesPage(props: {
     const { peepholes, pagination } = await getPeepholes({
         search: query,
         page: currentPage,
-        limit: tableLimits.bolts,
+        limit: tableLimits.peepholes,
     });
 
     return (
