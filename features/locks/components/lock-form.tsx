@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { TLockType } from "../../types/TLockType";
+import { TLockType } from "../types/TLockType";
 import { lockTypes } from "@/features/locks/data/lock-types";
-import { Button } from "@/shared/ui/shadcn/button";
-import { InputField } from "@/shared/ui/input-field";
-import { ComboboxField } from "@/shared/ui/combobox-field";
-import { lockFormSchema, LockFormValues } from "../../model/lock-schema";
+import { Button } from "@/shared/components/shadcn/button";
+import { InputField } from "@/shared/components/input-field";
+import { ComboboxField } from "@/shared/components/combobox-field";
+import { lockFormSchema, LockFormValues } from "../model/lock-schema";
 import { parseZodErrors } from "@/shared/utils/zod-utils";
-import { updateLock } from "../../actions/update-lock";
-import { createLock } from "../../actions/create-lock";
+import { updateLock } from "../actions/update-lock";
+import { createLock } from "../actions/create-lock";
 import { toast } from "sonner";
 
 interface LockFormProps {

@@ -1,4 +1,4 @@
-import LockNew from "@/features/locks/ui/pages/lock-new";
+import LockNew from "@/features/locks/pages/lock-new";
 
 
 export default function LockNewPage() {

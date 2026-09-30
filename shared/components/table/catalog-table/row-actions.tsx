@@ -1,7 +1,7 @@
 "use client";
 
-import { DeleteBtn } from "@/shared/ui/table/delete-btn";
-import { EditLink } from "@/shared/ui/table/edit-link";
+import { DeleteBtn } from "@/shared/components/table/delete-btn";
+import { EditLink } from "@/shared/components/table/edit-link";
 
 type RowActionsProps = {
     id: number;

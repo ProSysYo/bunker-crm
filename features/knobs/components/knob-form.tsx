@@ -4,8 +4,8 @@ import { useState } from "react";
 import { knobFormSchema, KnobFormValues } from "../model/knob-schema";
 import { createKnob } from "../actions/create-knob";
 import { updateKnob } from "../actions/update-knob";
-import { Button } from "@/shared/ui/shadcn/button";
-import { InputField } from "@/shared/ui/input-field";
+import { Button } from "@/shared/components/shadcn/button";
+import { InputField } from "@/shared/components/input-field";
 import { toast } from "sonner";
 import { parseZodErrors } from "@/shared/utils/zod-utils";
 

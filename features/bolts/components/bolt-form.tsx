@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/shared/ui/shadcn/button";
-import { InputField } from "@/shared/ui/input-field";
+import { Button } from "@/shared/components/shadcn/button";
+import { InputField } from "@/shared/components/input-field";
 import { toast } from "sonner";
 import { parseZodErrors } from "@/shared/utils/zod-utils";
 import { BoltCreate } from "../types/Bolt";

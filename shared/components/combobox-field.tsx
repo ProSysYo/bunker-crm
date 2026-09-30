@@ -6,8 +6,8 @@ import {
     ComboboxInput,
     ComboboxItem,
     ComboboxList,
-} from "@/shared/ui/shadcn/combobox";
-import { Field, FieldDescription, FieldLabel } from "@/shared/ui/shadcn/field";
+} from "@/shared/components/shadcn/combobox";
+import { Field, FieldDescription, FieldLabel } from "@/shared/components/shadcn/field";
 
 export type ComboboxOption = {
     value: string;

@@ -1,6 +1,6 @@
 "use client";
 
-import { CatalogTable, ColumnDef } from "@/shared/ui/table/catalog-table/catalog-table";
+import { CatalogTable, ColumnDef } from "@/shared/components/table/catalog-table/catalog-table";
 
 import { routes } from "@/config/navigation";
 import { Bolt } from "../types/Bolt";

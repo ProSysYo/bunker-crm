@@ -1,6 +1,6 @@
 "use client";
 
-import { CatalogTable, ColumnDef } from "@/shared/ui/table/catalog-table/catalog-table";
+import { CatalogTable, ColumnDef } from "@/shared/components/table/catalog-table/catalog-table";
 import { TKnob } from "../types/TKnob";
 import { deleteKnob } from "../actions/delete-knob";
 import { routes } from "@/config/navigation";

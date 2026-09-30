@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useLoginStore } from "../store/use-login-store";
 import { routes } from "@/config/navigation";
-import { Button } from "@/shared/ui/shadcn/button";
-import { InputField } from "@/shared/ui/input-field";
+import { useRegisterStore } from "../store/use-register-store";
+import { Button } from "@/shared/components/shadcn/button";
+import { InputField } from "@/shared/components/input-field";
 
-export const LoginForm = () => {
-    const { values, errors, loading, serverError, setField, submit } = useLoginStore();
+export const RegisterForm = () => {
+    const { values, errors, loading, serverError, setField, submit } = useRegisterStore();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -33,7 +33,7 @@ export const LoginForm = () => {
 
             <InputField
                 id="password"
-                label="Password"
+                label="Пароль"
                 value={values.password}
                 placeholder="Введите пароль"
                 error={errors.password}
@@ -41,14 +41,24 @@ export const LoginForm = () => {
                 onChange={(e) => setField("password", e.target.value)}
             />
 
+            <InputField
+                id="confirmPassword"
+                label="Подтвердите пароль"
+                value={values.confirmPassword}
+                placeholder="Введите пароль"
+                error={errors.confirmPassword}
+                type="password"
+                onChange={(e) => setField("confirmPassword", e.target.value)}
+            />
+
             <Button type="submit" variant="default">
-                {loading ? "Отправка..." : "Войти"}
+                {loading ? "Отправка..." : "Зарегистрироваться"}
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">
-                Нет аккаунта?{" "}
-                <Link href={routes.register} className="text-primary hover:underline">
-                    Зарегистрироваться
+                Уже есть аккаунт?{" "}
+                <Link href={routes.login} className="text-primary hover:underline">
+                    Войти
                 </Link>
             </p>
         </form>

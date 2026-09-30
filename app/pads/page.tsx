@@ -1,6 +1,6 @@
 
 import { tableLimits } from "@/config/table-limits";
-import Pads from "../../features/pads/ui/pages/pads";
+import Pads from "../../features/pads/pages/pads";
 import { TPad } from "@/features/pads/types/TPad";
 import { getPads } from "@/features/pads/actions/get-pads";
 

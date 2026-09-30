@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { routes } from "@/config/navigation";
-import { Pagination } from "@/shared/ui/table/pagination";
-import { Search } from "@/shared/ui/table/search";
+import { Pagination } from "@/shared/components/table/pagination";
+import { Search } from "@/shared/components/table/search";
 import { KnobsTable } from "../components/knobs-table";
-import { Button } from "@/shared/ui/shadcn/button";
+import { Button } from "@/shared/components/shadcn/button";
 import { TKnob } from "../types/TKnob";
 
 interface Props {

@@ -1,10 +1,10 @@
 "use client";
 
 import { routes } from "@/config/navigation";
-import { TPad } from "../../types/TPad";
-import { CatalogTable, ColumnDef } from "@/shared/ui/table/catalog-table/catalog-table";
-import { padTypeLabels } from "../../types/TPadType";
-import { deletePad } from "../../actions/delete-pad";
+import { TPad } from "../types/TPad";
+import { CatalogTable, ColumnDef } from "@/shared/components/table/catalog-table/catalog-table";
+import { padTypeLabels } from "../types/TPadType";
+import { deletePad } from "../actions/delete-pad";
 
 type Props = {
     pads: TPad[];

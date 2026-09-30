@@ -1,6 +1,6 @@
 import { tableLimits } from "@/config/table-limits";
 import { getLocks } from "@/features/locks/actions/get-locks";
-import LocksList from "../../features/locks/ui/pages/locks-list";
+import LocksList from "../../features/locks/pages/locks-list";
 
 
 export default async function LocksPage(props: {

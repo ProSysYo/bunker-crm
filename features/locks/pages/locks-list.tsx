@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { TLock } from "@/features/locks/types/TLock";
-import { LocksTable } from "@/features/locks/ui/components/locks-table";
+import { LocksTable } from "@/features/locks/components/locks-table";
 import { routes } from "@/config/navigation";
-import { Pagination } from "@/shared/ui/table/pagination";
-import { Search } from "@/shared/ui/table/search";
-import { Button } from "@/shared/ui/shadcn/button";
+import { Pagination } from "@/shared/components/table/pagination";
+import { Search } from "@/shared/components/table/search";
+import { Button } from "@/shared/components/shadcn/button";
 
 interface Props {
     locks: TLock[];

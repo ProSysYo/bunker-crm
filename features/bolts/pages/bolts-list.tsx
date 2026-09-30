@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { routes } from "@/config/navigation";
-import { Pagination } from "@/shared/ui/table/pagination";
-import { Search } from "@/shared/ui/table/search";
-
-import { Button } from "@/shared/ui/shadcn/button";
+import { Pagination } from "@/shared/components/table/pagination";
+import { Search } from "@/shared/components/table/search";
+import { Button } from "@/shared/components/shadcn/button";
 import { Bolt } from "../types/Bolt";
 import { BoltsTable } from "../components/bolts-table";
 

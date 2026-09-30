@@ -1,16 +1,13 @@
 "use client";
 
 import Link from "next/link";
-
+import { useLoginStore } from "../store/use-login-store";
 import { routes } from "@/config/navigation";
-import { useRegisterStore } from "../store/use-register-store";
-import { Field, FieldDescription, FieldLabel } from "@/shared/ui/shadcn/field";
-import { Input } from "@/shared/ui/shadcn/input";
-import { Button } from "@/shared/ui/shadcn/button";
-import { InputField } from "@/shared/ui/input-field";
+import { Button } from "@/shared/components/shadcn/button";
+import { InputField } from "@/shared/components/input-field";
 
-export const RegisterForm = () => {
-    const { values, errors, loading, serverError, setField, submit } = useRegisterStore();
+export const LoginForm = () => {
+    const { values, errors, loading, serverError, setField, submit } = useLoginStore();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,7 +33,7 @@ export const RegisterForm = () => {
 
             <InputField
                 id="password"
-                label="Пароль"
+                label="Password"
                 value={values.password}
                 placeholder="Введите пароль"
                 error={errors.password}
@@ -44,24 +41,14 @@ export const RegisterForm = () => {
                 onChange={(e) => setField("password", e.target.value)}
             />
 
-            <InputField
-                id="confirmPassword"
-                label="Подтвердите пароль"
-                value={values.confirmPassword}
-                placeholder="Введите пароль"
-                error={errors.confirmPassword}
-                type="password"
-                onChange={(e) => setField("confirmPassword", e.target.value)}
-            />
-
             <Button type="submit" variant="default">
-                {loading ? "Отправка..." : "Зарегистрироваться"}
+                {loading ? "Отправка..." : "Войти"}
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">
-                Уже есть аккаунт?{" "}
-                <Link href={routes.login} className="text-primary hover:underline">
-                    Войти
+                Нет аккаунта?{" "}
+                <Link href={routes.register} className="text-primary hover:underline">
+                    Зарегистрироваться
                 </Link>
             </p>
         </form>

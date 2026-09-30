@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AppShell } from "@/shared/ui/app-shell";
+import { AppShell } from "@/shared/components/app-shell";
 import { Providers } from "./providers";
 import { auth } from "@/features/auth/auth";
 import { SessionProvider } from "next-auth/react";

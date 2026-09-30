@@ -2,7 +2,7 @@
 
 import { routes } from "@/config/navigation";
 import { TPad } from "@/features/pads/types/TPad";
-import { PadForm } from "@/features/pads/ui/components/pad-form";
+import { PadForm } from "@/features/pads/components/pad-form";
 import { useRouter } from "next/navigation";
 
 interface Props {

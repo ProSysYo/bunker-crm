@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { TPadType } from "../../types/TPadType";
-import { padTypes } from "../../data/pad-types";
-import { Button } from "@/shared/ui/shadcn/button";
-import { InputField } from "@/shared/ui/input-field";
-import { ComboboxField } from "@/shared/ui/combobox-field";
+import { TPadType } from "../types/TPadType";
+import { padTypes } from "../data/pad-types";
+import { Button } from "@/shared/components/shadcn/button";
+import { InputField } from "@/shared/components/input-field";
+import { ComboboxField } from "@/shared/components/combobox-field";
 import { toast } from "sonner";
-import { padFormSchema, PadFormValues } from "../../model/pad-schema";
-import { updatePad } from "../../actions/update-pad";
-import { createPad } from "../../actions/create-pad";
+import { padFormSchema, PadFormValues } from "../model/pad-schema";
+import { updatePad } from "../actions/update-pad";
+import { createPad } from "../actions/create-pad";
 import { parseZodErrors } from "@/shared/utils/zod-utils";
 
 interface LockFormProps {

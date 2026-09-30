@@ -1,11 +1,11 @@
 "use client";
 
-import { TLock } from "../../types/TLock";
+import { TLock } from "../types/TLock";
 import { routes } from "@/config/navigation";
 
-import { deleteLock } from "../../actions/delete-lock";
-import { CatalogTable, ColumnDef } from "@/shared/ui/table/catalog-table/catalog-table";
-import { lockTypeLabels } from "../../types/TLockType";
+import { deleteLock } from "../actions/delete-lock";
+import { CatalogTable, ColumnDef } from "@/shared/components/table/catalog-table/catalog-table";
+import { lockTypeLabels } from "../types/TLockType";
 
 const lockColumns: ColumnDef<TLock>[] = [
     { key: "name", label: "Название", render: (item) => item.name },

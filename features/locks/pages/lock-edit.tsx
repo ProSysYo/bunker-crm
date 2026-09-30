@@ -1,7 +1,7 @@
 "use client";
 
 import { TLock } from "@/features/locks/types/TLock";
-import { LockForm } from "@/features/locks/ui/components/lock-form";
+import { LockForm } from "@/features/locks/components/lock-form";
 import { useRouter } from "next/navigation";
 
 interface Props {

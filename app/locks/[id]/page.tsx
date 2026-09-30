@@ -1,7 +1,7 @@
 
 import { notFound } from "next/navigation";
 import { getLock } from "@/features/locks/actions/get-lock";
-import { LockEdit } from "@/features/locks/ui/pages/lock-edit";
+import { LockEdit } from "@/features/locks/pages/lock-edit";
 
 export default async function LockEditPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;

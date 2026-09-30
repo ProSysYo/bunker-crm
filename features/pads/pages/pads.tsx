@@ -4,11 +4,11 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { routes } from "@/config/navigation";
-import { Pagination } from "@/shared/ui/table/pagination";
-import { Search } from "@/shared/ui/table/search";
+import { Pagination } from "@/shared/components/table/pagination";
+import { Search } from "@/shared/components/table/search";
 import { TPad } from "@/features/pads/types/TPad";
-import { PadsTable } from "@/features/pads/ui/components/pads-table";
-import { Button } from "@/shared/ui/shadcn/button";
+import { PadsTable } from "@/features/pads/components/pads-table";
+import { Button } from "@/shared/components/shadcn/button";
 
 interface Props {
     pads: TPad[];
