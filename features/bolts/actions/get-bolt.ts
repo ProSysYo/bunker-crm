@@ -1,8 +1,8 @@
+import { Bolt } from "../types/Bolt";
 import { requireAuth } from "@/features/auth/auth";
 import prisma from "@/lib/prisma";
-import { TKnob } from "../types/TKnob";
 
-export async function getKnob(id: number): Promise<TKnob | null> {
+export async function getBolt(id: number): Promise<Bolt | null> {
     const { userId } = await requireAuth();
 
     if (!userId) {
@@ -10,11 +10,11 @@ export async function getKnob(id: number): Promise<TKnob | null> {
     }
 
     if (!id) {
-        throw new Error("Нет id ручки");
+        throw new Error("Нет id замка");
     }
 
-    const knob = await prisma.knob.findUnique({
+    const bolt = await prisma.bolt.findUnique({
         where: { id },
     });
-    return knob;
+    return bolt;
 }

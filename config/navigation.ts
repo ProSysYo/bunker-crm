@@ -17,6 +17,10 @@ export const routes = {
     knobsNew: "/knobs/new",
     knobsEdit: "/knobs/",
 
+    bolts: "/bolts",
+    boltsNew: "/bolts/new",
+    boltsEdit: "/bolts/",
+
     orderCurrent: "/order-current",
     orderPreview: "/order-preview",
     orderOld: "/order-old"
@@ -58,6 +62,10 @@ export const navItems = [
             {
                 href: routes.knobs,
                 label: "Ручки",
+            },
+            {
+                href: routes.bolts,
+                label: "Засовы",
             },
         ],
     },

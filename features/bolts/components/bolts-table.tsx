@@ -1,11 +1,12 @@
 "use client";
 
 import { CatalogTable, ColumnDef } from "@/shared/ui/table/catalog-table/catalog-table";
-import { TKnob } from "../../types/TKnob";
-import { deleteKnob } from "../../actions/delete-knob";
-import { routes } from "@/config/navigation";
 
-const knobColumns: ColumnDef<TKnob>[] = [
+import { routes } from "@/config/navigation";
+import { Bolt } from "../types/Bolt";
+import { deleteBolt } from "../actions/delete-bolt";
+
+const columns: ColumnDef<Bolt>[] = [
     { key: "name", label: "Название", render: (item) => item.name },
 
     {
@@ -17,18 +18,18 @@ const knobColumns: ColumnDef<TKnob>[] = [
 ];
 
 type Props = {
-    knobs: TKnob[];
+    items: Bolt[];
 };
 
-export const KnobsTable = ({ knobs }: Props) => {
+export const BoltsTable = ({ items }: Props) => {
     return (
         <CatalogTable
-            data={knobs}
-            columns={knobColumns}
+            data={items}
+            columns={columns}
             emptyContent="Ручки не найдены"
             ariaLabel="Таблица ручек"
-            onDelete={deleteKnob}
-            getEditHref={(item) => `${routes.knobsEdit}${item.id}`}
+            onDelete={deleteBolt}
+            getEditHref={(item) => `${routes.boltsEdit}${item.id}`}
         />
     );
 };

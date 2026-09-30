@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { knobFormSchema, KnobFormValues } from "../../model/knob-schema";
-import { createKnob } from "../../actions/create-knob";
-import { updateKnob } from "../../actions/update-knob";
 import { Button } from "@/shared/ui/shadcn/button";
 import { InputField } from "@/shared/ui/input-field";
 import { toast } from "sonner";
 import { parseZodErrors } from "@/shared/utils/zod-utils";
+import { BoltCreate } from "../types/Bolt";
+import { boltFormSchema } from "../model/bolt-schema";
+import { updateBolt } from "../actions/update-bolt";
+import { createBolt } from "../actions/create-bolt";
 
 interface KnobFormProps {
     onSuccess?: () => void;
@@ -15,25 +16,25 @@ interface KnobFormProps {
     initialValues?: { name?: string } | null;
 }
 
-export function KnobForm({ onSuccess, editId, initialValues }: KnobFormProps) {
+export function BoltForm({ onSuccess, editId, initialValues }: KnobFormProps) {
     const isEdit = !!editId;
 
-    const [values, setValues] = useState<KnobFormValues>({
+    const [values, setValues] = useState<BoltCreate>({
         name: initialValues?.name ?? "",
     });
 
-    const [errors, setErrors] = useState<Partial<Record<keyof KnobFormValues, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof BoltCreate, string>>>({});
 
     const [loading, setLoading] = useState(false);
 
-    const setField = <K extends keyof KnobFormValues>(field: K, value: KnobFormValues[K]) => {
+    const setField = <K extends keyof BoltCreate>(field: K, value: BoltCreate[K]) => {
         setValues((prev) => ({ ...prev, [field]: value }));
 
         setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
-    const validate = (): KnobFormValues | null => {
-        const result = knobFormSchema.safeParse(values);
+    const validate = (): BoltCreate | null => {
+        const result = boltFormSchema.safeParse(values);
 
         if (!result.success) {
             setErrors(parseZodErrors(result.error));
@@ -50,16 +51,16 @@ export function KnobForm({ onSuccess, editId, initialValues }: KnobFormProps) {
 
         setLoading(true);
 
-        const response = isEdit ? await updateKnob({ ...data, id: editId }) : await createKnob(data);
+        const response = isEdit ? await updateBolt({ ...data, id: editId }) : await createBolt(data);
 
         if (response.errors) {
-            setErrors(response.errors as Partial<Record<keyof KnobFormValues, string>>);
+            setErrors(response.errors as Partial<Record<keyof BoltCreate, string>>);
         }
 
         if (response.error) {
             toast.error(response.error);
         } else if (response.data) {
-            toast.success(isEdit ? "Данные обновлены" : `Добавлена ручка: ${response.data.name}`);
+            toast.success(isEdit ? "Данные обновлены" : `Добавлен засов: ${response.data.name}`);
             onSuccess?.();
         }
 

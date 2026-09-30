@@ -1,3 +1,4 @@
+import { BoltCreate } from "@/features/bolts/types/Bolt";
 import { TKnobCreate } from "@/features/knobs/types/TKnob";
 import { TLockCreate } from "@/features/locks/types/TLock";
 import { TPadCreate } from "@/features/pads/types/TPad";
@@ -56,19 +57,32 @@ async function main() {
 
     console.log(`Создано ${pads.length} накладок`);
 
-    const knobs: TKnobCreate[] = [
-        {name: 'Р 26 Л'},
-        {name: 'Р 26 Х'},
-        {name: 'Р 26 Б'},
-    ]
+    const knobs: TKnobCreate[] = [{ name: "Р 26 Л" }, { name: "Р 26 Х" }, { name: "Р 26 Б" }];
 
     for (const item of knobs) {
         await prisma.knob.create({
-            data: item
-        })
+            data: item,
+        });
     }
 
-    console.log(`Создано ${knobs.length} замков`)
+    console.log(`Создано ${knobs.length} замков`);
+
+    const bolts: BoltCreate[] = [
+        { name: "Apecs Б" },
+        { name: "Apecs Л" },
+        { name: "Apecs Х" },
+        { name: "Rezident Б" },
+        { name: "Rezident Л" },
+        { name: "Rezident Х" },
+    ];
+
+    for (const item of bolts) {
+        await prisma.bolt.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${bolts.length} засовов`);
 }
 
 main()

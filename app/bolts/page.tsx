@@ -1,8 +1,8 @@
 import { tableLimits } from "@/config/table-limits";
-import { getKnobs } from "@/features/knobs/actions/get-knobs";
-import KnobsList from "@/features/knobs/pages/knobs-list";
+import { getBolts } from "@/features/bolts/actions/get-bolts";
+import BoltsList from "@/features/bolts/pages/bolts-list";
 
-export default async function KnobsPage(props: {
+export default async function BoltsPage(props: {
     searchParams?: Promise<{
         query?: string;
         page?: string;
@@ -12,15 +12,15 @@ export default async function KnobsPage(props: {
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
     
-    const { knobs, pagination } = await getKnobs({
+    const { bolts, pagination } = await getBolts({
         search: query,
         page: currentPage,
-        limit: tableLimits.knobs,
+        limit: tableLimits.bolts,
     });
 
     return (
-        <KnobsList
-            knobs={knobs}
+        <BoltsList
+            items={bolts}
             totalPages={pagination.totalPages}
         />
     );
