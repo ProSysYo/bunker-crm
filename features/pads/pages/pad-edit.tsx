@@ -1,12 +1,12 @@
 "use client";
 
 import { routes } from "@/config/navigation";
-import { TPad } from "@/features/pads/types/TPad";
+import { Pad } from "@/features/pads/types/Pad";
 import { PadForm } from "@/features/pads/components/pad-form";
 import { useRouter } from "next/navigation";
 
 interface Props {
-    item: TPad;
+    item: Pad;
 }
 
 export const PadEdit = ({ item }: Props) => {

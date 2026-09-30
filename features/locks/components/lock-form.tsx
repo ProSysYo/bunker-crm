@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TLockType } from "../types/TLockType";
+import { LockType } from "../types/LockType";
 import { lockTypes } from "@/features/locks/data/lock-types";
 import { Button } from "@/shared/components/shadcn/button";
 import { InputField } from "@/shared/components/input-field";
@@ -15,7 +15,7 @@ import { toast } from "sonner";
 interface LockFormProps {
     onSuccess?: () => void;
     editId?: number;
-    initialValues?: { name?: string; type?: TLockType } | null;
+    initialValues?: { name?: string; type?: LockType } | null;
 }
 
 export const LockForm = ({ onSuccess, editId, initialValues }: LockFormProps) => {
@@ -23,7 +23,7 @@ export const LockForm = ({ onSuccess, editId, initialValues }: LockFormProps) =>
 
     const [values, setValues] = useState<LockFormValues>({
         name: initialValues?.name ?? "",
-        type: initialValues?.type ?? ("" as TLockType),
+        type: initialValues?.type ?? ("" as LockType),
     });
 
     const [errors, setErrors] = useState<Partial<Record<keyof LockFormValues, string>>>({});
@@ -88,7 +88,7 @@ export const LockForm = ({ onSuccess, editId, initialValues }: LockFormProps) =>
                 placeholder="Выберите тип"
                 items={lockTypes}
                 value={values.type}
-                onValueChange={(v) => setField("type", v as TLockType)}
+                onValueChange={(v) => setField("type", v as LockType)}
                 error={errors.type}
                 required
             />

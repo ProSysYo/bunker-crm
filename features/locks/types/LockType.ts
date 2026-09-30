@@ -6,11 +6,11 @@ export const LOCK_TYPE_VALUES = [
     "code",
 ] as const;
 
-export type TLockType = typeof LOCK_TYPE_VALUES[number];
+export type LockType = typeof LOCK_TYPE_VALUES[number];
 
-//export type TLockType = "cylinder" | "suvaldny" | "cylinder_suvaldny" | "suvaldny_cylinder" | "code";
+//export type LockType = "cylinder" | "suvaldny" | "cylinder_suvaldny" | "suvaldny_cylinder" | "code";
 
-export const lockTypeLabels: Record<TLockType, string> = {
+export const lockTypeLabels: Record<LockType, string> = {
     cylinder: "цилиндр",
     suvaldny: "сувальда",
     cylinder_suvaldny: "цилиндр + сувальда",

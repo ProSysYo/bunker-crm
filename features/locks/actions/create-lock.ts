@@ -4,11 +4,11 @@ import { lockFormSchema, LockFormValues } from "../model/lock-schema";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { ActionResult } from "@/shared/utils/action-types";
-import { TLock } from "../types/TLock";
+import { Lock } from "../types/Lock";
 import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
 import { handleServerError } from "@/shared/utils/server-error";
 
-export async function createLock(data: LockFormValues): Promise<ActionResult<TLock>> {
+export async function createLock(data: LockFormValues): Promise<ActionResult<Lock>> {
     const { userId } = await requireAuth();
 
     if (!userId) {

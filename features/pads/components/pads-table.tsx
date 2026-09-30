@@ -1,16 +1,16 @@
 "use client";
 
 import { routes } from "@/config/navigation";
-import { TPad } from "../types/TPad";
+import { Pad } from "../types/Pad";
 import { CatalogTable, ColumnDef } from "@/shared/components/table/catalog-table/catalog-table";
-import { padTypeLabels } from "../types/TPadType";
+import { padTypeLabels } from "../types/PadType";
 import { deletePad } from "../actions/delete-pad";
 
 type Props = {
-    pads: TPad[];
+    pads: Pad[];
 };
 
-const padColumns: ColumnDef<TPad>[] = [
+const padColumns: ColumnDef<Pad>[] = [
     { key: "name", label: "Название", render: (item) => item.name },
     { key: "type", label: "Тип", render: (item) => padTypeLabels[item.type] ?? item.type  },
     {

@@ -1,11 +1,11 @@
 "use client";
 
-import { TLock } from "@/features/locks/types/TLock";
+import { Lock } from "@/features/locks/types/Lock";
 import { LockForm } from "@/features/locks/components/lock-form";
 import { useRouter } from "next/navigation";
 
 interface Props {
-    lock: TLock;
+    lock: Lock;
 }
 
 export const LockEdit = ({ lock }: Props) => {

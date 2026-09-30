@@ -5,11 +5,11 @@ import { revalidatePath } from "next/cache";
 import { padFormSchema, PadFormValues } from "../model/pad-schema";
 import { requireAuth } from "@/features/auth/auth";
 import { ActionResult } from "@/shared/utils/action-types";
-import { TPad } from "../types/TPad";
+import { Pad } from "../types/Pad";
 import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
 import { handleServerError } from "@/shared/utils/server-error";
 
-export async function createPad(data: PadFormValues): Promise<ActionResult<TPad>> {
+export async function createPad(data: PadFormValues): Promise<ActionResult<Pad>> {
     const { userId } = await requireAuth();
 
     if (!userId) {

@@ -6,10 +6,10 @@ import { revalidatePath } from "next/cache";
 import { knobFormSchema } from "@/features/knobs/model/knob-schema";
 import { handleServerError } from "@/shared/utils/server-error";
 import { ActionResult } from "@/shared/utils/action-types";
-import { TKnobCreate, TKnob } from "@/features/knobs/types/TKnob";
+import { KnobCreate, Knob } from "@/features/knobs/types/Knob";
 import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
 
-export async function updateKnob(data: TKnobCreate & { id: number }): Promise<ActionResult<TKnob>> {
+export async function updateKnob(data: KnobCreate & { id: number }): Promise<ActionResult<Knob>> {
     const { userId } = await requireAuth();
     if (!userId) {
         return { error: "Не авторизован" };

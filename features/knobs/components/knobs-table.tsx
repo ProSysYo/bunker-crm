@@ -1,11 +1,11 @@
 "use client";
 
 import { CatalogTable, ColumnDef } from "@/shared/components/table/catalog-table/catalog-table";
-import { TKnob } from "../types/TKnob";
+import { Knob } from "../types/Knob";
 import { deleteKnob } from "../actions/delete-knob";
 import { routes } from "@/config/navigation";
 
-const knobColumns: ColumnDef<TKnob>[] = [
+const knobColumns: ColumnDef<Knob>[] = [
     { key: "name", label: "Название", render: (item) => item.name },
 
     {
@@ -17,7 +17,7 @@ const knobColumns: ColumnDef<TKnob>[] = [
 ];
 
 type Props = {
-    knobs: TKnob[];
+    knobs: Knob[];
 };
 
 export const KnobsTable = ({ knobs }: Props) => {

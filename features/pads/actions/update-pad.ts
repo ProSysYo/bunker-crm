@@ -4,12 +4,12 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { padFormSchema } from "../model/pad-schema";
 import { requireAuth } from "@/features/auth/auth";
-import { TPad, TPadCreate } from "../types/TPad";
+import { Pad, PadCreate } from "../types/Pad";
 import { ActionResult } from "@/shared/utils/action-types";
 import { handleServerError } from "@/shared/utils/server-error";
 import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
 
-export async function updatePad(data: TPadCreate & { id: number }): Promise<ActionResult<TPad>> {
+export async function updatePad(data: PadCreate & { id: number }): Promise<ActionResult<Pad>> {
     const { userId } = await requireAuth();
     if (!userId) {
         return { error: "Не авторизован" };

@@ -1,7 +1,7 @@
 
 import { tableLimits } from "@/config/table-limits";
 import Pads from "../../features/pads/pages/pads";
-import { TPad } from "@/features/pads/types/TPad";
+import { Pad } from "@/features/pads/types/Pad";
 import { getPads } from "@/features/pads/actions/get-pads";
 
 export default async function PadsPage(props: {
@@ -22,7 +22,7 @@ export default async function PadsPage(props: {
 
     return (
         <Pads
-            pads={pads as TPad[]}
+            pads={pads as Pad[]}
             totalPages={pagination.totalPages}
         />
     );

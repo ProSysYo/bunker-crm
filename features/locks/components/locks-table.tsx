@@ -1,13 +1,13 @@
 "use client";
 
-import { TLock } from "../types/TLock";
+import { Lock } from "../types/Lock";
 import { routes } from "@/config/navigation";
 
 import { deleteLock } from "../actions/delete-lock";
 import { CatalogTable, ColumnDef } from "@/shared/components/table/catalog-table/catalog-table";
-import { lockTypeLabels } from "../types/TLockType";
+import { lockTypeLabels } from "../types/LockType";
 
-const lockColumns: ColumnDef<TLock>[] = [
+const lockColumns: ColumnDef<Lock>[] = [
     { key: "name", label: "Название", render: (item) => item.name },
     { key: "type", label: "Тип", render: (item) => lockTypeLabels[item.type] ?? item.type },
     {
@@ -19,7 +19,7 @@ const lockColumns: ColumnDef<TLock>[] = [
 ];
 
 type Props = {
-    locks: TLock[];
+    locks: Lock[];
 };
 
 export const LocksTable = ({ locks }: Props) => {

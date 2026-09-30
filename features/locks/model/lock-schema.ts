@@ -1,6 +1,6 @@
 import { z } from "zod";
 import {} from "../data/lock-types";
-import { LOCK_TYPE_VALUES } from "../types/TLockType";
+import { LOCK_TYPE_VALUES } from "../types/LockType";
 
 export const lockFormSchema = z.object({
     name: z.string().trim().min(3, "Минимум 3 символа"),

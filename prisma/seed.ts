@@ -1,13 +1,13 @@
 import { BoltCreate } from "@/features/bolts/types/Bolt";
-import { TKnobCreate } from "@/features/knobs/types/TKnob";
-import { TLockCreate } from "@/features/locks/types/TLock";
-import { TPadCreate } from "@/features/pads/types/TPad";
+import { KnobCreate } from "@/features/knobs/types/Knob";
+import { LockCreate } from "@/features/locks/types/Lock";
+import { PadCreate } from "@/features/pads/types/Pad";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function main() {
-    const locks: TLockCreate[] = [
+    const locks: LockCreate[] = [
         { name: "Г1211", type: "cylinder" },
         { name: "Г1212", type: "cylinder" },
         { name: "Г1213", type: "cylinder" },
@@ -39,7 +39,7 @@ async function main() {
 
     console.log(`Создано ${locks.length} замков`);
 
-    const pads: TPadCreate[] = [
+    const pads: PadCreate[] = [
         { name: "Sec-21 Л", type: "suvaldny" },
         { name: "Sec-21 Х", type: "suvaldny" },
         { name: "Sec-21 Б", type: "suvaldny" },
@@ -57,7 +57,7 @@ async function main() {
 
     console.log(`Создано ${pads.length} накладок`);
 
-    const knobs: TKnobCreate[] = [{ name: "Р 26 Л" }, { name: "Р 26 Х" }, { name: "Р 26 Б" }];
+    const knobs: KnobCreate[] = [{ name: "Р 26 Л" }, { name: "Р 26 Х" }, { name: "Р 26 Б" }];
 
     for (const item of knobs) {
         await prisma.knob.create({

@@ -1,8 +1,8 @@
-export type TKnobCreate = {
+export type KnobCreate = {
     name: string
 }
 
-export type TKnob = TKnobCreate & {
+export type Knob = KnobCreate & {
     id: number
     createdAt: Date
     updatedAt: Date

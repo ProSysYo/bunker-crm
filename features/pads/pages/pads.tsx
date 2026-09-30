@@ -6,12 +6,12 @@ import { Plus } from "lucide-react";
 import { routes } from "@/config/navigation";
 import { Pagination } from "@/shared/components/table/pagination";
 import { Search } from "@/shared/components/table/search";
-import { TPad } from "@/features/pads/types/TPad";
+import { Pad } from "@/features/pads/types/Pad";
 import { PadsTable } from "@/features/pads/components/pads-table";
 import { Button } from "@/shared/components/shadcn/button";
 
 interface Props {
-    pads: TPad[];
+    pads: Pad[];
     totalPages: number;
 }
 

@@ -1,8 +1,8 @@
 import { requireAuth } from "@/features/auth/auth";
 import prisma from "@/lib/prisma";
-import { TKnob } from "../types/TKnob";
+import { Knob } from "../types/Knob";
 
-export async function getKnob(id: number): Promise<TKnob | null> {
+export async function getKnob(id: number): Promise<Knob | null> {
     const { userId } = await requireAuth();
 
     if (!userId) {

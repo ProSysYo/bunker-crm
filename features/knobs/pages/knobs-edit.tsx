@@ -1,11 +1,11 @@
 "use client";
 
-import { TKnob } from "@/features/knobs/types/TKnob";
+import { Knob } from "@/features/knobs/types/Knob";
 import { useRouter } from "next/navigation";
 import { KnobForm } from "../components/knob-form";
 
 interface Props {
-    item: TKnob;
+    item: Knob;
 }
 
 export const KnobsEdit = ({ item }: Props) => {

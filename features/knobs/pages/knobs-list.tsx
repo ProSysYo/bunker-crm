@@ -7,10 +7,10 @@ import { Pagination } from "@/shared/components/table/pagination";
 import { Search } from "@/shared/components/table/search";
 import { KnobsTable } from "../components/knobs-table";
 import { Button } from "@/shared/components/shadcn/button";
-import { TKnob } from "../types/TKnob";
+import { Knob } from "../types/Knob";
 
 interface Props {
-    knobs: TKnob[];
+    knobs: Knob[];
     totalPages: number;
 }
 

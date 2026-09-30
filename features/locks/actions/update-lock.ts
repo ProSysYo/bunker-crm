@@ -3,12 +3,12 @@ import { requireAuth } from "@/features/auth/auth";
 import { lockFormSchema } from "../model/lock-schema";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { TLock, TLockCreate } from "../types/TLock";
+import { Lock, LockCreate } from "../types/Lock";
 import { ActionResult } from "@/shared/utils/action-types";
 import { getFirstZodError, parseZodErrors } from "@/shared/utils/zod-utils";
 import { handleServerError } from "@/shared/utils/server-error";
 
-export async function updateLock(data: TLockCreate & { id: number }): Promise<ActionResult<TLock>> {
+export async function updateLock(data: LockCreate & { id: number }): Promise<ActionResult<Lock>> {
     const { userId } = await requireAuth();
     if (!userId) {
         return { error: "Не авторизован" };

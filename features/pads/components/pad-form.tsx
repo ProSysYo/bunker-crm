@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TPadType } from "../types/TPadType";
+import { PadType } from "../types/PadType";
 import { padTypes } from "../data/pad-types";
 import { Button } from "@/shared/components/shadcn/button";
 import { InputField } from "@/shared/components/input-field";
@@ -15,7 +15,7 @@ import { parseZodErrors } from "@/shared/utils/zod-utils";
 interface LockFormProps {
     onSuccess?: () => void;
     editId?: number;
-    initialValues?: { name?: string; type?: TPadType } | null;
+    initialValues?: { name?: string; type?: PadType } | null;
 }
 
 export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => {
@@ -23,7 +23,7 @@ export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => 
 
     const [values, setValues] = useState<PadFormValues>({
         name: initialValues?.name ?? "",
-        type: initialValues?.type ?? ("" as TPadType),
+        type: initialValues?.type ?? ("" as PadType),
     });
 
     const [errors, setErrors] = useState<Partial<Record<keyof PadFormValues, string>>>({});
@@ -88,7 +88,7 @@ export const PadForm = ({ onSuccess, editId, initialValues }: LockFormProps) => 
                 placeholder="Выберите тип"
                 items={padTypes}
                 value={values.type}
-                onValueChange={(v) => setField("type", v as TPadType)}
+                onValueChange={(v) => setField("type", v as PadType)}
                 error={errors.type}
                 required
             />

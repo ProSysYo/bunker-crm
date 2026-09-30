@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PAD_TYPE_VALUES } from "../types/TPadType";
+import { PAD_TYPE_VALUES } from "../types/PadType";
 
 export const padFormSchema = z.object({
   name: z.string().min(3, "Минимум 3 символа"),
