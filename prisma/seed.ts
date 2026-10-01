@@ -2,6 +2,7 @@ import { BoltCreate } from "@/features/bolts/bolt-types";
 import { EarCreate } from "@/features/ears/ear-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
 import { LockCreate } from "@/features/locks/types/Lock";
+import { PackagingCreate } from "@/features/packagings/packaging-types";
 import { PadCreate } from "@/features/pads/types/Pad";
 import { PaintCreate } from "@/features/paints/paint-types";
 import { PeepholeCreate } from "@/features/peepholes/peephole-types";
@@ -137,6 +138,23 @@ async function main() {
     }
 
     console.log(`Создано ${ears.length} ушей`);
+    
+    const packagings: PackagingCreate[] = [
+        { name: "упаковка  ХАВЕР" },
+        { name: "упаковка  LUXOR" },
+        { name: "упаковка БЕЗ ПЕНОПЛАСТА" },
+        { name: "картон+стрейч пленка" },
+        { name: "упаковка ДВЕРИ ГУД" },
+        { name: "упаковка БУНКЕР" },
+    ];
+
+    for (const item of packagings) {
+        await prisma.packaging.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${packagings.length} упаковок`);
 }
 
 main()

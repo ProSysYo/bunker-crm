@@ -28,14 +28,18 @@ export const routes = {
     paints: "/paints",
     paintsNew: "/paints/new",
     paintsEdit: "/paints/",
-    
+
     ears: "/ears",
     earsNew: "/ears/new",
     earsEdit: "/ears/",
 
+    packagings: "/packagings",
+    packagingsNew: "/packagings/new",
+    packagingsEdit: "/packagings/",
+
     orderCurrent: "/order-current",
     orderPreview: "/order-preview",
-    orderOld: "/order-old"
+    orderOld: "/order-old",
 };
 
 export const navItems = [
@@ -90,6 +94,10 @@ export const navItems = [
             {
                 href: routes.ears,
                 label: "Уши",
+            },
+             {
+                href: routes.packagings,
+                label: "Упаковки",
             },
         ],
     },

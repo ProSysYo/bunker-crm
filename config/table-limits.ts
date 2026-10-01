@@ -6,4 +6,5 @@ export const tableLimits = {
     peepholes: 10,
     paints: 10,
     ears: 10,
+    packagings: 10,
 }
