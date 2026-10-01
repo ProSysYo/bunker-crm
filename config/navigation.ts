@@ -41,6 +41,10 @@ export const routes = {
     jambHolesNew: "/jamb-holes/new",
     jambHolesEdit: "/jamb-holes/",
 
+    hinges: "/hinges",
+    hingesNew: "/hinges/new",
+    hingesEdit: "/hinges/",
+
     orderCurrent: "/order-current",
     orderPreview: "/order-preview",
     orderOld: "/order-old",
@@ -106,6 +110,10 @@ export const navItems = [
             {
                 href: routes.jambHoles,
                 label: "Отверстия в коробе",
+            },
+            {
+                href: routes.hinges,
+                label: "Петли",
             },
         ],
     },

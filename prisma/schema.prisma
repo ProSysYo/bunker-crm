@@ -155,3 +155,12 @@ model JambHole {
 
   @@map("jamb_hole")
 }
+
+model Hinge {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("hinge")
+}

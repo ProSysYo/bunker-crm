@@ -1,5 +1,6 @@
 import { BoltCreate } from "@/features/bolts/bolt-types";
 import { EarCreate } from "@/features/ears/ear-types";
+import { HingeCreate } from "@/features/hinges/hinge-types";
 import { JambHoleCreate } from "@/features/jamb-holes/jamb-hole-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
 import { LockCreate } from "@/features/locks/types/Lock";
@@ -171,6 +172,23 @@ async function main() {
     }
 
     console.log(`Создано ${jambHoles.length} отверстий в коробе`);
+
+    const hinges: HingeCreate[] = [
+        { name: "нет" },
+        { name: "Петли капелька" },
+        { name: "Пели на подшипнике" },
+        { name: "Петли на шарике" },
+        { name: "Петли Барк" },
+        { name: "см.прим." },
+    ];
+
+    for (const item of hinges) {
+        await prisma.hinge.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${hinges.length} петлей`);
 }
 
 main()
