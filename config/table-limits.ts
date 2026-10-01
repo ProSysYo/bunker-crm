@@ -7,4 +7,5 @@ export const tableLimits = {
     paints: 10,
     ears: 10,
     packagings: 10,
+    jambHoles: 10
 }

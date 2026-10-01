@@ -1,5 +1,6 @@
 import { BoltCreate } from "@/features/bolts/bolt-types";
 import { EarCreate } from "@/features/ears/ear-types";
+import { JambHoleCreate } from "@/features/jamb-holes/jamb-hole-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
 import { LockCreate } from "@/features/locks/types/Lock";
 import { PackagingCreate } from "@/features/packagings/packaging-types";
@@ -138,7 +139,7 @@ async function main() {
     }
 
     console.log(`Создано ${ears.length} ушей`);
-    
+
     const packagings: PackagingCreate[] = [
         { name: "упаковка  ХАВЕР" },
         { name: "упаковка  LUXOR" },
@@ -155,6 +156,21 @@ async function main() {
     }
 
     console.log(`Создано ${packagings.length} упаковок`);
+
+    const jambHoles: JambHoleCreate[] = [
+        { name: "нет" },
+        { name: "6 шт Д10" },
+        { name: "8 шт Д10" },
+        { name: "см.прим." },
+    ];
+
+    for (const item of jambHoles) {
+        await prisma.jambHole.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${jambHoles.length} отверстий в коробе`);
 }
 
 main()

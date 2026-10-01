@@ -146,3 +146,12 @@ model Packaging {
 
   @@map("packaging")
 }
+
+model JambHole {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("jamb_hole")
+}
