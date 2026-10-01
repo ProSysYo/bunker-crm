@@ -1,4 +1,5 @@
 import { BoltCreate } from "@/features/bolts/bolt-types";
+import { EarCreate } from "@/features/ears/ear-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
 import { LockCreate } from "@/features/locks/types/Lock";
 import { PadCreate } from "@/features/pads/types/Pad";
@@ -119,6 +120,23 @@ async function main() {
     }
 
     console.log(`Создано ${paints.length} цветов покраски`);
+
+    const ears: EarCreate[] = [
+        { name: "нет" },
+        { name: "80x40x6шт" },
+        { name: "80x40x8шт" },
+        { name: "100x40x6шт" },
+        { name: "100x40x8шт" },
+        { name: "нестандартный" },
+    ];
+
+    for (const item of ears) {
+        await prisma.ear.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${ears.length} ушей`);
 }
 
 main()

@@ -5,4 +5,5 @@ export const tableLimits = {
     bolts: 10,
     peepholes: 10,
     paints: 10,
+    ears: 10,
 }
