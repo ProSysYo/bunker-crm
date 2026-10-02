@@ -1,7 +1,7 @@
 import { requireAuth } from "@/features/auth/auth";
 import prisma from "@/lib/prisma";
 
-export async function getCustomers(params?: { search?: string; page?: number; limit?: number }) {
+export async function getInsideFinishes(params?: { search?: string; page?: number; limit?: number }) {
     const { userId } = await requireAuth();
     if (!userId) {
         throw new Error("Нет id пользователя");
@@ -12,25 +12,22 @@ export async function getCustomers(params?: { search?: string; page?: number; li
 
     const where = search
         ? {
-              OR: [
-                  { name: { contains: search, mode: "insensitive" as const } },
-                  { code: { contains: search, mode: "insensitive" as const } },
-              ],
+              OR: [{ name: { contains: search, mode: "insensitive" as const } }],
           }
         : {};
 
-    const [customers, total] = await Promise.all([
-        prisma.customer.findMany({
+    const [insideFinishes, total] = await Promise.all([
+        prisma.insideFinish.findMany({
             where,
-            orderBy: { code: "asc" },
+            orderBy: { name: "asc" },
             skip,
             take: limit,
         }),
-        prisma.customer.count({ where }),
+        prisma.insideFinish.count({ where }),
     ]);
 
     return {
-        customers,
+        insideFinishes,
         pagination: {
             page,
             limit,

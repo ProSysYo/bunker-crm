@@ -184,3 +184,21 @@ model Customer {
 
   @@map("customer")
 }
+
+model OutsideFinish {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("outside_finish")
+}
+
+model InsideFinish {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("inside_finish")
+}

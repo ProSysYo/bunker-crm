@@ -6,6 +6,7 @@ import { JambHoleCreate } from "@/features/jamb-holes/jamb-hole-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
 import { LockCreate } from "@/features/locks/types/Lock";
 import { ModelCreate } from "@/features/models/model-types";
+import { OutsideFinishCreate } from "@/features/outside-finishes/outside-finish-types";
 import { PackagingCreate } from "@/features/packagings/packaging-types";
 import { PadCreate } from "@/features/pads/types/Pad";
 import { PaintCreate } from "@/features/paints/paint-types";
@@ -203,7 +204,6 @@ async function main() {
         { code: "D002", name: "Иванов" },
         { code: "D003", name: "ГАМ" },
         { code: "D004", name: "РДК" },
-       
     ];
 
     for (const item of customers) {
@@ -213,6 +213,42 @@ async function main() {
     }
 
     console.log(`Создано ${customers.length} заказчиков`);
+
+    const outsideFinishes: OutsideFinishCreate[] = [
+        { name: "нет" },
+        { name: "МДФ 10мм лам. б/фр." },
+        { name: "МДФ 10мм лам. фр." },
+        { name: "Кованные элементы" },
+        { name: "Наружняя отделка металлом" },
+        { name: "под панель 6мм" },
+        { name: "уст. п/з 10мм" },
+        { name: "см. прим" },
+    ];
+
+    for (const item of outsideFinishes) {
+        await prisma.outsideFinish.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${customers.length} наружных отделок`);
+
+    const insideFinishes: OutsideFinishCreate[] = [
+        { name: "нет" },
+        { name: "МДФ 10мм лам. б/фр." },
+        { name: "МДФ 10мм лам. фр." },
+        { name: "под панель 6мм" },
+        { name: "уст. п/з 10мм" },
+        { name: "см. прим" },
+    ];
+
+    for (const item of insideFinishes) {
+        await prisma.insideFinish.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${insideFinishes.length} внутренних отделок`);
 }
 
 main()

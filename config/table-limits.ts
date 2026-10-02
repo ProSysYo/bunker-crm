@@ -11,4 +11,6 @@ export const tableLimits = {
     hinges: 20,
     models: 20,
     customers: 20,
+    outsideFinishes: 20,
+    insideFinishes: 20,
 }

@@ -53,6 +53,14 @@ export const routes = {
     customersNew: "/customers/new",
     customersEdit: "/customers/",
 
+    outsideFinishes: "/outside-finishes",
+    outsideFinishesNew: "/outside-finishes/new",
+    outsideFinishesEdit: "/outside-finishes/",
+
+    insideFinishes: "/inside-finishes",
+    insideFinishesNew: "/inside-finishes/new",
+    insideFinishesEdit: "/inside-finishes/",
+
     orderCurrent: "/order-current",
     orderPreview: "/order-preview",
     orderOld: "/order-old",
@@ -90,6 +98,14 @@ export const navItems = [
             {
                 href: routes.models,
                 label: "Модели",
+            },
+            {
+                href: routes.outsideFinishes,
+                label: "Отделки снаружи",
+            },
+            {
+                href: routes.insideFinishes,
+                label: "Отделки внутри",
             },
             {
                 href: routes.locks,
