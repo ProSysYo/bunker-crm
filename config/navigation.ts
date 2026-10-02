@@ -57,6 +57,10 @@ export const routes = {
     outsideFinishesNew: "/outside-finishes/new",
     outsideFinishesEdit: "/outside-finishes/",
 
+    foils: "/foils",
+    foilsNew: "/foils/new",
+    foilsEdit: "/foils/",
+
     insideFinishes: "/inside-finishes",
     insideFinishesNew: "/inside-finishes/new",
     insideFinishesEdit: "/inside-finishes/",
@@ -106,6 +110,10 @@ export const navItems = [
             {
                 href: routes.insideFinishes,
                 label: "Отделки внутри",
+            },
+            {
+                href: routes.foils,
+                label: "Пленки мдф",
             },
             {
                 href: routes.locks,

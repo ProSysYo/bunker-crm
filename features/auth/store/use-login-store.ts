@@ -17,7 +17,7 @@ type LoginState = {
 export const useLoginStore = create<LoginState>((set, get) => ({
     values: {
         email: "m@mail.ru",
-        password: "123456",
+        password: "zxc123v",
     },
     errors: {},
     loading: false,

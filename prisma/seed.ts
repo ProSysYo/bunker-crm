@@ -1,6 +1,7 @@
 import { BoltCreate } from "@/features/bolts/bolt-types";
 import { CustomerCreate } from "@/features/customers/customer-types";
 import { EarCreate } from "@/features/ears/ear-types";
+import { FoilCreate } from "@/features/foils/foil-types";
 import { HingeCreate } from "@/features/hinges/hinge-types";
 import { JambHoleCreate } from "@/features/jamb-holes/jamb-hole-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
@@ -249,6 +250,24 @@ async function main() {
     }
 
     console.log(`Создано ${insideFinishes.length} внутренних отделок`);
+
+    const foils: FoilCreate[] = [
+        { name: "нет" },
+        { name: "см. прим" },
+        { name: "белый глянец" },
+        { name: "белый матовый" },
+        { name: "бетон снежный" },
+        { name: "венге кантри" },
+        { name: "венге капучино" },
+    ];
+
+    for (const item of foils) {
+        await prisma.foil.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${foils.length} пленок`);
 }
 
 main()
