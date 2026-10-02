@@ -19,7 +19,7 @@ export async function getPackagings(params?: { search?: string; page?: number; l
     const [packagings, total] = await Promise.all([
         prisma.packaging.findMany({
             where,
-            orderBy: { createdAt: "desc" },
+            orderBy: { name: "asc" },
             skip,
             take: limit,
         }),

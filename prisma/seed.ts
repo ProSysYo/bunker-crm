@@ -4,6 +4,7 @@ import { HingeCreate } from "@/features/hinges/hinge-types";
 import { JambHoleCreate } from "@/features/jamb-holes/jamb-hole-types";
 import { KnobCreate } from "@/features/knobs/types/Knob";
 import { LockCreate } from "@/features/locks/types/Lock";
+import { ModelCreate } from "@/features/models/model-types";
 import { PackagingCreate } from "@/features/packagings/packaging-types";
 import { PadCreate } from "@/features/pads/types/Pad";
 import { PaintCreate } from "@/features/paints/paint-types";
@@ -20,21 +21,6 @@ async function main() {
         { name: "Г1214", type: "cylinder" },
         { name: "Г1215", type: "cylinder" },
         { name: "Г1216", type: "cylinder" },
-        { name: "Г1217", type: "cylinder" },
-        { name: "Г1218", type: "cylinder" },
-        { name: "Г1219", type: "cylinder" },
-        { name: "Г1220", type: "cylinder" },
-        { name: "Г1221", type: "cylinder" },
-        { name: "Г1222", type: "cylinder" },
-        { name: "Г1223", type: "cylinder" },
-        { name: "Г1224", type: "cylinder" },
-        { name: "Г1225", type: "cylinder" },
-        { name: "Г1227", type: "cylinder" },
-        { name: "Г1228", type: "cylinder" },
-        { name: "Г1229", type: "cylinder" },
-        { name: "Г1230", type: "cylinder" },
-        { name: "Г1231", type: "cylinder" },
-        { name: "Г1232", type: "cylinder" },
     ];
 
     for (const lock of locks) {
@@ -189,6 +175,25 @@ async function main() {
     }
 
     console.log(`Создано ${hinges.length} петлей`);
+
+    const models: ModelCreate[] = [
+        { code: "МП2", name: "металл-панель 2к" },
+        { code: "ПП2", name: "панель-панель 2к" },
+        { code: "МП3", name: "металл-панель 3к" },
+        { code: "ПП3", name: "панель-панель 3к" },
+        { code: "ДМП2", name: "двустворчатая металл-панель 2к" },
+        { code: "ДПП2", name: "двустворчатая панель-панель 2к" },
+        { code: "МПТ3", name: "металл-панель термо 3к" },
+        { code: "ППТ3", name: "панель-панель термо 3к" },
+    ];
+
+    for (const item of models) {
+        await prisma.model.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${models.length} моделей`);
 }
 
 main()

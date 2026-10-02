@@ -21,7 +21,7 @@ export async function getLocks(params?: { search?: string; page?: number; limit?
     const [locks, total] = await Promise.all([
         prisma.lock.findMany({
             where,
-            orderBy: { createdAt: "desc" },
+            orderBy: { name: "asc" },
             skip,
             take: limit,
         }),

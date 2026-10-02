@@ -22,7 +22,7 @@ export async function getPads(params?: { search?: string; page?: number; limit?:
     const [pads, total] = await Promise.all([
         prisma.pad.findMany({
             where,
-            orderBy: { createdAt: "desc" },
+            orderBy: { name: "asc" },
             skip,
             take: limit,
         }),

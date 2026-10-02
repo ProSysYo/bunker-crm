@@ -19,7 +19,7 @@ export async function getHinges(params?: { search?: string; page?: number; limit
     const [hinges, total] = await Promise.all([
         prisma.hinge.findMany({
             where,
-            orderBy: { createdAt: "desc" },
+            orderBy: { name: "asc" },
             skip,
             take: limit,
         }),

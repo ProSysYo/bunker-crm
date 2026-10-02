@@ -19,7 +19,7 @@ export async function getEars(params?: { search?: string; page?: number; limit?:
     const [ears, total] = await Promise.all([
         prisma.ear.findMany({
             where,
-            orderBy: { createdAt: "desc" },
+            orderBy: { name: "asc" },
             skip,
             take: limit,
         }),

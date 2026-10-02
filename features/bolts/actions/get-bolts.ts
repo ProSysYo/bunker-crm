@@ -21,7 +21,7 @@ export async function getBolts(params?: { search?: string; page?: number; limit?
     const [bolts, total] = await Promise.all([
         prisma.bolt.findMany({
             where,
-            orderBy: { createdAt: "desc" },
+            orderBy: { name: "asc" },
             skip,
             take: limit,
         }),

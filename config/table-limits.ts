@@ -9,4 +9,5 @@ export const tableLimits = {
     packagings: 10,
     jambHoles: 10,
     hinges: 10,
+    models: 10,
 }

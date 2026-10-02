@@ -164,3 +164,13 @@ model Hinge {
 
   @@map("hinge")
 }
+
+   model Model {
+     id        Int      @id @default(autoincrement())
+     code      String
+     name      String
+     createdAt DateTime @default(now()) @map("created_at")
+     updatedAt DateTime @updatedAt @map("updated_at")
+   
+     @@map("model") 
+   }

@@ -45,6 +45,10 @@ export const routes = {
     hingesNew: "/hinges/new",
     hingesEdit: "/hinges/",
 
+    models: "/models",
+    modelsNew: "/models/new",
+    modelsEdit: "/models/",
+
     orderCurrent: "/order-current",
     orderPreview: "/order-preview",
     orderOld: "/order-old",
@@ -75,6 +79,10 @@ export const navItems = [
         url: "#",
         icon: SquareTerminal,
         items: [
+            {
+                href: routes.models,
+                label: "Модели",
+            },
             {
                 href: routes.locks,
                 label: "Замки",

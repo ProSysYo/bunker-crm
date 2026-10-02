@@ -19,7 +19,7 @@ export async function getPaints(params?: { search?: string; page?: number; limit
     const [paints, total] = await Promise.all([
         prisma.paint.findMany({
             where,
-            orderBy: { createdAt: "desc" },
+            orderBy: { name: "asc" },
             skip,
             take: limit,
         }),

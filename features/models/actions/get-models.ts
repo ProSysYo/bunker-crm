@@ -1,7 +1,7 @@
 import { requireAuth } from "@/features/auth/auth";
 import prisma from "@/lib/prisma";
 
-export async function getPeepholes(params?: { search?: string; page?: number; limit?: number }) {
+export async function getModels(params?: { search?: string; page?: number; limit?: number }) {
     const { userId } = await requireAuth();
     if (!userId) {
         throw new Error("Нет id пользователя");
@@ -12,22 +12,25 @@ export async function getPeepholes(params?: { search?: string; page?: number; li
 
     const where = search
         ? {
-              OR: [{ name: { contains: search, mode: "insensitive" as const } }],
+              OR: [
+                  { name: { contains: search, mode: "insensitive" as const } },
+                  { code: { contains: search, mode: "insensitive" as const } },
+              ],
           }
         : {};
 
-    const [peepholes, total] = await Promise.all([
-        prisma.peephole.findMany({
+    const [models, total] = await Promise.all([
+        prisma.model.findMany({
             where,
             orderBy: { name: "asc" },
             skip,
             take: limit,
         }),
-        prisma.peephole.count({ where }),
+        prisma.model.count({ where }),
     ]);
 
     return {
-        peepholes,
+        models,
         pagination: {
             page,
             limit,
