@@ -16,7 +16,7 @@ import {
 } from "./shadcn/sidebar";
 import { navItems, routes } from "@/config/navigation";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./shadcn/collapsible";
-import { BadgeCheck, Bell, ChevronRight, ChevronsUpDown, Command, LogOut } from "lucide-react";
+import { Bell, ChevronRight, ChevronsUpDown, LogOut, UserRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -38,6 +38,8 @@ export const AppSidebar = () => {
 
     const { data: session } = useSession();
 
+    const initials = (session?.user?.email ?? "??").slice(0, 2).toUpperCase();
+
     const handleSignOut = async () => {
         try {
             await signOut({ redirect: true });
@@ -52,9 +54,23 @@ export const AppSidebar = () => {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={routes.home}>
-                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                                    <Command className="size-4" />
+                            <Link href={routes.home} className="group/logo">
+                                <div className="relative flex aspect-square size-8 items-center justify-center overflow-hidden rounded-lg bg-linear-to-br from-zinc-600 via-zinc-800 to-zinc-950 text-white shadow-sm ring-1 ring-inset ring-white/15 transition-transform duration-300 group-hover/logo:scale-105">
+                                    <span className="pointer-events-none absolute -inset-y-2 -left-1/3 w-1/3 rotate-12 bg-white/25 blur-md transition-transform duration-500 group-hover/logo:translate-x-[320%]" />
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth={1.8}
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="relative"
+                                        aria-hidden="true"
+                                    >
+                                        <rect x="5" y="2.5" width="14" height="19" rx="1.5" />
+                                        <path d="M8 6.5h1.6M8 10.5h1.6M8 14.5h1.6M8 18h1.6" />
+                                        <circle cx="15.4" cy="12" r="1" fill="currentColor" stroke="none" />
+                                    </svg>
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-medium">Железные двери</span>
@@ -84,8 +100,13 @@ export const AppSidebar = () => {
                                 >
                                     <SidebarMenuItem>
                                         <CollapsibleTrigger asChild>
-                                            <SidebarMenuButton tooltip={item.title}>
-                                                {item.icon && <item.icon />}
+                                            <SidebarMenuButton
+                                                tooltip={item.title}
+                                                className="transition-transform hover:translate-x-0.5"
+                                            >
+                                                {item.icon && (
+                                                    <item.icon className="transition-colors group-data-[state=open]/collapsible:text-sidebar-primary" />
+                                                )}
                                                 <span>{item.title}</span>
                                                 <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                                             </SidebarMenuButton>
@@ -99,7 +120,11 @@ export const AppSidebar = () => {
                                                             : pathname.startsWith(subItem.href);
                                                     return (
                                                         <SidebarMenuSubItem key={subItem.label}>
-                                                            <SidebarMenuSubButton asChild isActive={isActive}>
+                                                            <SidebarMenuSubButton
+                                                                asChild
+                                                                isActive={isActive}
+                                                                className="transition-transform hover:translate-x-0.5 data-[active=true]:font-medium data-[active=true]:text-sidebar-primary"
+                                                            >
                                                                 <Link href={subItem.href}>
                                                                     <span>{subItem.label}</span>
                                                                 </Link>
@@ -126,9 +151,14 @@ export const AppSidebar = () => {
                                     size="lg"
                                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                                 >
-                                    <Avatar className="h-8 w-8 rounded-lg">
-                                        <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                                    </Avatar>
+                                    <div className="relative">
+                                        <Avatar className="h-8 w-8 rounded-lg">
+                                            <AvatarFallback className="rounded-lg bg-linear-to-br from-zinc-600 to-zinc-900 text-xs text-white">
+                                                {initials}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <span className="absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full border-2 border-sidebar bg-emerald-500" />
+                                    </div>
                                     <div className="grid flex-1 text-left text-sm leading-tight">
                                         <span className="truncate text-xs">{session?.user?.email}</span>
                                     </div>
@@ -143,7 +173,7 @@ export const AppSidebar = () => {
                             >
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem>
-                                        <BadgeCheck />
+                                        <UserRound />
                                         Профиль
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>
