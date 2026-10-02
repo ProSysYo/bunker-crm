@@ -1,4 +1,5 @@
 import { BoltCreate } from "@/features/bolts/bolt-types";
+import { CustomerCreate } from "@/features/customers/customer-types";
 import { EarCreate } from "@/features/ears/ear-types";
 import { HingeCreate } from "@/features/hinges/hinge-types";
 import { JambHoleCreate } from "@/features/jamb-holes/jamb-hole-types";
@@ -194,6 +195,24 @@ async function main() {
     }
 
     console.log(`Создано ${models.length} моделей`);
+
+    const customers: CustomerCreate[] = [
+        { code: "D000", name: "разовый заказчик" },
+        { code: "D100", name: "Склад" },
+        { code: "D001", name: "Красноярск" },
+        { code: "D002", name: "Иванов" },
+        { code: "D003", name: "ГАМ" },
+        { code: "D004", name: "РДК" },
+       
+    ];
+
+    for (const item of customers) {
+        await prisma.customer.create({
+            data: item,
+        });
+    }
+
+    console.log(`Создано ${customers.length} заказчиков`);
 }
 
 main()

@@ -49,6 +49,10 @@ export const routes = {
     modelsNew: "/models/new",
     modelsEdit: "/models/",
 
+    customers: "/customers",
+    customersNew: "/customers/new",
+    customersEdit: "/customers/",
+
     orderCurrent: "/order-current",
     orderPreview: "/order-preview",
     orderOld: "/order-old",
@@ -79,6 +83,10 @@ export const navItems = [
         url: "#",
         icon: SquareTerminal,
         items: [
+            {
+                href: routes.customers,
+                label: "Заказчики",
+            },
             {
                 href: routes.models,
                 label: "Модели",
