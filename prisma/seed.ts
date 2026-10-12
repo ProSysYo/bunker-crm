@@ -165,7 +165,7 @@ async function main() {
     const hinges: HingeCreate[] = [
         { name: "нет" },
         { name: "Петли капелька" },
-        { name: "Пели на подшипнике" },
+        { name: "Петли на подшипнике" },
         { name: "Петли на шарике" },
         { name: "Петли Барк" },
         { name: "см.прим." },

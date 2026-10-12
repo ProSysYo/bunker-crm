@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
     Sidebar,
     SidebarContent,
@@ -30,6 +30,9 @@ import {
 import { Avatar, AvatarFallback } from "./shadcn/avatar";
 import { signOut, useSession } from "next-auth/react";
 
+const matchesPath = (href: string, pathname: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+
 export const AppSidebar = () => {
     const pathname = usePathname();
     const router = useRouter();
@@ -39,6 +42,14 @@ export const AppSidebar = () => {
     const { data: session } = useSession();
 
     const initials = (session?.user?.email ?? "??").slice(0, 2).toUpperCase();
+
+    // Активным считается самый специфичный (самый длинный) совпавший роут,
+    // чтобы /orders/new не подсвечивал одновременно и /orders
+    const activeHref = useMemo(() => {
+        const hrefs = navItems.flatMap((item) => item.items?.map((subItem) => subItem.href) ?? []);
+
+        return hrefs.filter((href) => matchesPath(href, pathname)).sort((a, b) => b.length - a.length)[0] ?? null;
+    }, [pathname]);
 
     const handleSignOut = async () => {
         try {
@@ -87,9 +98,7 @@ export const AppSidebar = () => {
                     <SidebarMenu>
                         {navItems.map((item) => {
                             const isGroupOpen =
-                                item.items?.some((subItem) =>
-                                    subItem.href === "/" ? pathname === "/" : pathname.startsWith(subItem.href),
-                                ) ?? false;
+                                item.items?.some((subItem) => subItem.href === activeHref) ?? false;
 
                             return (
                                 <Collapsible
@@ -114,10 +123,7 @@ export const AppSidebar = () => {
                                         <CollapsibleContent>
                                             <SidebarMenuSub>
                                                 {item.items?.map((subItem) => {
-                                                    const isActive =
-                                                        subItem.href === "/"
-                                                            ? pathname === "/"
-                                                            : pathname.startsWith(subItem.href);
+                                                    const isActive = subItem.href === activeHref;
                                                     return (
                                                         <SidebarMenuSubItem key={subItem.label}>
                                                             <SidebarMenuSubButton

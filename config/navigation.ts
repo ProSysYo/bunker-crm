@@ -1,4 +1,4 @@
-import { DoorOpen, SquareTerminal } from "lucide-react";
+import { ChartNoAxesCombined, DoorOpen, ScanBarcode, SquareTerminal, Truck } from "lucide-react";
 
 export const routes = {
     home: "/",
@@ -65,9 +65,9 @@ export const routes = {
     insideFinishesNew: "/inside-finishes/new",
     insideFinishesEdit: "/inside-finishes/",
 
-    orderCurrent: "/order-current",
-    orderPreview: "/order-preview",
-    orderOld: "/order-old",
+    orders: "/orders",
+    ordersNew: "/orders/new",
+    
 };
 
 export const navItems = [
@@ -77,17 +77,69 @@ export const navItems = [
         icon: DoorOpen,
         items: [
             {
-                href: routes.orderCurrent,
-                label: "Текущие",
+                href: routes.ordersNew,
+                label: "Новый заказ",
             },
             {
-                href: routes.orderPreview,
-                label: "Предварительные",
+                href: routes.orders,
+                label: "Все заказы",
+            },
+            
+        ],
+    },
+    {
+        title: "Отгрузка",
+        url: "#",
+        icon: Truck,
+        items: [
+            {
+                href: "#",
+                label: "План отгрузок",
+            },
+            
+            
+        ],
+    },
+    {
+        title: "Штрихкод",
+        url: "#",
+        icon: ScanBarcode,
+        items: [
+            {
+                href: "#",
+                label: "Участки",
             },
             {
-                href: routes.orderOld,
-                label: "Отгруженные",
+                href: "#",
+                label: "Отгрузка",
             },
+            {
+                href: "#",
+                label: "Менеджер Отгрузки",
+            },
+            
+            
+        ],
+    },
+     {
+        title: "Статистика",
+        url: "#",
+        icon: ChartNoAxesCombined,
+        items: [
+            {
+                href: "#",
+                label: "По участками",
+            },
+            {
+                href: "#",
+                label: "Успеваемость",
+            },
+            {
+                href: "#",
+                label: "План",
+            },
+            
+            
         ],
     },
     {
