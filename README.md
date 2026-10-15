@@ -22,3 +22,8 @@ npx prisma db seed
 npx prisma migrate reset --force !!!УДАЛИТ ВСЕ ДАННЫЕ В БД!!! ОСТОРОЖНО!!! 
 
 ```
+
+## api
+```bash
+nvm use 24.22.0 
+```

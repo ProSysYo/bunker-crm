@@ -1,9 +1,10 @@
 # ---------------------------------------------------------------------------
-# Общие правила для монорепозитория (frontend/ + backend/)
-# Паттерны не заякорены на корень, чтобы работать во всех подпапках.
+# Монорепозиторий (client/ + api/)
+# Паттерны не заякорены на корень (без ведущего /),
+# чтобы работать во всех подпапках.
 # ---------------------------------------------------------------------------
 
-# --- Node / Next.js (frontend) ---
+# --- Node / Next.js (client) ---
 node_modules/
 .next/
 out/
@@ -17,31 +18,18 @@ coverage/
 !.yarn/releases
 !.yarn/versions
 
-# TypeScript
+# --- NestJS / Node (api) ---
+dist/
+
+# --- TypeScript ---
 *.tsbuildinfo
 next-env.d.ts
 
-# npm/yarn/pnpm логи
+# --- npm/yarn/pnpm логи ---
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-
-# --- Python (backend) ---
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-env/
-*.egg-info/
-.eggs/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-*.db
-*.sqlite3
 
 # --- Секреты ---
 # Игнорируем все env-файлы, но примеры коммитим намеренно.
